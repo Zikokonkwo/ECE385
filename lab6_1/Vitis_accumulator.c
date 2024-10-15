@@ -16,7 +16,7 @@
 #include "platform.h"
 
 volatile uint32_t* led_gpio_data = (uint32_t*)0x40000000;  //Hint: either find the manual address (via the memory map in the block diagram, or
-															 //replace with the proper define in xparameters (part of the BSP). Either way
+volatile uint32_t* switch_gpio_data = (uint32_t*); 	//fix														 //replace with the proper define in xparameters (part of the BSP). Either way
 															 //this is the base address of the GPIO corresponding to your LEDs
 															 //(similar to 0xFFFF from MEM2IO from previous labs).
 
@@ -24,6 +24,8 @@ int main()
 {
     init_platform();
 
+	int accumulator = 0; 
+	
 	while (1+1 != 3)
 	{
 		sleep(1);
@@ -34,4 +36,17 @@ int main()
 		printf("Led Off!\r\n");
 	}
 
+	while(1)
+	{
+		uint32_t switch_value = *switch_gpio_data; //fix 
+		accumulator += switch_value;
+		*led_gpio_data = accumulator; //fix
+		printf("This is the value of the accumulator: %u\r\n ", accumulator);
+	} 
+	
+
     cleanup_platform();
+
+	
+}
+
