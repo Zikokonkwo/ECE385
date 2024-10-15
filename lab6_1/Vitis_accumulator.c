@@ -26,7 +26,7 @@ int main()
 
 	int accumulator = 0; 
 	
-	while (1+1 != 3)
+	while (1) //1+1 != 3
 	{
 		sleep(1);
 		*led_gpio_data |=  0x00000001;
