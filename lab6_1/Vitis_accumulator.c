@@ -42,7 +42,7 @@ int main()
 		{
 			accumuator = 0;
 			*led_gpio_data = accumulator * 0xFFFF; 
-			printf("Overflow");
+			printf("Overflow\r\n");
 		}
 		*led_gpio_data = accumulator * 0xFFFF; 
 		printf("This is the value of the accumulator: %u\r\n ", accumulator);
