@@ -34,13 +34,11 @@ int main()
 		sleep(1);
 		*led_gpio_data &= ~0x00000001; //blinks LED
 		printf("Led Off!\r\n");
-	}
 
-	while(1)
-	{
+
 		uint32_t switch_value = *switch_gpio_data * 0xFFFF; 
 		accumulator += switch_value;
-		if(accumulator > )
+		if(accumulator > 65535)
 		{
 			accumuator = 0;
 			*led_gpio_data = accumulator * 0xFFFF; 
@@ -48,7 +46,7 @@ int main()
 		}
 		*led_gpio_data = accumulator * 0xFFFF; 
 		printf("This is the value of the accumulator: %u\r\n ", accumulator);
-	} 
+	}
 	
 
     cleanup_platform();
