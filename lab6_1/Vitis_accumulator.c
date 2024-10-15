@@ -38,9 +38,9 @@ int main()
 
 	while(1)
 	{
-		uint32_t switch_value = *switch_gpio_data; //fix 
+		uint32_t switch_value = *switch_gpio_data * 0xFFFF; 
 		accumulator += switch_value;
-		*led_gpio_data = accumulator; //fix
+		*led_gpio_data = accumulator * 0xFFFF; 
 		printf("This is the value of the accumulator: %u\r\n ", accumulator);
 	} 
 	
