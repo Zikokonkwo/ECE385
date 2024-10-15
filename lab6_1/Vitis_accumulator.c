@@ -40,6 +40,12 @@ int main()
 	{
 		uint32_t switch_value = *switch_gpio_data * 0xFFFF; 
 		accumulator += switch_value;
+		if(accumulator > )
+		{
+			accumuator = 0;
+			*led_gpio_data = accumulator * 0xFFFF; 
+			printf("Overflow:);
+		}
 		*led_gpio_data = accumulator * 0xFFFF; 
 		printf("This is the value of the accumulator: %u\r\n ", accumulator);
 	} 
