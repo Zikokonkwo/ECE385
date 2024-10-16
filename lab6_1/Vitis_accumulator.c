@@ -46,7 +46,7 @@ int main()
 		if (*accumulate_button == 1 && flag == 0)
 		{
 			sum = sum + *sw_data;
-			if (sum > 65535)
+			if (sum >= 65535)
 			{
 				sum = 0;
 				*led_gpio_data = sum;
