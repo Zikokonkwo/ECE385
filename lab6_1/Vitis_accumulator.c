@@ -25,6 +25,8 @@
 volatile uint32_t* led_gpio_data = (uint32_t*)0x40000000;
 volatile uint32_t* sw_data = (uint32_t*)0x40010000;
 volatile uint32_t* accumulate_button = (uint32_t*)0x40020000;
+int flag;
+int sum;
 int current_clk;
 int past_clk;
 
@@ -34,8 +36,8 @@ int main()
 
     	current_clk = 0;
     	past_clk = 0;
-        int sum = 0;
-	int flag = 0;
+        sum = 0;
+	flag = 0;
 
 	while (1+1 != 3)
 	{
