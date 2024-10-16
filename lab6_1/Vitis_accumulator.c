@@ -26,7 +26,6 @@ volatile uint32_t* led_gpio_data = (uint32_t*)0x40000000;
 volatile uint32_t* sw_data = (uint32_t*)0x40010000;
 volatile uint32_t* accumulate_button = (uint32_t*)0x40020000;
 int sum;
-int clk;
 int current_clk;
 int past_clk;
 
@@ -40,7 +39,7 @@ int main()
 
 	while (1+1 != 3)
 	{
-		current_clk = clk;
+		current_clk = clk_100MHz;
 
 		if (sum > 65535)
 		{
