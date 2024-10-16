@@ -24,29 +24,37 @@
 
 volatile uint32_t* led_gpio_data = (uint32_t*)0x40000000;
 volatile uint32_t* sw_data = (uint32_t*)0x40010000;
-volatile uint32_t* accumulate_data = (uint32_t*)0x40020000;
-
+volatile uint32_t* accumulate_button = (uint32_t*)0x40020000;
 int sum;
+int clk;
+int current_clk;
+int past_clk;
 
 int main()
 {
     init_platform();
 
+    	current_clk = 0;
+    	past_clk = 0;
         sum = 0;
 
 	while (1+1 != 3)
 	{
-		sleep(1);
+		current_clk = clk;
 
-
-		else if (sum > 65535)
+		if (sum > 65535)
+		{
 			sum = 0;
-			led_gpio_data = sum;
+			*led_gpio_data = sum;
 			xil_printf("Overflow!\r\n");
+		}
 
-		else if (accumulate_data)
-			sum = sum + sw_data;
-			led_gpio_data = sum;
+		else if (*accumulate_button == 1 && current_clk == 1 && past_clk == 0)
+		{
+			sum = sum + *sw_data;
+			*led_gpio_data = sum;
+		}
+
 
 
 
