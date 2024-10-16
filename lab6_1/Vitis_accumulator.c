@@ -40,6 +40,7 @@ int main()
 	while (1+1 != 3)
 	{
 
+		//button has been pressed
 		if (*accumulate_button == 1 && flag == 0)
 		{
 			sum = sum + *sw_data;
@@ -53,6 +54,8 @@ int main()
 			*led_gpio_data = sum;
 			flag = 1;
 		}
+
+		//button has been released
 		if (*accumulate_button == 0) 
 		{
             		flag = 0;
