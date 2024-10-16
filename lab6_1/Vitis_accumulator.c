@@ -55,6 +55,7 @@ int main()
 			*led_gpio_data = sum;
 		}
 
+		past_clk = current_clk;
 
 
 
