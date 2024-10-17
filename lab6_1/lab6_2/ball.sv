@@ -63,6 +63,13 @@ module  ball
             Ball_Y_Motion_next = Ball_Y_Step;
         end  
        //fill in the rest of the motion equations here to bounce left and right
+	else if ((BallX + BallS ) >= Ball_X_max)
+	begin
+	end
+	else if ((BallX - BallS ) <= Ball_X_max)
+	begin
+	end
+	    
 
     end
 
