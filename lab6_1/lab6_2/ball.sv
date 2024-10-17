@@ -63,11 +63,13 @@ module  ball
             Ball_Y_Motion_next = Ball_Y_Step;
         end  
        //fill in the rest of the motion equations here to bounce left and right
-	else if ((BallX + BallS ) >= Ball_X_max)
+	else if ((BallX + BallS ) >= Ball_X_max) //right edge --> bounce
 	begin
+		Ball_X_Motion_next = (~ (Ball_X_Step) + 1'b1);  // set to -1 via 2's complement.
 	end
-	else if ((BallX - BallS ) <= Ball_X_max)
+	else if ((BallX - BallS ) <= Ball_X_max) //left edge --> bounce
 	begin
+		Ball_X_Motion_next = Ball_X_Step;
 	end
 	    
 
