@@ -73,6 +73,25 @@ void MAXreg_wr(BYTE reg, BYTE val) {
 	//read return code from SPI peripheral (see Xilinx examples) 
 	//if return code != 0 print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
+
+    BYTE writeData[2];
+    int status;
+
+    // Select MAX3421E (assert chip select)
+    XSpi_SetSlaveSelect(&SpiInstance, 1);
+
+    // Prepare data: reg + 2 (write operation) and the value to write
+    writeData[0] = reg + 2;
+    writeData[1] = val;
+
+    // Write the two bytes via SPI
+    status = XSpi_Transfer(&SpiInstance, writeData, NULL, 2);
+    if (status != XST_SUCCESS) {
+        xil_printf("SPI write error: %d\n", status);
+    }
+
+    // Deselect MAX3421E (de-assert chip select)
+    XSpi_SetSlaveSelect(&SpiInstance, 0);
 }
 
 
@@ -87,6 +106,28 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 	//if return code != 0 print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return (data + nbytes);
+
+    BYTE* writeData = (BYTE*)malloc(nbytes + 1);
+    int status;
+
+    // Select MAX3421E
+    XSpi_SetSlaveSelect(&SpiInstance, 1);
+
+    // Prepare the data: reg + 2 (write command) followed by the actual data
+    writeData[0] = reg + 2;
+    memcpy(&writeData[1], data, nbytes);
+
+    // Write the data via SPI
+    status = XSpi_Transfer(&SpiInstance, writeData, NULL, nbytes + 1);
+    if (status != XST_SUCCESS) {
+        xil_printf("SPI multi-byte write error: %d\n", status);
+    }
+
+    // Deselect MAX3421E
+    XSpi_SetSlaveSelect(&SpiInstance, 0);
+
+    free(writeData);
+    return data + nbytes;
 }
 
 /* Single host register read        */
