@@ -50,7 +50,9 @@ module mb_usb_hdmi_top(
     logic reset_ah;
     
     assign reset_ah = reset_rtl_0;
-    
+
+
+    //ball move with 25hz one for clock
     
     //Keycode HEX drivers
     hex_driver HexA (
