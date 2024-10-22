@@ -86,7 +86,7 @@ void MAXreg_wr(BYTE reg, BYTE val) {
 
     // Write the two bytes via SPI
     status = XSpi_Transfer(&SpiInstance, writeData, NULL, 2);
-    if (status != 0) {
+    if (status != XST_SUCCESS) {
         xil_printf("SPI write error: %d\n", status);
     }
 
@@ -119,7 +119,7 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 
     // Write the data via SPI
     status = XSpi_Transfer(&SpiInstance, writeData, NULL, nbytes + 1);
-    if (status != 0) {
+    if (status != XST_SUCCESS) {
         xil_printf("SPI write error: %d\n", status);
     }
 
@@ -187,7 +187,7 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
 
      // Write register address 
     status = XSpi_Transfer(&SpiInstance, &writeData, NULL, 1);
-    if (status != 0) {
+    if (status != XST_SUCCESS) {
         xil_printf("SPI write error: %d\n", status);
     }
 
