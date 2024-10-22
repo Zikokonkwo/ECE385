@@ -186,7 +186,7 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
     XSpi_SetSlaveSelect(&SpiInstance, 1);
 
      // Write register address 
-    status = XSpi_Transfer(&SpiInstance, &writeData, NULL, 1);
+    status = XSpi_Transfer(&SpiInstance, &, NULL, 1);
     if (status != XST_SUCCESS) {
         xil_printf("SPI write error: %d\n", status);
     }
