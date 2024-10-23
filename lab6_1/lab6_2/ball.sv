@@ -63,8 +63,8 @@ module  ball
             IDLE: begin
 		if (keycode == 8'h26) next_direction = UP;    // Up arrow key
 		else if (keycode == 8'h22) next_direction = DOWN;  // Down arrow key
-		else if (keycode == 8'h4) next_direction = LEFT;  // Left arrow key
-		else if (keycode == 8'h7) next_direction = RIGHT; // Right arrow key
+		else if (keycode == 8'h04) next_direction = LEFT;  // Left arrow key
+		else if (keycode == 8'h07) next_direction = RIGHT; // Right arrow key
             end
 
             UP: Ball_Y_Motion_next = -Ball_Y_Step;   // Move up
