@@ -45,13 +45,38 @@ module  ball
     logic [9:0] Ball_X_next;
     logic [9:0] Ball_Y_next;
 
+    typedef enum logic [1:0] {IDLE, UP, DOWN, LEFT, RIGHT} motion_t;
+    motion_t current_direction, next_direction;
+
+    // Internal signals for motion and position updates
+    logic [9:0] Ball_X_Motion, Ball_X_Motion_next;
+    logic [9:0] Ball_Y_Motion, Ball_Y_Motion_next;
+    logic [9:0] Ball_X_next, Ball_Y_next;
+
     always_comb begin
         Ball_Y_Motion_next = Ball_Y_Motion; // set default motion to be same as prev clock cycle 
         Ball_X_Motion_next = Ball_X_Motion;
+        next_direction = current_direction;  // Default to current direction
+
+        // Direction control based on key press (no diagonal allowed)
+        case (current_direction)
+            IDLE: begin
+                if (keycode == 8'h1A) next_direction = UP;    // Up arrow key
+                else if (keycode == 8'h1B) next_direction = DOWN;  // Down arrow key
+                else if (keycode == 8'h1C) next_direction = LEFT;  // Left arrow key
+                else if (keycode == 8'h1D) next_direction = RIGHT; // Right arrow key
+            end
+
+            UP: Ball_Y_Motion_next = -Ball_Y_Step;   // Move up
+            DOWN: Ball_Y_Motion_next = Ball_Y_Step;  // Move down
+            LEFT: Ball_X_Motion_next = -Ball_X_Step; // Move left
+            RIGHT: Ball_X_Motion_next = Ball_X_Step; // Move right
+        endcase
+	
 
         //modify to control ball motion with the keycode
-        if (keycode == 8'h1A)
-            Ball_Y_Motion_next = -10'd1;
+        // if (keycode == 8'h1A)
+        //     Ball_Y_Motion_next = -10'd1;
 
 
         if ( (BallY + BallS) >= Ball_Y_Max )  // Ball is at the bottom edge, BOUNCE!
