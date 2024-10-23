@@ -144,7 +144,7 @@ BYTE MAXreg_rd(BYTE reg) {
 	//return val
 
     BYTE writeData = reg;
-    BYTE readData[2];
+    BYTE readData = 0;
     int status;
 
     // Select MAX3421E
@@ -157,7 +157,7 @@ BYTE MAXreg_rd(BYTE reg) {
     }
 
     // Read the value from the register
-    status = XSpi_Transfer(&SpiInstance, NULL, readData, 2);
+    status = XSpi_Transfer(&SpiInstance, NULL, &readData, 1);
     if (status != XST_SUCCESS) {
        // xil_printf("SPI read error: %d\n", status);
     }
