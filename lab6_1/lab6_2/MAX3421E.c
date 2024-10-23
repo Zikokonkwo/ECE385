@@ -107,7 +107,7 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return (data + nbytes);
 
-    BYTE* writeData = (BYTE*)malloc(nbytes + 1);
+    BYTE writeData[1]
     int status;
 
     // Select MAX3421E
@@ -115,7 +115,6 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 
     // Prepare the data: reg + 2
     writeData[0] = reg + 2;
-    memcpy(&writeData[1], data, nbytes);
 
     // Write the data via SPI
     status = XSpi_Transfer(&SpiInstance, writeData, NULL, nbytes + 1);
