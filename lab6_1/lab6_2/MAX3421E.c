@@ -107,7 +107,7 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return (data + nbytes);
 
-    BYTE writeData[256]
+    BYTE writeData[256]; //temp buffer
     int status;
 
     // Select MAX3421E
@@ -183,7 +183,7 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
 	//return (data + nbytes);
 
     BYTE writeData = reg;
-    BYTE readData = 0;
+    BYTE readData[256];
     int status;
 
     // Select MAX3421E
@@ -196,12 +196,13 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
     }
 
     // Read the value from the register
-    status = XSpi_Transfer(&SpiInstance, NULL, &readData, nbytes + 1);
+    status = XSpi_Transfer(&SpiInstance, NULL, readData, nbytes + 1);
     if (status != XST_SUCCESS) {
       //  xil_printf("SPI read error: %d\n", status);
     }
    for (BYTE i = 0; i < nbytes; ++i) {
-        
+        //whatever you read put that back into the data
+	data[i] = readData[i];
     }
 
    // Deselect MAX3421E
