@@ -117,9 +117,16 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
     writeData[0] = reg + 2;
 
     // Write the data via SPI
-    status = XSpi_Transfer(&SpiInstance, writeData, NULL, nbytes + 1);
+    status = XSpi_Transfer(&SpiInstance, writeData, NULL, 1);
     if (status != XST_SUCCESS) {
         xil_printf("SPI write error: %d\n", status);
+    }
+
+   for (BYTE i = 0; i < nbytes; ++i) {
+        status = XSpi_Transfer(&SpiInstance, &data[i], NULL, 1);
+        if (status != XST_SUCCESS) {
+            xil_printf("SPI write error on data[%d]: %d\n", i, status);
+        }
     }
 
     // Deselect MAX3421E
