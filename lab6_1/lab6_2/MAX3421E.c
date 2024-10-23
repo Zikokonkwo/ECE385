@@ -107,7 +107,7 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return (data + nbytes);
 
-    BYTE writeData[256]; //temp buffer
+    BYTE writeData[nbytes]; //temp buffer
     int status;
 
     // Select MAX3421E
@@ -183,7 +183,7 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
 	//return (data + nbytes);
 
     BYTE writeData = reg;
-    BYTE readData[256];
+    BYTE readData[nybtes];
     int status;
 
     // Select MAX3421E
