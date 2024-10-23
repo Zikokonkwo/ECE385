@@ -186,7 +186,7 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
 	//return (data + nbytes);
 
     BYTE writeData = reg;
-   // BYTE readData = 0;
+    BYTE readData = 0;
     int status;
 
     // Select MAX3421E
