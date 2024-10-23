@@ -49,9 +49,9 @@ module  ball
     motion_t current_direction, next_direction;
 
     // Internal signals for motion and position updates
-    logic [9:0] Ball_X_Motion, Ball_X_Motion_next;
-    logic [9:0] Ball_Y_Motion, Ball_Y_Motion_next;
-    logic [9:0] Ball_X_next, Ball_Y_next;
+//    logic [9:0] Ball_X_Motion, Ball_X_Motion_next;
+//    logic [9:0] Ball_Y_Motion, Ball_Y_Motion_next;
+//    logic [9:0] Ball_X_next, Ball_Y_next;
 
     always_comb begin
         Ball_Y_Motion_next = Ball_Y_Motion; // set default motion to be same as prev clock cycle 
@@ -88,11 +88,11 @@ module  ball
             Ball_Y_Motion_next = Ball_Y_Step;
         end  
        //fill in the rest of the motion equations here to bounce left and right
-	if ((BallX + BallS ) >= Ball_X_max) //right edge --> bounce
+	if ((BallX + BallS ) >= Ball_X_Max) //right edge --> bounce
 	begin
 		Ball_X_Motion_next = (~ (Ball_X_Step) + 1'b1);  // set to -1 via 2's complement.
 	end
-	else if ((BallX - BallS ) <= Ball_X_max) //left edge --> bounce
+	else if ((BallX - BallS ) <= Ball_X_Max) //left edge --> bounce
 	begin
 		Ball_X_Motion_next = Ball_X_Step;
 	end
