@@ -132,7 +132,6 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
     // Deselect MAX3421E
     XSpi_SetSlaveSelect(&SpiInstance, 0);
 
-    free(writeData);
     return data + nbytes;
 }
 
