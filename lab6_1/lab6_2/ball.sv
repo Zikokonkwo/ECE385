@@ -59,25 +59,43 @@ module  ball
         next_direction = current_direction;  // Default to current direction
 
         // Direction control based on key press (no diagonal allowed)
-        case (current_direction)
-            IDLE: begin
-		if (keycode == 8'h26) next_direction = UP;    // Up arrow key
-		else if (keycode == 8'h22) next_direction = DOWN;  // Down arrow key
-		else if (keycode == 8'h04) next_direction = LEFT;  // Left arrow key
-		else if (keycode == 8'h07) next_direction = RIGHT; // Right arrow key
-            end
+  //       case (current_direction)
+  //           IDLE: begin
+		// if (keycode == 8'h26) next_direction = UP;    // Up arrow key
+		// else if (keycode == 8'h22) next_direction = DOWN;  // Down arrow key
+		// else if (keycode == 8'h04) next_direction = LEFT;  // Left arrow key
+		// else if (keycode == 8'h07) next_direction = RIGHT; // Right arrow key
+  //           end
 
-            UP: Ball_Y_Motion_next = -Ball_Y_Step;   // Move up
-            DOWN: Ball_Y_Motion_next = Ball_Y_Step;  // Move down
-            LEFT: Ball_X_Motion_next = -Ball_X_Step; // Move left
-            RIGHT: Ball_X_Motion_next = Ball_X_Step; // Move right
-        endcase
+  //           UP: Ball_Y_Motion_next = -Ball_Y_Step;   // Move up
+  //           DOWN: Ball_Y_Motion_next = Ball_Y_Step;  // Move down
+  //           LEFT: Ball_X_Motion_next = -Ball_X_Step; // Move left
+  //           RIGHT: Ball_X_Motion_next = Ball_X_Step; // Move right
+  //       endcase
 	
 
         //modify to control ball motion with the keycode
-        // if (keycode == 8'h1A)
-        //     Ball_Y_Motion_next = -10'd1;
-
+        if (keycode == 8'h1A)
+	begin
+            	Ball_Y_Motion_next = -10'd1;
+	    	Ball_X_Motion_next = 0;
+	end
+	    
+        else if(keycode == 8'h16)
+	begin
+	    	Ball_Y_Motion_next = 10'd1;
+	    	Ball_X_Motion_next = 0;
+	end 
+	else if(keycode == 8'h04)
+	begin
+		Ball_Y_Motion_next = 0;
+		Ball_X_Motion_next = -10'd1;
+	end 
+	else if(keycode == 8'h16)
+	begin
+		Ball_Y_Motion_next = 0;
+	    	Ball_X_Motion_next = 10'd1;
+	end 
 
         if ( (BallY + BallS) >= Ball_Y_Max )  // Ball is at the bottom edge, BOUNCE!
         begin
