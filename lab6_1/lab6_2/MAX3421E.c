@@ -87,7 +87,7 @@ void MAXreg_wr(BYTE reg, BYTE val) {
     // Write the two bytes via SPI
     status = XSpi_Transfer(&SpiInstance, writeData, NULL, 2);
     if (status != XST_SUCCESS) {
-       // xil_printf("SPI write error: %d\n", status);
+        xil_printf("SPI write error: %d\n", status);
     }
 
     // Deselect MAX3421E
@@ -122,7 +122,7 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
     // Write the data via SPI
     status = XSpi_Transfer(&SpiInstance, writeBuffer, NULL, nbytes + 1);
     if (status != XST_SUCCESS) {
-        //xil_printf("SPI write error: %d\n", status);
+        xil_printf("SPI write error: %d\n", status);
     }
 	
     // Deselect MAX3421E
@@ -153,7 +153,7 @@ BYTE MAXreg_rd(BYTE reg) {
     writeData[0] = reg;
     status = XSpi_Transfer(&SpiInstance, writeData, readData, 2);
     if (status != XST_SUCCESS) {
-      //  xil_printf("SPI write error: %d\n", status);
+        xil_printf("SPI write error: %d\n", status);
     }
 
     // Deselect MAX3421E
@@ -189,7 +189,7 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
     // Write register address
     status = XSpi_Transfer(&SpiInstance, writeData, readBuffer, nbytes + 1);
     if (status != XST_SUCCESS) {
-    //    xil_printf("SPI write error: %d\n", status);
+    xil_printf("SPI write error: %d\n", status);
     }
 
    for (BYTE i = 0; i < nbytes; ++i) {
