@@ -75,23 +75,23 @@ module  ball
 	
 
         //modify to control ball motion with the keycode
-        if (keycode == 8'h1A)
+	if (keycode == 8'h1A) //go up
 	begin
             	Ball_Y_Motion_next = -10'd1;
 	    	Ball_X_Motion_next = 0;
 	end
 	    
-        else if(keycode == 8'h16)
+	else if(keycode == 8'h16) //go down
 	begin
 	    	Ball_Y_Motion_next = 10'd1;
 	    	Ball_X_Motion_next = 0;
 	end 
-	else if(keycode == 8'h04)
+	    else if(keycode == 8'h04) //move left
 	begin
 		Ball_Y_Motion_next = 0;
 		Ball_X_Motion_next = -10'd1;
 	end 
-	else if(keycode == 8'h16)
+	    else if(keycode == 8'h07) //move right
 	begin
 		Ball_Y_Motion_next = 0;
 	    	Ball_X_Motion_next = 10'd1;
