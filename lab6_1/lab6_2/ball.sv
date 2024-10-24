@@ -56,7 +56,7 @@ module  ball
     always_comb begin
         Ball_Y_Motion_next = Ball_Y_Motion; // set default motion to be same as prev clock cycle 
         Ball_X_Motion_next = Ball_X_Motion;
-        next_direction = current_direction;  // Default to current direction
+       // next_direction = current_direction;  // Default to current direction
 
         // Direction control based on key press (no diagonal allowed)
   //       case (current_direction)
