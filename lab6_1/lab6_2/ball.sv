@@ -110,7 +110,7 @@ module  ball
 	begin
 		Ball_X_Motion_next = (~ (Ball_X_Step) + 1'b1);  // set to -1 via 2's complement.
 	end
-	else if ((BallX - BallS ) <= Ball_X_Max) //left edge --> bounce
+	    else if ((BallX - BallS ) <= Ball_X_Min) //left edge --> bounce
 	begin
 		Ball_X_Motion_next = Ball_X_Step;
 	end
