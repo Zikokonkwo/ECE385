@@ -107,21 +107,20 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return (data + nbytes);
 
-    BYTE writeData[2]; //temp buffer
+    BYTE writeBuffer[nbytes + 1]; //temp buffer
     int status;
 
     // Select MAX3421E
     XSpi_SetSlaveSelect(&SpiInstance, 1);
 
     // Prepare the data: reg + 2
-    writeData[0] = reg + 2;
-
-    // for (BYTE i = 0; i < nbytes; ++i) {
-    //     writeData[i + 1] = data[i];
-    // }
-
+    writeBuffer[0] = reg + 2;
+    for(int i = 0; i < nbytes; i++){
+	 writeBuffer[i+1] = data[i];
+	}
+  
     // Write the data via SPI
-    status = XSpi_Transfer(&SpiInstance, writeData, NULL, nbytes + 1);
+    status = XSpi_Transfer(&SpiInstance, writeBuffer, NULL, nbytes + 1);
     if (status != XST_SUCCESS) {
         //xil_printf("SPI write error: %d\n", status);
     }
@@ -178,22 +177,24 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
 	//return (data + nbytes);
 
     BYTE writeData[2]
-    BYTE readData[2];
+    BYTE readBuffer[nbytes + 1];
     int status;
 
     // Select MAX3421E
     XSpi_SetSlaveSelect(&SpiInstance, 1);
 
-     // Write register address
+     // set up writeData
     writeData[0] = reg;
-    status = XSpi_Transfer(&SpiInstance, writeData, readData, nbytes + 1);
+	
+    // Write register address
+    status = XSpi_Transfer(&SpiInstance, writeData, readBuffer, nbytes + 1);
     if (status != XST_SUCCESS) {
     //    xil_printf("SPI write error: %d\n", status);
     }
 
    for (BYTE i = 0; i < nbytes; ++i) {
         //whatever you read put that back into the data
-	data[i] = readData[i];
+	data[i] = readBuffer[i+1];
     }
 
    // Deselect MAX3421E
