@@ -45,8 +45,8 @@ module  ball
     logic [9:0] Ball_X_next;
     logic [9:0] Ball_Y_next;
 
-    typedef enum logic [1:0] {IDLE, UP, DOWN, LEFT, RIGHT} motion_t;
-    motion_t current_direction, next_direction;
+    // typedef enum logic [1:0] {IDLE, UP, DOWN, LEFT, RIGHT} motion_t;
+    // motion_t current_direction, next_direction;
 
     // Internal signals for motion and position updates
 //    logic [9:0] Ball_X_Motion, Ball_X_Motion_next;
