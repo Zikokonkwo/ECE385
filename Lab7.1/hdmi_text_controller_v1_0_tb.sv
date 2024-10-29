@@ -117,9 +117,9 @@ module hdmi_text_controller_tb();
     
     // Pixel clock, hs, vs, and vde (!blank) - these come from your internal VGA module
     	assign pixel_clk = hdmi_text_controller_v1_0_inst.
-    	assign pixel_hs = hdmi_text_controller_v1_0_inst.
-    	assign pixel_vs = hdmi_text_controller_v1_0_inst.
-    	assign pixel_vde = hdmi_text_controller_v1_0_inst.
+    	assign pixel_hs = hdmi_text_controller_v1_0_inst.hs;
+    	assign pixel_vs = hdmi_text_controller_v1_0_inst.vs;
+    	assign pixel_vde = hdmi_text_controller_v1_0_inst.vde;
     
     // DrawX and DrawY - these come from your internal VGA module
     	assign drawX = hdmi_text_controller_v1_0_inst.drawX;
@@ -228,6 +228,40 @@ module hdmi_text_controller_tb();
     //Note the read handshake process is simpler than the write
     task axi_read (input logic [31:0] addr, output logic [31:0] data);
         begin
+	   #3 read_addr <= addr;	//Put read address on bus
+	    read_data <= data;	//put write data on bus
+            read_addr_valid <= 1'b1;	//indicate address is valid
+            read_data_valid <= 1'b1;	//indicate data is valid
+            read_resp_ready <= 1'b1;	//indicate ready for a response
+            read_strb <= 4'hF;		//reading all 4 bytes
+
+	   //wait for one slave ready signal or the other
+	   wait(read_data_ready || read_addr_ready);
+                
+            @(posedge aclk); //one or both signals and a positive edge
+	   if(read_data_ready&&read_addr_ready)//received both ready signals
+            begin
+                read_addr_valid<=0;
+                read_data_valid<=0;
+            end
+            else    //wait for the other signal and a positive edge
+            begin
+	        if(read_data_ready)    //case data handshake completed
+                begin
+                    read_data_valid<=0;
+			wait(read_addr_ready); //wait for address address ready
+                end
+		else if(read_addr_ready)   //case address handshake completed
+                        begin
+                    read_addr_valid<=0;
+			wait(read_data_ready); //wait for data ready
+                        end 
+                @ (posedge aclk);// complete the second handshake
+                read_addr_valid<=0; //make sure both valid signals are deasserted
+                read_data_valid<=0;
+            end
+                
+		
         end
     endtask;
   
