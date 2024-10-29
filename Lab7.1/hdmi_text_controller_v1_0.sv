@@ -133,6 +133,17 @@ VGA_controller vga(
         .drawX        (),     // horizontal coordinate
         .drawY        ()
     );
+ //Color Mapper Module   
+color_mapper color_instance(
+        .BallX(ballxsig),
+        .BallY(ballysig),
+        .DrawX(drawX),
+        .DrawY(drawY),
+        .Ball_size(ballsizesig),
+        .Red(red),
+        .Green(green),
+        .Blue(blue)
+    );
 
 // User logic ends
 
