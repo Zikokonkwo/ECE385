@@ -123,14 +123,14 @@ hdmi_tx_0 vga_to_hdmi (
         .TMDS_DATA_N(hdmi_tmds_data_n)          
     );  
 VGA_controller vga(
-        .pixel_clk    (),        // 50 MHz clock
-        .reset        (),            // reset signal
-        .hs           (),               // Horizontal sync pulse.  Active low
-        .vs           (),               // Vertical sync pulse.  Active low
-        .active_nblank(),    // High = active, low = blanking interval
-        .sync         (),      // Composite Sync signal.  Active low.  We don't use it in this lab,
-									            //   but the video DAC on the DE2 board requires an input for it.
-        .drawX        (),     // horizontal coordinate
+        .pixel_clk    (),        
+        .reset        (),         
+        .hs           (),         
+        .vs           (),         
+        .active_nblank(),    
+        .sync         (),    
+				
+        .drawX        (),
         .drawY        ()
     );
  //Color Mapper Module   
