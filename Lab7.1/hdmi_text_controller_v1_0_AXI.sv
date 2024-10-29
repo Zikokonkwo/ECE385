@@ -143,7 +143,7 @@ logic	 aw_en;
 
 // I/O Connections assignments
 
-assign S_AXI_AWREADY	= axi_awready;
+assign S_AXI_AWREADY = axi_awready;
 assign S_AXI_WREADY	= axi_wready;
 assign S_AXI_BRESP	= axi_bresp;
 assign S_AXI_BVALID	= axi_bvalid;
