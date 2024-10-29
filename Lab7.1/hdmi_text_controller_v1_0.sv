@@ -86,7 +86,15 @@ hdmi_text_controller_v1_0_AXI # (
 //top-level from the previous lab. You should get the IP to generate a valid HDMI signal (e.g. blue screen or gradient)
 //prior to working on the text drawing.
     VGA_controller VGA_Controller_inst(
-        
+        .pixel_clk    (),        // 50 MHz clock
+        .reset        (),            // reset signal
+        .hs           (),               // Horizontal sync pulse.  Active low
+        .vs           (),               // Vertical sync pulse.  Active low
+        .active_nblank(),    // High = active, low = blanking interval
+        .sync         (),      // Composite Sync signal.  Active low.  We don't use it in this lab,
+									            //   but the video DAC on the DE2 board requires an input for it.
+        .drawX        (),     // horizontal coordinate
+        .drawY        ()
     );
 
 // User logic ends
