@@ -155,25 +155,6 @@ assign S_AXI_RVALID	= axi_rvalid;
 // axi_awready is asserted for one S_AXI_ACLK clock cycle when both
 // S_AXI_AWVALID and S_AXI_WVALID are asserted. axi_awready is
 // de-asserted when reset is low.
-always @(posedge S_AXI_ACLK) 
-    begin
-    if (!S_AXI_ARESETN) begin
-        axi_awready <= 1'b0;  // De-assert on reset
-    end 
-    else 
-        begin
-        // Assert axi_awready for one clock cycle when both AWVALID and WVALID are high
-        if (S_AXI_AWVALID && S_AXI_WVALID) 
-        begin
-            axi_awready <= 1'b1;
-        end 
-        else 
-            begin
-            axi_awready <= 1'b0;  // De-assert otherwise
-        end
-    end
-end
-
 always_ff @( posedge S_AXI_ACLK )
 begin
   if ( S_AXI_ARESETN == 1'b0 )
