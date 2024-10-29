@@ -61,7 +61,7 @@ logic hsync, vsync, vde;
 logic [3:0] red, green, blue;
 logic reset_ah;
 
-assign reset_ah = reset_rtl_0;
+//assign reset_ah = reset_rtl_0;
 
 
 	
