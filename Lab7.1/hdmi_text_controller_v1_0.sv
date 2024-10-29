@@ -52,6 +52,7 @@ module hdmi_text_controller_v1_0 #
 );
 
 //additional logic variables as necessary to support VGA, and HDMI modules.
+logic clk_25MHz, clk_125MHz, clk, clk_100MHz;
 
 // Instantiation of Axi Bus Interface AXI
 hdmi_text_controller_v1_0_AXI # ( 
