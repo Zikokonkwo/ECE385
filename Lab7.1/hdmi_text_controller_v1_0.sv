@@ -85,6 +85,9 @@ hdmi_text_controller_v1_0_AXI # (
 //Instiante clocking wizard, VGA sync generator modules, and VGA-HDMI IP here. For a hint, refer to the provided
 //top-level from the previous lab. You should get the IP to generate a valid HDMI signal (e.g. blue screen or gradient)
 //prior to working on the text drawing.
+    VGA_controller VGA_Controller_inst(
+        
+    );
 
 // User logic ends
 
