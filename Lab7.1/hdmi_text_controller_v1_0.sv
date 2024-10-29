@@ -52,7 +52,16 @@ module hdmi_text_controller_v1_0 #
 );
 
 //additional logic variables as necessary to support VGA, and HDMI modules.
+logic [31:0] keycode0_gpio, keycode1_gpio;
 logic clk_25MHz, clk_125MHz, clk, clk_100MHz;
+logic locked;
+logic [9:0] drawX, drawY, ballxsig, ballysig, ballsizesig;
+
+logic hsync, vsync, vde;
+logic [3:0] red, green, blue;
+logic reset_ah;
+
+assign reset_ah = reset_rtl_0;
 
 
 	
