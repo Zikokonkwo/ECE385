@@ -132,15 +132,15 @@ hdmi_tx_0 vga_to_hdmi (
         .TMDS_DATA_N(hdmi_tmds_data_n)          
     );  
 vga_controller vga(
-        .pixel_clk    (),        
-        .reset        (),         
-        .hs           (),         
-        .vs           (),         
-        .active_nblank(),    
+        .pixel_clk    (clk_25MHz),        
+        .reset        (reset_ah),         
+        .hs           (hsync),         
+        .vs           (vsync),         
+        .active_nblank(vde),    
         .sync         (),    
 				
-        .drawX        (),
-        .drawY        ()
+        .drawX        (drawX),
+        .drawY        (drawY)
     );
  //Color Mapper Module   
 color_mapper color_instance(
