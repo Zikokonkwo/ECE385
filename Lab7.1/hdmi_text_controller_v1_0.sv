@@ -57,7 +57,7 @@ logic clk_25MHz, clk_125MHz, clk, clk_100MHz;
 logic locked;
 logic [9:0] drawX, drawY, ballxsig, ballysig, ballsizesig;
 
-logic hsync, vsync, vde;
+logic hsync, vsync, vde, sync_out;
 logic [3:0] red, green, blue;
 logic reset_ah;
 
@@ -132,12 +132,12 @@ hdmi_tx_0 vga_to_hdmi (
         .TMDS_DATA_N(hdmi_tmds_data_n)          
     );  
 vga_controller vga(
-        .pixel_clk    (clk_25MHz),        
+        .pixel_clk    (axi_aclk),        
         .reset        (reset_ah),         
         .hs           (hsync),         
         .vs           (vsync),         
         .active_nblank(vde),    
-        .sync         (),    
+        .sync         (sync_out),    
 				
         .drawX        (drawX),
         .drawY        (drawY)
