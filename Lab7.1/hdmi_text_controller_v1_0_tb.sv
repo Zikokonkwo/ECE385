@@ -65,7 +65,7 @@ module hdmi_text_controller_tb();
 	//Instantiation of DUT (HDMI TEXT_CONTROLLER) IP
 	hdmi_text_controller_v1_0 # (
 		.C_AXI_DATA_WIDTH(32),
-		.C_AXI_ADDR_WIDTH(16)
+		.C_AXI_ADDR_WIDTH(32)
 	) hdmi_text_controller_v1_0_inst (
 
 		.axi_aclk(aclk),
