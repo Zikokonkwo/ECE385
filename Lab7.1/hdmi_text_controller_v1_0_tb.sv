@@ -117,8 +117,8 @@ module hdmi_text_controller_tb();
     
     // Pixel clock, hs, vs, and vde (!blank) - these come from your internal VGA module
     	assign pixel_clk = hdmi_text_controller_v1_0_inst.clk_25MHz;
-    	assign pixel_hs = hdmi_text_controller_v1_0_inst.hs;
-    	assign pixel_vs = hdmi_text_controller_v1_0_inst.vs;
+    	assign pixel_hs = hdmi_text_controller_v1_0_inst.hsync;
+    	assign pixel_vs = hdmi_text_controller_v1_0_inst.vsync;
     	assign pixel_vde = hdmi_text_controller_v1_0_inst.vde;
     
     // DrawX and DrawY - these come from your internal VGA module
