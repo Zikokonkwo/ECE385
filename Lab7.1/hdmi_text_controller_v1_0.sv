@@ -102,7 +102,7 @@ hdmi_text_controller_v1_0_AXI # (
         .clk_out2(clk_125MHz),
         .reset(reset_ah),
         .locked(locked),
-        .clk_in1(Clk)
+        .clk_in1(axi_aclk)
     );
 hdmi_tx_0 vga_to_hdmi (
         //Clocking and Reset
