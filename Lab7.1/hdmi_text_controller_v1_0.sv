@@ -126,10 +126,10 @@ hdmi_tx_0 vga_to_hdmi (
         .ade(1'b0),
         
         //Differential outputs
-        .TMDS_CLK_P(hdmi_tmds_clk_p),          
-        .TMDS_CLK_N(hdmi_tmds_clk_n),          
-        .TMDS_DATA_P(hdmi_tmds_data_p),         
-        .TMDS_DATA_N(hdmi_tmds_data_n)          
+        .TMDS_CLK_P(hdmi_clk_p),          
+        .TMDS_CLK_N(hdmi_clk_n),          
+        .TMDS_DATA_P(hdmi_tx_p),         
+        .TMDS_DATA_N(hdmi_tx_n)          
     );  
 vga_controller vga(
         .pixel_clk    (axi_aclk),        
