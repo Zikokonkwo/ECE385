@@ -245,11 +245,11 @@ module hdmi_text_controller_tb();
 
         // Capture the data and response
         data <= read_data;          // Assign the data output
-        read_resp <= 1'b1;    // Indicate master is ready to accept the response
+        read_data_ready <= 1'b1;    // Indicate master is ready to accept the response
 
         
         @(posedge aclk);
-        read_resp <= 1'b0;    // Reset the response ready signal
+        read_data_ready <= 1'b0;    // Reset the response ready signal
 
         
     end
