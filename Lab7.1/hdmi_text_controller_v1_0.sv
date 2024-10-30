@@ -131,7 +131,7 @@ hdmi_tx_0 vga_to_hdmi (
         .TMDS_DATA_P(hdmi_tmds_data_p),         
         .TMDS_DATA_N(hdmi_tmds_data_n)          
     );  
-VGA_controller vga(
+vga_controller vga(
         .pixel_clk    (),        
         .reset        (),         
         .hs           (),         
