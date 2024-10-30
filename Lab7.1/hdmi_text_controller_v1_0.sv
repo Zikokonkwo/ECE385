@@ -99,7 +99,7 @@ hdmi_text_controller_v1_0_AXI # (
 //prior to working on the text drawing.
  clk_wiz_0 clk_wiz (
         .clk_out1(clk_25MHz),
-        .clk_out2(clk_125MHz),
+        //.clk_out2(clk_125MHz),
         .reset(reset_ah),
         .locked(locked),
         .clk_in1(axi_aclk)
