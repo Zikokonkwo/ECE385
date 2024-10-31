@@ -86,21 +86,21 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
 	
-	case (register_num)
+	case (byte_num)
             0: begin
-		slv_regs[0][7:0]; 
+		    slv_regs[register_num][7:0]; 
             end
             1: begin
-		slv_regs[1][15:8]; 
+		    slv_regs[register_num][15:8]; 
             end
             2: begin
-		slv_regs[0][23:16]; 
+		    slv_regs[register_num][23:16]; 
             end
             3: begin
-		slv_regs[29][31:24]; 
+		    slv_regs[register_num][31:24]; 
             end
             default: begin
-                slv_regs[0][7:0]; 
+		    slv_regs[register_num][0]; 
             end
         endcase
 
