@@ -60,6 +60,10 @@ module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
     //         Blue = 4'hf - DrawX[9:6];
     //     end      
     // end 
+
+   //psuedocode:
+	assign glyphX = drawX/ 8;
+	assign glyphY = drawY/ 16;
     
 endmodule
 
