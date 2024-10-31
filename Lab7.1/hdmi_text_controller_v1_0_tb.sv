@@ -12,6 +12,14 @@
 //`define SIM_VIDEO //Comment out to simulate AXI bus only
                     //Uncomment to simulate entire screen and write BMP (slow)
 
+
+/*
+Color Mapper concepts:
+	//want to know what bite your gliph is --> math involved e gliphs per register
+	//get sprite address --> starting add of gliph + y start address (row major order) drawY mod(..) --> put into font_rom
+
+*/
+
 module hdmi_text_controller_tb();
 
 	//clock and reset_n signals
