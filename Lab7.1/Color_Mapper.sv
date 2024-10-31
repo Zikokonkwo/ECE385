@@ -85,6 +85,8 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
 
+	slv_reg[register_num][];
+
 	//  Determine RGB values based on glyph_byte
     always_comb begin: RGB_Display
         if () begin 
