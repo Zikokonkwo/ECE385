@@ -75,7 +75,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
  //    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
 
 
-	assign register_col = (drawX/32);
+	assign register_col = (drawX /32);
 	assign register_row = (drawY/16);
 
 	assign register_num = (20) * (register_row) + register_col;
@@ -84,6 +84,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	assign byte_num = 4 * register_num;
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
+	
 
 	slv_reg[register_num][];
 
