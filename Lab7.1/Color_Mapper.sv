@@ -75,12 +75,13 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
  //    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
 
 
-	assign register_col = (drawX /8);
+	assign byte_num = (drawX /8);
 	assign register_row = (drawY/16);
 
 	assign register_num = (20) * (register_row) + register_col;
 
 	//find the glyph coordinates
+	assign glyph = byte_num % 4;
 	assign byte_num = 4 * register_num;
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
@@ -102,8 +103,6 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
                 slv_regs[0][7:0]; 
             end
         endcase
-	
-	slv_reg[register_num][];
 
 	//  Determine RGB values based on glyph_byte
     always_comb begin: RGB_Display
