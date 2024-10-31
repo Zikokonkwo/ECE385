@@ -85,7 +85,24 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
 	
-
+	case (register_num)
+            0: begin
+		slv_regs[0][7:0]; 
+            end
+            1: begin
+		slv_regs[1][15:8]; 
+            end
+            2: begin
+		slv_regs[0][23:16]; 
+            end
+            3: begin
+		slv_regs[29][31:24]; 
+            end
+            default: begin
+                slv_regs[0][7:0]; 
+            end
+        endcase
+	
 	slv_reg[register_num][];
 
 	//  Determine RGB values based on glyph_byte
