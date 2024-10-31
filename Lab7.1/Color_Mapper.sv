@@ -87,9 +87,19 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
 	
+	logic invert, glyphLine;
+	logic [2:0] FGD_RGB, BKG_RGB;
+	
+	assign FGD_RGB = slv_regs[600][24:13];
+	assign BKG_RGB = slv_regs[600][12:1];
+
+	
 	case (byte_num)
             0: begin
-		    slv_regs[register_num][7:0]; 
+	            assign invert = slv_regs[register_num][7] ;
+		    assign glyphLine = font_data[((slv_regs[register_num][6:0])*16)+(drawY%16)];
+		    
+		    
             end
             1: begin
 		    slv_regs[register_num][15:8]; 
