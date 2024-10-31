@@ -75,7 +75,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 
 	//  Determine RGB values based on glyph_byte
     always_comb begin: RGB_Display
-        if (ball_on == 1'b1) begin 
+        if () begin 
             // Display Ball Color
             Red = 4'hf;
             Green = 4'h7;
