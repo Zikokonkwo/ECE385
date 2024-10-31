@@ -55,7 +55,7 @@ module hdmi_text_controller_v1_0 #
 logic [31:0] keycode0_gpio, keycode1_gpio;
 logic clk_25MHz, clk_125MHz, clk, clk_100MHz;
 logic locked;
-logic [9:0] drawX, drawY, ballxsig, ballysig, ballsizesig;
+logic [9:0] drawX, drawY;
 
 logic hsync, vsync, vde, sync_out;
 logic [3:0] red, green, blue;
@@ -144,11 +144,8 @@ vga_controller vga(
     );
  //Color Mapper Module   
 color_mapper color_instance(
-        .BallX(ballxsig),
-        .BallY(ballysig),
         .DrawX(drawX),
         .DrawY(drawY),
-        .Ball_size(ballsizesig),
         .Red(red),
         .Green(green),
         .Blue(blue)
