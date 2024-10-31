@@ -231,26 +231,24 @@ module hdmi_text_controller_tb();
         // Initiate read transaction by setting address and signaling validity
         read_addr <= addr;          
         read_addr_valid <= 1'b1;    // Indicate the address is valid
-        
+        read_data_ready <= 1'b1; 
 	// Wait for slave to acknowledge the address with 'read_addr_ready'
-        @(posedge aclk);
+       // @(posedge aclk);
         wait(read_addr_ready);      // Wait until slave is ready
 
         // Deassert the address valid signal after handshake
         @(posedge aclk);
         read_addr_valid <= 1'b0;    
-
+	read_addr_ready <= 1'b0;
         
         wait(read_data_valid);      // Wait for data to become valid
-
-        // Capture the data and response
-        data <= read_data;          // Assign the data output
-        read_data_ready <= 1'b1;    // Indicate master is ready to accept the response
-
+       
         
         @(posedge aclk);
         read_data_ready <= 1'b0;    // Reset the response ready signal
+	read_data_valid <= 1'b0;
 
+	data <= read_data;
         
     end
     endtask;
