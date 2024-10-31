@@ -15,7 +15,7 @@
 
 
 module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
-		       inpu   logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];
+		       input   logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];
                        output logic [3:0]  Red, Green, Blue );
     
     logic ball_on;
