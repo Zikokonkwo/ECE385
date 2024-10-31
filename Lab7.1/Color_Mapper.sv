@@ -63,15 +63,15 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 
    //psuedocode:
 	//Calculate glyph coordinates from pixel coordinates
-	assign glyphX = drawX/ 8;
-	assign glyphY = drawY/ 16;
-	// Determine VRAM register address to access
-	assign register_address = (glyphY * 20) + (glyphX / 4);
-	 // Calculate byte offset within the register
-    	assign byte_offset = glyphX % 4;
+	// assign glyphX = drawX/ 8;
+	// assign glyphY = drawY/ 16;
+	// // Determine VRAM register address to access
+	// assign register_address = (glyphY * 20) + (glyphX / 4);
+	//  // Calculate byte offset within the register
+ //    	assign byte_offset = glyphX % 4;
 
-    	// Extract glyph byte from VRAM data at register_address
-    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
+ //    	// Extract glyph byte from VRAM data at register_address
+ //    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
 
 	//  Determine RGB values based on glyph_byte
     always_comb begin: RGB_Display
