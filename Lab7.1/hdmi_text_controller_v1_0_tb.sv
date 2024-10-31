@@ -111,12 +111,12 @@ module hdmi_text_controller_tb();
     //the pixel clock, assign pixel_clk = hdmi_text_controller_v1_0_inst.clk_25MHz
     
     // Red Green and Blue values respectively - these come from your draw logic
-	assign pixel_rgb[0] = 4'hf - drawX[9:6];
-	assign pixel_rgb[1] = 4'hf - drawX[9:6];
-	assign pixel_rgb[2] = 4'hf - drawX[9:6];
+	assign pixel_rgb[0] = hdmi_text_controller_v1_0_inst.red;
+	assign pixel_rgb[1] = hdmi_text_controller_v1_0_inst.blue;
+	assign pixel_rgb[2] =hdmi_text_controller_v1_0_inst.green;
     
     // Pixel clock, hs, vs, and vde (!blank) - these come from your internal VGA module
-    	assign pixel_clk = hdmi_text_controller_v1_0_inst.clk_25MHz;
+    	assign pixel_clk = hdmi_text_controller_v1_0_inst.pixel_clk;
     	assign pixel_hs = hdmi_text_controller_v1_0_inst.hsync;
     	assign pixel_vs = hdmi_text_controller_v1_0_inst.vsync;
     	assign pixel_vde = hdmi_text_controller_v1_0_inst.vde;
