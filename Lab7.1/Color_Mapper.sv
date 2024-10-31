@@ -62,6 +62,7 @@ module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
     // end 
 
    //psuedocode:
+	//Calculate glyph coordinates from pixel coordinates
 	assign glyphX = drawX/ 8;
 	assign glyphY = drawY/ 16;
 	// Determine VRAM register address to access
