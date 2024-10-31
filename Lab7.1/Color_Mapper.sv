@@ -64,6 +64,36 @@ module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
    //psuedocode:
 	assign glyphX = drawX/ 8;
 	assign glyphY = drawY/ 16;
+	// Determine VRAM register address to access
+	assign register_address = (glyphY * 20) + (glyphX / 4);
+	 // Calculate byte offset within the register
+    	assign byte_offset = glyphX % 4;
+
+    	// Extract glyph byte from VRAM data at register_address
+    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
+
+	//  Determine RGB values based on glyph_byte
+    always_comb begin: RGB_Display
+        if (ball_on == 1'b1) begin 
+            // Display Ball Color
+            Red = 4'hf;
+            Green = 4'h7;
+            Blue = 4'h0;
+        end else begin 
+            // Display Color Based on Glyph Byte
+            if (glyph_byte[DrawY % 16]) begin // Assuming glyph_byte bit pattern maps directly to pixels
+                Red = 4'hf;
+                Green = 4'hf;
+                Blue = 4'hf;
+            end else begin
+                // Background Color (Gray Gradient)
+                Red = 4'hf - DrawX[9:6];
+                Green = 4'hf - DrawX[9:6];
+                Blue = 4'hf - DrawX[9:6];
+            end
+        end
+    end
+
     
 endmodule
 
