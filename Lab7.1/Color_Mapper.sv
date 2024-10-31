@@ -73,6 +73,17 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
  //    	// Extract glyph byte from VRAM data at register_address
  //    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
 
+
+	assign register_col = (drawX/32) * (truncated);
+	assign register_row = (drawY/16) * (truncated);
+
+	assign register_num = (20) * (register_row) + register_col;
+
+	//find the glyph coordinates
+	assign byte_num = 4 * register_num;
+	assign byte_row = byte_num / 80;
+	assign byte_col = byte_num % 80;
+
 	//  Determine RGB values based on glyph_byte
     always_comb begin: RGB_Display
         if () begin 
