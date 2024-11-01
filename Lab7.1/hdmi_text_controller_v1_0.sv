@@ -130,7 +130,7 @@ hdmi_tx_0 vga_to_hdmi (
         .TMDS_CLK_N(hdmi_clk_n),          
         .TMDS_DATA_P(hdmi_tx_p),         
         .TMDS_DATA_N(hdmi_tx_n)          
-    );  
+);  
 vga_controller vga(
         .pixel_clk    (axi_aclk),        
         .reset        (reset_ah),         
@@ -141,7 +141,7 @@ vga_controller vga(
 				
         .drawX        (drawX),
         .drawY        (drawY)
-    );
+);
  //Color Mapper Module   
 color_mapper color_instance(
 	.font_data (data),
@@ -150,7 +150,12 @@ color_mapper color_instance(
         .Red(red),
         .Green(green),
         .Blue(blue)
-    );
+);
+//font_rom Module
+font_rom font(
+	.addr(),
+	.data()
+);
 
 // User logic ends
 
