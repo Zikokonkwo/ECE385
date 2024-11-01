@@ -75,7 +75,7 @@ font_rom font(
 
     // Assign RGB based on glyph line and inversion
     always_comb begin
-        if (glyphLine[3'b111 - DrawX[2:0]] ^ invert) begin
+	if (glyphLine[3'b111 - drawX[2:0]] ^ invert) begin
             // Foreground color
             Red   = FGD_R;
             Green = FGD_G;
