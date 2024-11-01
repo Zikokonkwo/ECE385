@@ -90,7 +90,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	assign byte_col = byte_num % 80;
 	
 	logic invert;
-	logic [2:0] FGD_B, FGD_G, FGD_B, BKG_R, BKG_G, BKG_G;
+	logic [2:0] FGD_R, FGD_G, FGD_B, BKG_R, BKG_G, BKG_G;
 	
 	assign FGD_R = slv_regs[600][24:21];
 	assign FGD_G = slv_regs[600][20:17];
