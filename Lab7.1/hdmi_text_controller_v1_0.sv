@@ -61,6 +61,8 @@ logic hsync, vsync, vde, sync_out;
 logic [3:0] red, green, blue;
 logic reset_ah;
 
+logic [10:0]	addr_out;
+logic [7:0]	data_out;
 assign reset_ah = axi_aresetn;
 
 
@@ -144,17 +146,18 @@ vga_controller vga(
 );
  //Color Mapper Module   
 color_mapper color_instance(
-	.font_data (data),
+	.font_data (data_out),
 	DrawX(drawX),
         .DrawY(drawY),
         .Red(red),
         .Green(green),
-        .Blue(blue)
+	.Blue(blue),
+	.sprite_addr(addr_out)
 );
 //font_rom Module
 font_rom font(
-	.addr(),
-	.data()
+	.addr(addr_out),
+	.data(data_out)
 );
 
 // User logic ends
