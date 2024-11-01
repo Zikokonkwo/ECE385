@@ -15,7 +15,7 @@
 
 
 module  color_mapper ( input  logic [9:0] drawX, drawY,
-		      input  logic [31:0] slv_regs[600:0],
+		       input  logic [31:0] slv_regs[600:0],
 		       output logic [3:0]  Red, Green, Blue
 		     );
 
@@ -24,7 +24,7 @@ module  color_mapper ( input  logic [9:0] drawX, drawY,
     logic [7:0] font_data; 
 
     logic invert;
-    //logic [2:0] FGD_R, FGD_G, FGD_B, BKG_R, BKG_G, BKG_B;
+    logic [2:0] FGD_R, FGD_G, FGD_B, BKG_R, BKG_G, BKG_B;
 
    //psuedocode:
 	//Calculate glyph coordinates from pixel coordinates
@@ -47,9 +47,9 @@ font_rom font(
 	// Calculate VRAM and glyph coordinates
     logic [8:0] register_num;
     logic [7:0] char_sel, character;
-    logic invert, glyphLine;
-    logic [3:0] FGD_R, FGD_G, FGD_B;
-    logic [3:0] BKG_R, BKG_G, BKG_B;
+    logic glyphLine;
+//    logic [3:0] FGD_R, FGD_G, FGD_B;
+//    logic [3:0] BKG_R, BKG_G, BKG_B;
     
     // Set control register and character select based on inputs
     assign control_reg = slv_regs[600];
