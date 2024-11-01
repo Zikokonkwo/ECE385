@@ -63,7 +63,7 @@ logic reset_ah;
 
 logic [10:0]	addr_in;
 logic [7:0]	data_out;
-logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs_out[601];
+ logic [C_AXI_DATA_WIDTH-1:0] slv_regs_out[600:0];  // 601 registers array
 assign reset_ah = axi_aresetn;
 
 
