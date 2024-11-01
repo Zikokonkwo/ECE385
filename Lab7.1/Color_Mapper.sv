@@ -18,7 +18,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 		       input  logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];
 		       output logic [3:0]  Red, Green, Blue,
 		     );
-    
+
     logic ball_on;
     logic [10:0] sprite_addr;
     logic [7:0] font_data; 
@@ -37,6 +37,19 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 
  //    	// Extract glyph byte from VRAM data at register_address
  //    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
+
+		
+font_rom font(
+	.addr(sprite_addr),
+	.data(font_data)
+);
+
+	control_reg = slv_reg[600];
+	char_sel = drawX % 32;
+	register = slv_reg[drawX/32 + 20(drawY/16)];
+	character = register[14:8] * 16;
+	Inv = resister[15];
+	sprite_addr = character + drawY % 16;
 
 
 	assign byte_num = (drawX /8);
@@ -170,11 +183,6 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
             end
         endcase
 
-	
-font_rom font(
-	.addr(sprite_addr),
-	.data(font_data)
-);
 
     
 endmodule
