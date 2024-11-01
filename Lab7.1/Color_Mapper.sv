@@ -77,14 +77,14 @@ font_rom font(
         always_comb begin
         if (font_data[3'b111 - drawX[2:0]] ^ invert) begin
             // If invert is active, assign background colors to foreground and vice versa
-            Red   = invert ? BKG_R : FGD_R;
-            Green = invert ? BKG_G : FGD_G;
-            Blue  = invert ? BKG_B : FGD_B;
+ 	    Red   = FGD_R;
+            Green = FGD_G;
+            Blue  = FGD_B;
         end else begin
-            // Default behavior without inversion
-            Red   = invert ? FGD_R : BKG_R;
-            Green = invert ? FGD_G : BKG_G;
-            Blue  = invert ? FGD_B : BKG_B;
+            // Draw background color
+            Red   = BKG_R;
+            Green = BKG_G;
+            Blue  = BKG_B;
         end
     end
 
