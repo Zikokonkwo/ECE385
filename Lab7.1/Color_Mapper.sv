@@ -89,7 +89,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
 	
-	logic invert, sprite_addr;
+	logic invert;
 	logic [2:0] FGD_RGB, BKG_RGB;
 	
 	assign FGD_R = slv_regs[600][24:21];
