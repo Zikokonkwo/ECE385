@@ -38,7 +38,7 @@ module hdmi_text_controller_v1_0_AXI #
 )
 (
     // Users to add ports here
-    output logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];
+    output logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[600:0];
     // User ports ends
 
     // Global Clock Signal
