@@ -127,11 +127,11 @@ module hdmi_text_controller_tb();
     	assign pixel_clk = hdmi_text_controller_v1_0_inst.vga.pix_clk;
     	assign pixel_hs = hdmi_text_controller_v1_0_inst.vga.hsync;
     	assign pixel_vs = hdmi_text_controller_v1_0_inst.vga.vsync;
-    	assign pixel_vde = hdmi_text_controller_v1_0_inst.vga.vde;
+    	assign pixel_vde = hdmi_text_controller_v1_0_inst.vga.active_nblank;
     
     // DrawX and DrawY - these come from your internal VGA module
-    	assign drawX = hdmi_text_controller_v1_0_inst.drawX;
-	assign drawY = hdmi_text_controller_v1_0_inst.drawY;
+    	assign drawX = hdmi_text_controller_v1_0_inst.vga.drawX;
+	assign drawY = hdmi_text_controller_v1_0_inst.vga.drawY;
    
     // BMP writing task, based off work from @BrianHGinc:
     // https://github.com/BrianHGinc/SystemVerilog-TestBench-BPM-picture-generator
