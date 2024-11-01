@@ -24,7 +24,7 @@ module  color_mapper ( input  logic [9:0] drawX, drawY,
     logic [7:0] font_data; 
 
     logic invert;
-    logic [2:0] FGD_R, FGD_G, FGD_B, BKG_R, BKG_G, BKG_B;
+    //logic [2:0] FGD_R, FGD_G, FGD_B, BKG_R, BKG_G, BKG_B;
 
    //psuedocode:
 	//Calculate glyph coordinates from pixel coordinates
