@@ -147,7 +147,8 @@ vga_controller vga(
  //Color Mapper Module   
 color_mapper color_instance(
 	.font_data (data_out),
-	DrawX(drawX),
+	.slv_regs ()
+	.DrawX(drawX),
         .DrawY(drawY),
         .Red(red),
         .Green(green),
