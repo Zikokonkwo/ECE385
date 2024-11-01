@@ -113,9 +113,9 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 				    assign BKG_G = slv_regs[600][20:17];
 				    assign BKG_B = slv_regs[600][16:13]; 
 
-				    assign FGD_R = slv_regs[600][24:21];
-				    assign FGD_G = slv_regs[600][20:17];
-				    assign FGD_B = slv_regs[600][16:13];
+				    assign FGD_R = slv_regs[600][12:9];
+				    assign FGD_G = slv_regs[600][8:5];
+				    assign FGD_B = slv_regs[600][4:1];
 	
 		    }
 ///////////////////////////////////////////////////
@@ -134,7 +134,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 			    	  Red = BKG_R;
 			          Blue = BKG_B;
 			   	  Green = BKG_G;
-				    
+		    } 
 		    
             end
             1: begin
