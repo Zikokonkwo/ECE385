@@ -9,7 +9,7 @@
 //Used for simulation of AXI4-Lite bus as well as generating
 //simulation video image for testing
 
-//`define SIM_VIDEO //Comment out to simulate AXI bus only
+`define SIM_VIDEO //Comment out to simulate AXI bus only
                     //Uncomment to simulate entire screen and write BMP (slow)
 
 
@@ -20,7 +20,7 @@ Color Mapper concepts:
 
 */
 
-module hdmi_text_controller_tb();
+module  hdmi_text_controller_tb();
 
 	//clock and reset_n signals
 	logic aclk =1'b0;
@@ -124,9 +124,9 @@ module hdmi_text_controller_tb();
 	assign pixel_rgb[2] =hdmi_text_controller_v1_0_inst.green;
     
     // Pixel clock, hs, vs, and vde (!blank) - these come from your internal VGA module
-    	assign pixel_clk = hdmi_text_controller_v1_0_inst.vga.pix_clk;
-    	assign pixel_hs = hdmi_text_controller_v1_0_inst.vga.hsync;
-    	assign pixel_vs = hdmi_text_controller_v1_0_inst.vga.vsync;
+    	assign pixel_clk = hdmi_text_controller_v1_0_inst.vga.pixel_clk;
+    	assign pixel_hs = hdmi_text_controller_v1_0_inst.vga.hs;
+    	assign pixel_vs = hdmi_text_controller_v1_0_inst.vga.vs;
     	assign pixel_vde = hdmi_text_controller_v1_0_inst.vga.active_nblank;
     
     // DrawX and DrawY - these come from your internal VGA module
