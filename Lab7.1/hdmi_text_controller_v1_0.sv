@@ -149,21 +149,15 @@ vga_controller vga(
 );
  //Color Mapper Module   
 color_mapper color_instance(
-	.font_data (data_out),
+	//.font_data (data_out),
 	.slv_regs (slv_regs_out),
 	.DrawX(drawX),
         .DrawY(drawY),
         .Red(red),
         .Green(green),
 	.Blue(blue),
-	.sprite_addr(addr_in)
+	//.sprite_addr(addr_in)
 );
-//font_rom Module
-font_rom font(
-	.addr(addr_in),
-	.data(data_out)
-);
-
 // User logic ends
 
 endmodule
