@@ -59,16 +59,28 @@ font_rom font(
     assign register_num = (drawX / 32) + (20 * (drawY / 16));
     assign character =  slv_regs[register_num][14:8] * 16;
     assign invert =  slv_regs[register_num][15];
+//assign invert = 1;
     assign sprite_addr = character + (drawY % 16);
-
+logic byte_num, glyph;
     // Extract foreground and background colors from control register
-    assign FGD_R = slv_regs[600][24:21];
-    assign FGD_G = slv_regs[600][20:17];
-    assign FGD_B = slv_regs[600][16:13];
     
-    assign BKG_R = slv_regs[600][12:9];
-    assign BKG_G = slv_regs[600][8:5];
-    assign BKG_B = slv_regs[600][4:1];
+//    assign FGD_R = slv_regs[600][24:21];
+//    assign FGD_G = slv_regs[600][20:17];
+//    assign FGD_B = slv_regs[600][16:13];
+    
+//    assign BKG_R = slv_regs[600][12:9];
+//    assign BKG_G = slv_regs[600][8:5];
+//    assign BKG_B = slv_regs[600][4:1];
+    
+    
+    
+    assign FGD_R = 4'b0011;
+    assign FGD_G = 4'b0000;
+    assign FGD_B = 4'b1100;
+    
+    assign BKG_R = 4'b1100;
+    assign BKG_G = 4'b0000;
+    assign BKG_B = 4'b0011;
 
     // Determine glyph line based on font data and inversion
     assign glyphLine = font_data[sprite_addr];
@@ -89,8 +101,37 @@ font_rom font(
     end
 
 
+//case (glyph) 
+//0: begin
+// assign character =  slv_regs[register_num][6:0] * 16;
+//    assign invert =  slv_regs[register_num][7];
+//end
 
-	//assign byte_num = (drawX /8);
+//1: begin
+// assign character =  slv_regs[register_num][14:8] * 16;
+//    assign invert =  slv_regs[register_num][15];
+//end
+
+//2: begin
+// assign character =  slv_regs[register_num][22:16] * 16;
+//    assign invert =  slv_regs[register_num][23];
+//end
+
+//3: begin
+// assign character =  slv_regs[register_num][30:24] * 16;
+//    assign invert =  slv_regs[register_num][31];
+//end
+
+//endcase
+ 
+
+
+
+
+
+
+
+	assign byte_num = (drawX /8);
 // 	logic byte_num;
 // 	assign register_col = (drawX/32);
 // 	assign register_row = (drawY/16);
@@ -98,7 +139,7 @@ font_rom font(
 // 	assign register_num = (20) * (register_row) + register_col;
 
 // 	//find the glyph coordinates
-// 	assign glyph = byte_num % 4;
+ 	assign glyph = byte_num % 4;/////////////////////////////////////////
 // //	assign byte_num = 4 * register_num;
 // 	assign byte_row = byte_num / 80;
 // 	assign byte_col = byte_num % 80;
