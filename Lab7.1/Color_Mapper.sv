@@ -44,12 +44,12 @@ font_rom font(
 	.data(font_data)
 );
 
-	control_reg = slv_reg[600];
-	char_sel = drawX % 32;
-	register = slv_reg[drawX/32 + 20(drawY/16)];
-	character = register[14:8] * 16;
-	Inv = resister[15];
-	sprite_addr = character + drawY % 16;
+	// control_reg = slv_reg[600];
+	// char_sel = drawX % 32;
+	// register = slv_reg[drawX/32 + 20(drawY/16)];
+	// character = register[14:8] * 16;
+	// Inv = resister[15];
+	// sprite_addr = character + drawY % 16;
 
 
 	assign byte_num = (drawX /8);
