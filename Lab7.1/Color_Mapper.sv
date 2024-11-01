@@ -124,9 +124,9 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	case (byte_num)
             0: begin
 	            assign invert = slv_regs[register_num][7] ;
-		    assign sprite_addr = font_data[((slv_regs[register_num][6:0])*16)+(drawY%16)];
+		    assign sprite_addr = ((slv_regs[register_num][6:0])*16)+(drawY%16);
 		    
-		    if (sprite_addr[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
 		    {
 			    Red = FGD_R;
 			    Blue = FGD_B;
@@ -143,7 +143,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 		   // slv_regs[register_num][15:8]; 
 
 		    assign invert = slv_regs[register_num][15] ;
-		    assign glyphLine = ((slv_regs[register_num][14:8])*16)+(drawY%16);
+		    assign sprite_addr = (slv_regs[register_num][14:8])*16)+(drawY%16);
 		    
 		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
 		    {
