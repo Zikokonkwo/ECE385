@@ -90,15 +90,46 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 	logic invert, glyphLine;
 	logic [2:0] FGD_RGB, BKG_RGB;
 	
-	assign FGD_RGB = slv_regs[600][24:13];
-	assign BKG_RGB = slv_regs[600][12:1];
-
+	assign FGD_R = slv_regs[600][24:21];
+	assign FGD_G = slv_regs[600][20:17];
+	assign FGD_B = slv_regs[600][16:13];
 	
+	assign BKG_R = slv_regs[600][12:9];
+	assign BKG_G = slv_regs[600][16:13];
+	assign BKG_B = slv_regs[600][12:9];
+	
+/////////////////////////////////////////////////
+ 		if (invert){
+			assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
+			assign FGD_G = slv_regs[600][8:5];
+			assign FGD_B = slv_regs[600][4:1]; 
+
+			assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
+			assign BKG_G = slv_regs[600][20:17];
+			assign BKG_B = slv_regs[600][16:13]; 
+			
+			    else
+				    assign BKG_R = slv_regs[600][24:21];
+				    assign BKG_G = slv_regs[600][20:17];
+				    assign BKG_B = slv_regs[600][16:13]; 
+
+				    assign FGD_R = slv_regs[600][24:21];
+				    assign FGD_G = slv_regs[600][20:17];
+				    assign FGD_B = slv_regs[600][16:13];
+	
+		    }
+///////////////////////////////////////////////////
 	case (byte_num)
             0: begin
 	            assign invert = slv_regs[register_num][7] ;
 		    assign glyphLine = font_data[((slv_regs[register_num][6:0])*16)+(drawY%16)];
 		    
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+			    Red = 
+			    Blue = 
+			    Green = 
+			    
+				    
 		    
             end
             1: begin
