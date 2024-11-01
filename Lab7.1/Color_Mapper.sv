@@ -15,7 +15,7 @@
 
 
 module  color_mapper ( input  logic [9:0] DrawX, DrawY,
-		       input  logic [7:0] font_data,
+		      input  logic [7:0] data_out,
 		       input  logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];
 		       output logic [3:0]  Red, Green, Blue,
 		      output logic [10:0]	addr_in
