@@ -61,8 +61,9 @@ logic hsync, vsync, vde, sync_out;
 logic [3:0] red, green, blue;
 logic reset_ah;
 
-	logic [10:0]	addr_in;
+logic [10:0]	addr_in;
 logic [7:0]	data_out;
+logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs_out[601];
 assign reset_ah = axi_aresetn;
 
 
@@ -92,7 +93,9 @@ hdmi_text_controller_v1_0_AXI # (
     .S_AXI_RDATA(axi_rdata),
     .S_AXI_RRESP(axi_rresp),
     .S_AXI_RVALID(axi_rvalid),
-    .S_AXI_RREADY(axi_rready)
+    .S_AXI_RREADY(axi_rready),
+	
+    .slv_regs(slv_regs_out)
 );
 
 
@@ -147,7 +150,7 @@ vga_controller vga(
  //Color Mapper Module   
 color_mapper color_instance(
 	.font_data (data_out),
-	.slv_regs ()
+	.slv_regs (slv_regs_out),
 	.DrawX(drawX),
         .DrawY(drawY),
         .Red(red),
