@@ -14,9 +14,9 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper ( input  logic [9:0] DrawX, DrawY,
-		       input  logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];
-		       output logic [3:0]  Red, Green, Blue,
+module  color_mapper ( input  logic [9:0] drawX, drawY,
+		       input  logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601],
+		       output logic [3:0]  Red, Green, Blue
 		     );
 
     logic ball_on;
@@ -52,7 +52,8 @@ font_rom font(
 	// sprite_addr = character + drawY % 16;
 
 
-	assign byte_num = (drawX /8);
+	//assign byte_num = (drawX /8);
+	logic byte_num;
 	assign register_col = (drawX/32);
 	assign register_row = (drawY/16);
 
@@ -60,7 +61,7 @@ font_rom font(
 
 	//find the glyph coordinates
 	assign glyph = byte_num % 4;
-	assign byte_num = 4 * register_num;
+//	assign byte_num = 4 * register_num;
 	assign byte_row = byte_num / 80;
 	assign byte_col = byte_num % 80;
 	
@@ -73,8 +74,31 @@ font_rom font(
 	assign BKG_G = slv_regs[600][16:13];
 	assign BKG_B = slv_regs[600][12:9];
 	
-/////////////////////////////////////////////////
- 		if (invert){
+// 		if (invert) begin
+//			assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
+//			assign FGD_G = slv_regs[600][8:5];
+//			assign FGD_B = slv_regs[600][4:1]; 
+
+//			assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
+//			assign BKG_G = slv_regs[600][20:17];
+//			assign BKG_B = slv_regs[600][16:13]; 
+//			end
+//			    else begin
+//				    assign BKG_R = slv_regs[600][24:21];
+//				    assign BKG_G = slv_regs[600][20:17];
+//				    assign BKG_B = slv_regs[600][16:13]; 
+
+//				    assign FGD_R = slv_regs[600][12:9];
+//				    assign FGD_G = slv_regs[600][8:5];
+//				    assign FGD_B = slv_regs[600][4:1];
+	
+		    end
+	case (byte_num)
+            0: begin
+            assign byte_num = (drawX /8);
+	            assign invert = slv_regs[register_num][7] ;
+	            
+	            if (invert) begin
 			assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
 			assign FGD_G = slv_regs[600][8:5];
 			assign FGD_B = slv_regs[600][4:1]; 
@@ -82,8 +106,8 @@ font_rom font(
 			assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
 			assign BKG_G = slv_regs[600][20:17];
 			assign BKG_B = slv_regs[600][16:13]; 
-			
-			    else
+			end
+			    else begin
 				    assign BKG_R = slv_regs[600][24:21];
 				    assign BKG_G = slv_regs[600][20:17];
 				    assign BKG_B = slv_regs[600][16:13]; 
@@ -91,44 +115,58 @@ font_rom font(
 				    assign FGD_R = slv_regs[600][12:9];
 				    assign FGD_G = slv_regs[600][8:5];
 				    assign FGD_B = slv_regs[600][4:1];
-	
-		    }
-///////////////////////////////////////////////////
-	case (byte_num)
-            0: begin
-	            assign invert = slv_regs[register_num][7] ;
+	            
 		    assign addr_in = ((slv_regs[register_num][6:0])*16)+(drawY%16);
 		    
-		    if (data_out[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-		    {
-			    Red = FGD_R;
-			    Blue = FGD_B;
-			    Green = FGD_G;
-
-			    else 
-			    	  Red = BKG_R;
-			          Blue = BKG_B;
-			   	  Green = BKG_G;
-		    } 
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+		    begin
+			    assign Red = FGD_R;
+			    assign Blue = FGD_B;
+			    assign Green = FGD_G;
+            end
+			    else begin
+			    	  assign Red = BKG_R;
+			          assign Blue = BKG_B;
+			   	  assign Green = BKG_G;
+		      end
 		    
             end
             1: begin
 		   // slv_regs[register_num][15:8]; 
 
 		    assign invert = slv_regs[register_num][15] ;
+		    
+		    if (invert) begin
+			assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
+			assign FGD_G = slv_regs[600][8:5];
+			assign FGD_B = slv_regs[600][4:1]; 
+
+			assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
+			assign BKG_G = slv_regs[600][20:17];
+			assign BKG_B = slv_regs[600][16:13]; 
+			end
+			    else begin
+				    assign BKG_R = slv_regs[600][24:21];
+				    assign BKG_G = slv_regs[600][20:17];
+				    assign BKG_B = slv_regs[600][16:13]; 
+
+				    assign FGD_R = slv_regs[600][12:9];
+				    assign FGD_G = slv_regs[600][8:5];
+				    assign FGD_B = slv_regs[600][4:1];
+		    
 		    assign addr_in = ((slv_regs[register_num][14:8])*16)+(drawY%16);
 		    
-		    if (data_out[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-		    {
-			    Red = FGD_R;
-			    Blue = FGD_B;
-			    Green = FGD_G;
-
-			    else 
-			    	  Red = BKG_R;
-			          Blue = BKG_B;
-			   	  Green = BKG_G;
-		    } 
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+		    begin
+			    assign Red = FGD_R;
+			    assign Blue = FGD_B;
+			    assign Green = FGD_G;
+            end
+			    else begin
+			    	  assign Red = BKG_R;
+			          assign Blue = BKG_B;
+			   	  assign Green = BKG_G;
+		    end
 		    
             end
             2: begin
@@ -136,19 +174,38 @@ font_rom font(
 
 
 		    assign invert = slv_regs[register_num][23] ;
+		    
+		    if (invert) begin
+			assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
+			assign FGD_G = slv_regs[600][8:5];
+			assign FGD_B = slv_regs[600][4:1]; 
+
+			assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
+			assign BKG_G = slv_regs[600][20:17];
+			assign BKG_B = slv_regs[600][16:13]; 
+			end
+			    else begin
+				    assign BKG_R = slv_regs[600][24:21];
+				    assign BKG_G = slv_regs[600][20:17];
+				    assign BKG_B = slv_regs[600][16:13]; 
+
+				    assign FGD_R = slv_regs[600][12:9];
+				    assign FGD_G = slv_regs[600][8:5];
+				    assign FGD_B = slv_regs[600][4:1];
+		    
 		    assign addr_in = ((slv_regs[register_num][22:16])*16)+(drawY%16);
 		    
-		    if (data_out[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-		    {
-			    Red = FGD_R;
-			    Blue = FGD_B;
-			    Green = FGD_G;
-
-			    else 
-			    	  Red = BKG_R;
-			          Blue = BKG_B;
-			   	  Green = BKG_G;
-		    } 
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+		    begin
+			    assign Red = FGD_R;
+			    assign Blue = FGD_B;
+			    assign Green = FGD_G;
+            end 
+			    else begin
+			    	  assign Red = BKG_R;
+			          assign Blue = BKG_B;
+			   	  assign Green = BKG_G;
+		    end
 		    
             
 		    
@@ -157,33 +214,51 @@ font_rom font(
 		  //  slv_regs[register_num][31:24]; 
 
 		    assign invert = slv_regs[register_num][31] ;
+		    
+		    if (invert) begin
+			assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
+			assign FGD_G = slv_regs[600][8:5];
+			assign FGD_B = slv_regs[600][4:1]; 
+
+			assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
+			assign BKG_G = slv_regs[600][20:17];
+			assign BKG_B = slv_regs[600][16:13]; 
+			end
+			    else begin
+				    assign BKG_R = slv_regs[600][24:21];
+				    assign BKG_G = slv_regs[600][20:17];
+				    assign BKG_B = slv_regs[600][16:13]; 
+
+				    assign FGD_R = slv_regs[600][12:9];
+				    assign FGD_G = slv_regs[600][8:5];
+				    assign FGD_B = slv_regs[600][4:1];
+		    
 		    assign addr_in = ((slv_regs[register_num][30:24])*16)+(drawY%16);
 		    
-		    if (data_out[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-		    {
-			    Red = FGD_R;
-			    Blue = FGD_B;
-			    Green = FGD_G;
-
-			    else 
-			    	  Red = BKG_R;
-			          Blue = BKG_B;
-			   	  Green = BKG_G;
-		    } 
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+		    begin
+			    assign Red = FGD_R;
+			    assign Blue = FGD_B;
+			    assign Green = FGD_G;
+            end
+			    else begin
+			    	  assign Red = BKG_R;
+			          assign Blue = BKG_B;
+			   	  assign Green = BKG_G;
+		    end
 		    
             end
             default: begin
-		  Red = BKG_R;
-		Blue = BKG_B;
-		Green = BKG_G; 
+		 assign Red = BKG_R;
+		assign Blue = BKG_B;
+		assign Green = BKG_G; 
 
-		Red = FGD_R;
-		 Blue = FGD_B;
-		Green = FGD_G;
+		assign Red = FGD_R;
+		assign Blue = FGD_B;
+		assign Green = FGD_G;
             end
         endcase
 
 
     
 endmodule
-
