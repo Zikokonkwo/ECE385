@@ -74,19 +74,20 @@ font_rom font(
     assign glyphLine = font_data[sprite_addr];
 
     // Assign RGB based on glyph line and inversion
-    always_comb begin
-	if (font_data[3'b111 - drawX[2:0]] ^ invert) begin
-            // Foreground color
-            Red   = FGD_R;
-            Green = FGD_G;
-            Blue  = FGD_B;
+        always_comb begin
+        if (font_data[3'b111 - drawX[2:0]] ^ invert) begin
+            // If invert is active, assign background colors to foreground and vice versa
+            Red   = invert ? BKG_R : FGD_R;
+            Green = invert ? BKG_G : FGD_G;
+            Blue  = invert ? BKG_B : FGD_B;
         end else begin
-            // Background color
-            Red   = BKG_R;
-            Green = BKG_G;
-            Blue  = BKG_B;
+            // Default behavior without inversion
+            Red   = invert ? FGD_R : BKG_R;
+            Green = invert ? FGD_G : BKG_G;
+            Blue  = invert ? FGD_B : BKG_B;
         end
     end
+
 
 
 	//assign byte_num = (drawX /8);
