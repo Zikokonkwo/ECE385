@@ -53,14 +53,13 @@ font_rom font(
     
     // Set control register and character select based on inputs
     assign control_reg = slv_regs[600];
-    assign char_sel = DrawX % 32;
+    assign char_sel = drawX % 32;
 
     // Determine register, character, inversion, and sprite address
-    assign register_num = (DrawX / 32) + (20 * (DrawY / 16));
-    assign register = slv_regs[register_num];
-    assign character = register[14:8] * 16;
-    assign invert = register[15];
-    assign sprite_addr = character + (DrawY % 16);
+    assign register_num = (drawX / 32) + (20 * (drawY / 16));
+    assign character =  slv_regs[register_num][14:8] * 16;
+    assign invert =  slv_regs[register_num][15];
+    assign sprite_addr = character + (drawY % 16);
 
     // Extract foreground and background colors from control register
     assign FGD_R = slv_regs[600][24:21];
