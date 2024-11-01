@@ -58,7 +58,7 @@ font_rom font(
     // Determine register, character, inversion, and sprite address
     assign register_num = (drawX / 32) + (20 * (drawY / 16));
     assign character =  slv_regs[register_num][14:8] * 16;
-    assign invert =  slv_regs[register_num][15];
+    assign invert =  slv_regs[600][15];
     assign sprite_addr = character + (drawY % 16);
 
     // Extract foreground and background colors from control register
