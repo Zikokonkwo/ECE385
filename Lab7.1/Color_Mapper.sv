@@ -143,7 +143,7 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 		   // slv_regs[register_num][15:8]; 
 
 		    assign invert = slv_regs[register_num][15] ;
-		    assign sprite_addr = (slv_regs[register_num][14:8])*16)+(drawY%16);
+		    assign sprite_addr = ((slv_regs[register_num][14:8])*16)+(drawY%16);
 		    
 		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
 		    {
@@ -159,37 +159,58 @@ module  color_mapper ( input  logic [9:0] DrawX, DrawY,
 		    
             end
             2: begin
-		    slv_regs[register_num][23:16]; 
+		  //  slv_regs[register_num][23:16]; 
+
+
+		    assign invert = slv_regs[register_num][23] ;
+		    assign sprite_addr = ((slv_regs[register_num][22:16])*16)+(drawY%16);
+		    
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+		    {
+			    Red = FGD_R;
+			    Blue = FGD_B;
+			    Green = FGD_G;
+
+			    else 
+			    	  Red = BKG_R;
+			          Blue = BKG_B;
+			   	  Green = BKG_G;
+		    } 
+		    
+            
+		    
             end
             3: begin
-		    slv_regs[register_num][31:24]; 
+		  //  slv_regs[register_num][31:24]; 
+
+		    assign invert = slv_regs[register_num][31] ;
+		    assign sprite_addr = ((slv_regs[register_num][30:24])*16)+(drawY%16);
+		    
+		    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
+		    {
+			    Red = FGD_R;
+			    Blue = FGD_B;
+			    Green = FGD_G;
+
+			    else 
+			    	  Red = BKG_R;
+			          Blue = BKG_B;
+			   	  Green = BKG_G;
+		    } 
+		    
             end
             default: begin
-		    slv_regs[register_num][0]; 
+		  Red = BKG_R;
+		Blue = BKG_B;
+		Green = BKG_G; 
+
+		Red = FGD_R;
+		 Blue = FGD_B;
+		Green = FGD_G;
             end
         endcase
 
-	//  Determine RGB values based on glyph_byte
-    always_comb begin: RGB_Display
-        if () begin 
-            // Display Ball Color
-            Red = 4'hf;
-            Green = 4'h7;
-            Blue = 4'h0;
-        end else begin 
-            // Display Color Based on Glyph Byte
-            if (glyph_byte[DrawY % 16]) begin // Assuming glyph_byte bit pattern maps directly to pixels
-                Red = 4'hf;
-                Green = 4'hf;
-                Blue = 4'hf;
-            end else begin
-                // Background Color (Gray Gradient)
-                Red = 4'hf - DrawX[9:6];
-                Green = 4'hf - DrawX[9:6];
-                Blue = 4'hf - DrawX[9:6];
-            end
-        end
-    end
+	
 
     
 endmodule
