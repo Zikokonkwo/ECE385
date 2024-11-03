@@ -57,13 +57,13 @@ void setColorPalette (uint8_t color, uint8_t red, uint8_t green, uint8_t blue)
 	//fill in this function to set the color palette starting at offset 0x0000 2000 (from base)
 	if(color & 1)
 	{
-		hdmi_ctrl->Palette[color >> 1] &= (alt_u32)0xFE001FFF;
-		hdmi_ctrl->Palette[color >> 1] |= ((alt_u32)blue << 13) | ((alt_u32)green << 17) | ((alt_u32)red << 21);
+		hdmi_ctrl->Palette[color >> 1] &= (uint32_t)0xFE001FFF;
+		hdmi_ctrl->Palette[color >> 1] |= ((uint32_t)blue << 13) | ((uint32_t)green << 17) | ((uint32_t)red << 21);
 	}
 	else
 	{
-		hdmi_ctrl->Palette[color >> 1] &= (alt_u32)0xFFFFE001;
-		hdmi_ctrl->Palette[color >> 1] |= ((alt_u32)blue << 1) | ((alt_u32)green << 5) | ((alt_u32)red << 9);
+		hdmi_ctrl->Palette[color >> 1] &= (uint32_t)0xFFFFE001;
+		hdmi_ctrl->Palette[color >> 1] |= ((uint32_t)blue << 1) | ((uint32_t)green << 5) | ((uint32_t)red << 9);
 	}
 }
 
