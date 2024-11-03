@@ -55,10 +55,6 @@ void textHDMIDrawColorText(char* str, int x, int y, uint8_t background, uint8_t 
 void setColorPalette (uint8_t color, uint8_t red, uint8_t green, uint8_t blue)
 {
 	//fill in this function to set the color palette starting at offset 0x0000 2000 (from base)
-
-	void setColorPalette (alt_u8 color, alt_u8 red, alt_u8 green, alt_u8 blue)
-{
-	//fill in this function to set the color palette starting at offset 0x0000 2000 (from base)
 	if(color & 1)
 	{
 		hdmi_ctrl->Palette[color >> 1] &= (alt_u32)0xFE001FFF;
@@ -69,7 +65,6 @@ void setColorPalette (uint8_t color, uint8_t red, uint8_t green, uint8_t blue)
 		hdmi_ctrl->Palette[color >> 1] &= (alt_u32)0xFFFFE001;
 		hdmi_ctrl->Palette[color >> 1] |= ((alt_u32)blue << 1) | ((alt_u32)green << 5) | ((alt_u32)red << 9);
 	}
-}
 }
 
 
