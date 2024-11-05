@@ -115,7 +115,7 @@ hdmi_tx_0 vga_to_hdmi (
         .pix_clkx5(clk_125MHz),
         .pix_clk_locked(locked),
         //Reset is active LOW
-        .rst(reset_ah),
+	.rst(reset_ah), //set high
         //Color and Sync Signals
         .red(red),
         .green(green),
@@ -138,7 +138,7 @@ hdmi_tx_0 vga_to_hdmi (
 );  
 vga_controller vga(
         .pixel_clk    (axi_aclk),        
-        .reset        (reset_ah),         
+	.reset        (reset_ah), //set high        
         .hs           (hsync),         
         .vs           (vsync),         
         .active_nblank(vde),    
