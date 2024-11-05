@@ -102,6 +102,12 @@ hdmi_text_controller_v1_0_AXI # (
 //Instiante clocking wizard, VGA sync generator modules, and VGA-HDMI IP here. For a hint, refer to the provided
 //top-level from the previous lab. You should get the IP to generate a valid HDMI signal (e.g. blue screen or gradient)
 //prior to working on the text drawing.
+	
+//BRAM
+bram bram_module(
+	
+);
+//clocking wizard
  clk_wiz_0 clk_wiz (
         .clk_out1(clk_25MHz),
         //.clk_out2(clk_125MHz),
@@ -109,6 +115,7 @@ hdmi_text_controller_v1_0_AXI # (
         .locked(locked),
         .clk_in1(axi_aclk)
     );
+//vga to hdmi
 hdmi_tx_0 vga_to_hdmi (
         //Clocking and Reset
         .pix_clk(clk_25MHz),
@@ -158,6 +165,7 @@ color_mapper color_instance(
 	.Blue(blue),
 	//.sprite_addr(addr_in)
 );
+
 // User logic ends
 
 endmodule
