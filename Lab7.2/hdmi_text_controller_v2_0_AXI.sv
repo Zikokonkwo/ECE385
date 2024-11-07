@@ -381,8 +381,25 @@ always_comb begin
     wait_3: next_state = IDLE;    // After setting axi_bvalid, return to IDLE
   endcase
 end
-
     
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//write to the palette
+always_ff @(posedge S_AXI_ACLK) begin
+	if (S_AXI_WSTRB && S_AXI_WREADY)
+	begin
+        if (S_AXI_AWADDR[31])
+			palette[S_AXI_AWADDR[2:0]] <= S_AXI_WDATA;
+	end
+	S_AXI_WDATA <= 32'b0;
+	if(AVL_READ)
+        if(S_AXI_AWADDR[31])
+		begin
+			S_AXI_WDATA <= palette[S_AXI_AWADDR[2:0]];
+		end else
+		begin
+			S_AXI_WDATA <= q_a;
+		end
+end
           
 
 
