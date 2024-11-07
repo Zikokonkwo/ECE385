@@ -14,8 +14,8 @@
 struct TEXT_HDMI_STRUCT {
 	uint8_t		      	VRAM [ROWS*COLUMNS*2]; 									 //Week 2 - extended VRAM
 	//modify this by adding const bytes to skip to palette, or manually compute palette
-        alt_u8 reserved0 [3392]; // 0x12C0 - 0x1FFF
-	alt_u32 Palette [8]; // 0x2000 - 0x201F
+        uint32_t reserved0 [3392]; // 0x12C0 - 0x1FFF
+	uint32_t Palette [8]; // 0x2000 - 0x201F
 };
 
 struct COLOR{
