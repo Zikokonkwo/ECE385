@@ -61,7 +61,7 @@ font_rom font(
     assign invert =  slv_regs[register_num][15];
 //assign invert = 1;
     assign sprite_addr = character + (drawY % 16);
-logic byte_num, glyph;
+    logic byte_num, glyph;
     // Extract foreground and background colors from control register
     
 //    assign FGD_R = slv_regs[600][24:21];
