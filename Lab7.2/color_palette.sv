@@ -44,9 +44,6 @@ font_rom font(
 	.data(font_data)
 );
 
-
-    //palette 
-    reg [31:0] palette [7:0]; // 8 registers, each 32 bits
     // Calculate VRAM and glyph coordinates
     logic [8:0] register_num;
     logic [7:0] char_sel, character;
