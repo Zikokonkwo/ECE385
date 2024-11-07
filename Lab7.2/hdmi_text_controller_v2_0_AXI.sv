@@ -126,6 +126,16 @@ module hdmi_text_controller_v1_0_AXI #
 reg [31:0] Dina;
 reg [31:0] Addra;
 reg [31:0] Douta;
+
+logic [31:0] num;
+logic [31:0] Addrb;
+
+//calculate address B --> need to use DrawY and DrawX
+always_comb
+begin
+	num = DrawY[9:4] * 80 + DrawX[9:3];
+    Addrb = {1'b0, num[31:1]};
+end
     
     
 // AXI4LITE signals
