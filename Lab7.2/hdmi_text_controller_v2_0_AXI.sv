@@ -114,7 +114,7 @@ logic  axi_arready;
 logic  [C_S_AXI_DATA_WIDTH-1 : 0] 	axi_rdata;
 logic  [1 : 0] 	axi_rresp;
 logic  	axi_rvalid;
-reg [31:0] palette [7:0]; // 8 registers, each 32 bits
+// reg [31:0] palette [7:0]; // 8 registers, each 32 bits
 
 // Example-specific design signals
 // local parameter for addressing 32 bit / 64 bit C_S_AXI_DATA_WIDTH
