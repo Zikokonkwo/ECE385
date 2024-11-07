@@ -138,6 +138,8 @@ begin
     value = DrawY[] *  + DrawX[];
     Addrb = {1'b0, value[31:1]};
 end
+
+logic [31:0] palette [8];
     
     
 // AXI4LITE signals
@@ -386,19 +388,19 @@ end
 //write to the palette
 always_ff @(posedge S_AXI_ACLK) begin
 	if (S_AXI_WSTRB && S_AXI_WREADY)
-	begin
-        if (S_AXI_AWADDR[31])
-			palette[S_AXI_AWADDR[2:0]] <= S_AXI_WDATA;
-	end
+	  begin
+            if (S_AXI_AWADDR[31])
+		palette[S_AXI_AWADDR[2:0]] <= S_AXI_WDATA;
+	  end
 	S_AXI_WDATA <= 32'b0;
-	if(AVL_READ)
-        if(S_AXI_AWADDR[31])
-		begin
-			S_AXI_WDATA <= palette[S_AXI_AWADDR[2:0]];
-		end else
-		begin
-			S_AXI_WDATA <= q_a;
-		end
+	if(S_AXI_ARREADY)
+	  if(S_AXI_ARADDR[31])
+	    begin
+		S_AXI_RDATA <= palette[S_AXI_ARADDR[2:0]];
+	    end else
+	      begin
+		S_AXI_RDATA <= q_a;
+	      end
 end
           
 
