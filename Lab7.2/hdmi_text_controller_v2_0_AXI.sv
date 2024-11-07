@@ -492,7 +492,14 @@ begin
           axi_rvalid <= 1'b0;
         end                
     end
-end    
+end 
+always_comb
+begin
+	if(ena == 1)
+		addra <= axi_araddr;
+	else
+		addra <= axi_awaddr;
+end
 
 // Implement memory mapped register select and read logic generation
 // Slave register read enable is asserted when valid address is available
