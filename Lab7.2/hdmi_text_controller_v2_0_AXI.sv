@@ -127,6 +127,8 @@ reg [31:0] Dina;
 reg [31:0] Addra;
 reg [31:0] Douta;
 
+assign Enb = S_AXI_WSTRB & S_AXI_WREADY;
+
 logic [31:0] value;
 logic [31:0] Addrb;
 
