@@ -387,7 +387,7 @@ end
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //write to the palette
 always_ff @(posedge S_AXI_ACLK) begin
-	if (S_AXI_WSTRB && S_AXI_WREADY)
+	if (S_AXI_WREADY) //S_AXI_WSTRB && S_AXI_WREADY
 	  begin
             if (S_AXI_AWADDR[31])
 		palette[S_AXI_AWADDR[2:0]] <= S_AXI_WDATA;
