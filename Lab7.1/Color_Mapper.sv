@@ -81,20 +81,41 @@ logic byte_num, glyph;
 	assign pixel_data = sprite_data[7-drawX%8];
 
 	always_comb
-		begin
-			if(pixel_data^sprite_code[7] == 1)
-			begin
-				Red   = control_reg[24:21];
-				Green = control_reg[20:17];
-				Blue  = control_reg[16:13]; 
-			end
-			else
-			begin
-				Red   = control_reg[12:9];
-				Green = control_reg[8:5];
-				Blue  = control_reg[4:1]; 
-			end
-		end
+begin
+    // Check if inversion is enabled
+    if (invert)  // assuming 'invert' is a signal or flag indicating if inversion is enabled
+    begin
+        // Inverted case: Swap foreground and background colors
+        if (pixel_data ^ sprite_code[7] == 1)  // Check for background (0 in font data)
+        begin
+            Red   = control_reg[12:9];   // Background color
+            Green = control_reg[8:5];
+            Blue  = control_reg[4:1];
+        end
+        else  // Foreground (1 in font data)
+        begin
+            Red   = control_reg[24:21];  // Foreground color
+            Green = control_reg[20:17];
+            Blue  = control_reg[16:13];
+        end
+    end
+    else  // Non-inverted case: Regular foreground/background
+    begin
+        // Normal case: Use the standard foreground and background colors
+        if (pixel_data ^ sprite_code[7] == 1)  // Background
+        begin
+            Red   = control_reg[24:21];   // Foreground color
+            Green = control_reg[20:17];
+            Blue  = control_reg[16:13];
+        end
+        else  // Foreground
+        begin
+            Red   = control_reg[12:9];    // Background color
+            Green = control_reg[8:5];
+            Blue  = control_reg[4:1];
+        end
+    end
+end
 
     
     
