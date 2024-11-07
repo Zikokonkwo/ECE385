@@ -50,7 +50,7 @@ assign control_reg = slv_reg[reg_addr][8*char_num +:];
 	assign sprite_addr = sprite_code[6:0]*16 + drawY%16; //week 2 change to [14:8]
 // assign invert =  slv_regs[register_num][15];
 	
-font_rom font(.addr(sprite_addr), .data(sprite_data));
+//font_rom font(.addr(sprite_addr), .data(sprite_data));
 
 assign pixel_data = sprite_data[7-drawX%8];
 
