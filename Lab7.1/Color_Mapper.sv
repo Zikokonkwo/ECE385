@@ -71,6 +71,31 @@ logic byte_num, glyph;
 //    assign BKG_R = slv_regs[600][12:9];
 //    assign BKG_G = slv_regs[600][8:5];
 //    assign BKG_B = slv_regs[600][4:1];
+	assign reg_addr = (drawX/32) + (drawY/16) * 20;
+	assign char_num = (dtawx%32)/8;
+	assign control_reg = slv_reg[reg_addr][8*char_num +:];
+	assign sprite_addr = sprite_code[6:0]*16 + drawY%16;
+	
+	font_rom font(.addr(sprite_addr), .data(sprite_data));
+
+	assign pixel_data = sprite_data[7-drawX%8];
+
+	always_comb
+		begin
+			if(pixel_data^sprite_code[7] == 1)
+			begin
+				Red   = control_reg[24:21];
+				Green = control_reg[20:17];
+				Blue  = control_reg[16:13]; 
+			end
+			else
+			begin
+				Red   = control_reg[12:9];
+				Green = control_reg[8:5];
+				Blue  = control_reg[4:1]; 
+			end
+		end
+
     
     
     
