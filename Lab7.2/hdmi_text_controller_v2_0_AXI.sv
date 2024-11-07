@@ -127,7 +127,7 @@ reg [31:0] Dina;
 reg [31:0] Addra;
 reg [31:0] Douta;
 
-//assign enb = S_AXI_WSTRB & S_AXI_WREADY;
+assign enb =  S_AXI_RREADY & ~S_AXI_ARVALID;
 
 logic [31:0] value;
 logic [31:0] Addrb;
@@ -282,6 +282,9 @@ end
 // Slave register write enable is asserted when valid address and data are available
 // and the slave is ready to accept the write address and write data.
 // assign slv_reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;////////////////////////////////////////////////////////////////////////
+
+
+	
 assign ena = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;//added from previous slv_reg_wren
 
     
