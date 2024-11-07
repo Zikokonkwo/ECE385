@@ -123,7 +123,10 @@ module hdmi_text_controller_v1_0_AXI #
     );  
 
 ////////////
-
+reg [31:0] Dina;
+reg [31:0] Addra;
+reg [31:0] Douta;
+    
     
 // AXI4LITE signals
 logic  [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -160,7 +163,7 @@ localparam integer OPT_MEM_ADDR_BITS = 13;
     // logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];////////////////////////////////////////////////////////////////////////
 // logic	 slv_reg_rden;////////////////////////////////////////////////////////////////////////
 // logic	 slv_reg_wren;////////////////////////////////////////////////////////////////////////
-// logic [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;////////////////////////////////////////////////////////////////////////
+ logic [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;////////////////////////////////////////////////////////////////////////
 integer	 byte_index;
 logic	 aw_en;
     //change something else from 4 --> 12
@@ -274,7 +277,7 @@ begin
     begin
         for (integer i = 0; i < 2**C_S_AXI_ADDR_WIDTH; i++)
         begin
-            dina[i] <= 0; //instead of slv_regs its dina
+            Dina[i] <= 0; //instead of slv_regs its dina
         end
     end
   else begin
@@ -284,7 +287,8 @@ begin
           if ( S_AXI_WSTRB[byte_index] == 1 ) begin
             // Respective byte enables are asserted as per write strobes, note the use of the index part select operator
             // '+:', you will need to understand how this operator works.
-            dina[axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+            Dina[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+            Addra <= axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB];
           end  
       end
   end
@@ -370,29 +374,29 @@ end
           
 
 
-// State machine to control the latency and response timing
-always_ff @(posedge S_AXI_ACLK) begin
-  if (S_AXI_ARESETN == 1'b0) begin
-    current_state <= IDLE;
-    next_state    <= IDLE;
-  end else begin
-    current_state <= next_state;
-  end
-end
+//// State machine to control the latency and response timing
+//always_ff @(posedge S_AXI_ACLK) begin
+//  if (S_AXI_ARESETN == 1'b0) begin
+//    current_state <= IDLE;
+//    next_state    <= IDLE;
+//  end else begin
+//    current_state <= next_state;
+//  end
+//end
 
-// Indicate when the write operation is complete (this depends on the VRAM/palette update)
-always_ff @(posedge S_AXI_ACLK) begin
-  if (S_AXI_ARESETN == 1'b0) begin
-    write_done <= 0;  // Reset the write completion flag
-  end else begin
-    // Write done condition - example for latency management
-    if (/* Write to VRAM/palette complete */) begin
-      write_done <= 1'b1;  // Set write_done flag when the operation is completed
-    end else begin
-      write_done <= 0;  // Reset if the operation is not yet completed
-    end
-  end
-end
+//// Indicate when the write operation is complete (this depends on the VRAM/palette update)
+//always_ff @(posedge S_AXI_ACLK) begin
+//  if (S_AXI_ARESETN == 1'b0) begin
+//    write_done <= 0;  // Reset the write completion flag
+//  end else begin
+//    // Write done condition - example for latency management
+//    if (/* Write to VRAM/palette complete */) begin
+//      write_done <= 1'b1;  // Set write_done flag when the operation is completed
+//    end else begin
+//      write_done <= 0;  // Reset if the operation is not yet completed
+//    end
+//  end
+//end
 
 
 // Implement axi_arready generation
@@ -463,7 +467,8 @@ assign ena = axi_arready & S_AXI_ARVALID & ~axi_rvalid;
 always_comb
 begin
       // Address decoding for reading registers
-     douta = dina[axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]];
+//     Douta = Dina[axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]];
+reg_data_out = Douta;
 end
 
 // Output register or memory read data
