@@ -127,7 +127,7 @@ reg [31:0] Dina;
 reg [31:0] Addra;
 reg [31:0] Douta;
 
-assign Enb = S_AXI_WSTRB & S_AXI_WREADY;
+//assign enb = S_AXI_WSTRB & S_AXI_WREADY;
 
 logic [31:0] value;
 logic [31:0] Addrb;
@@ -392,7 +392,7 @@ always_ff @(posedge S_AXI_ACLK) begin
             if (S_AXI_AWADDR[31])
 		palette[S_AXI_AWADDR[2:0]] <= S_AXI_WDATA;
 	  end
-	S_AXI_WDATA <= 32'b0;
+	//S_AXI_WDATA <= 32'b0;
 	if(S_AXI_ARREADY)
 	  if(S_AXI_ARADDR[31])
 	    begin
