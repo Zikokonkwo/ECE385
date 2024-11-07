@@ -271,32 +271,32 @@ end
 // This marks the acceptance of address and indicates the status of 
 // write transaction.
 
-// always_ff @( posedge S_AXI_ACLK )
-// begin
-//   if ( S_AXI_ARESETN == 1'b0 )
-//     begin
-//       axi_bvalid  <= 0;
-//       axi_bresp   <= 2'b0;
-//     end 
-//   else
-//     begin    
-//       if (axi_awready && S_AXI_AWVALID && ~axi_bvalid && axi_wready && S_AXI_WVALID)
-//         begin
-//           // indicates a valid write response is available
-//           axi_bvalid <= 1'b1;
-//           axi_bresp  <= 2'b0; // 'OKAY' response 
-//         end                   // work error responses in future
-//       else
-//         begin
-//           if (S_AXI_BREADY && axi_bvalid) 
-//             //check if bready is asserted while bvalid is high) 
-//             //(there is a possibility that bready is always asserted high)   
-//             begin
-//               axi_bvalid <= 1'b0; 
-//             end  
-//         end
-//     end
-// end  
+always_ff @( posedge S_AXI_ACLK )
+begin
+  if ( S_AXI_ARESETN == 1'b0 )
+    begin
+      axi_bvalid  <= 0;
+      axi_bresp   <= 2'b0;
+    end 
+  else
+    begin    
+      if (axi_awready && S_AXI_AWVALID && ~axi_bvalid && axi_wready && S_AXI_WVALID)
+        begin
+          // indicates a valid write response is available
+          axi_bvalid <= 1'b1;
+          axi_bresp  <= 2'b0; // 'OKAY' response 
+        end                   // work error responses in future
+      else
+        begin
+          if (S_AXI_BREADY && axi_bvalid) 
+            //check if bready is asserted while bvalid is high) 
+            //(there is a possibility that bready is always asserted high)   
+            begin
+              axi_bvalid <= 1'b0; 
+            end  
+        end
+    end
+end  
 typedef enum logic [1:0] {
   IDLE,
   WRITING,
@@ -306,40 +306,42 @@ typedef enum logic [1:0] {
 write_state_t current_state, next_state;
     
 always_ff @(posedge S_AXI_ACLK) begin
-  if (S_AXI_ARESETN == 1'b0) begin
-    axi_bvalid  <= 0;
-    axi_bresp   <= 2'b0;  // Default response is OKAY (2'b00)
-  end else begin
-    case (current_state)
-      // IDLE state - waiting for a valid write request
-      IDLE: begin
-        if (axi_awready && S_AXI_AWVALID && axi_wready && S_AXI_WVALID) begin
-          // Initiate the write operation, wait for the next state
-          next_state = WRITING;
-        end
-      end
+  if (S_AXI_ARESETN == 1'b0) 
+    begin
+      axi_bvalid  <= 0;
+      axi_bresp   <= 2'b0;  // Default response is OKAY (2'b00)
+    end 
+//   end else begin
+//     case (current_state)
+//       // IDLE state - waiting for a valid write request
+//       IDLE: begin
+//         if (axi_awready && S_AXI_AWVALID && axi_wready && S_AXI_WVALID) begin
+//           // Initiate the write operation, wait for the next state
+//           next_state = WRITING;
+//         end
+//       end
 
-      // WRITING state - processing the write operation and handling latency
-      WRITING: begin
-        if (write_done) begin // Write is done, ready to send response
-          // Check if the write response can be asserted
-          axi_bvalid <= 1'b1;
-          axi_bresp  <= 2'b00; // OKAY response (successful write)
-          next_state = RESPONDING; // Transition to the responding state
-        end
-      end
+//       // WRITING state - processing the write operation and handling latency
+//       WRITING: begin
+//         if (write_done) begin // Write is done, ready to send response
+//           // Check if the write response can be asserted
+//           axi_bvalid <= 1'b1;
+//           axi_bresp  <= 2'b00; // OKAY response (successful write)
+//           next_state = RESPONDING; // Transition to the responding state
+//         end
+//       end
 
-      // RESPONDING state - handling the bready signal
-      RESPONDING: begin
-        if (S_AXI_BREADY && axi_bvalid) begin
-          // If bready is asserted and we have a valid response, clear bvalid
-          axi_bvalid <= 1'b0;
-          next_state = IDLE;  // Return to IDLE state after the response is sent
-        end
-      end
-    endcase
-  end
-end
+//       // RESPONDING state - handling the bready signal
+//       RESPONDING: begin
+//         if (S_AXI_BREADY && axi_bvalid) begin
+//           // If bready is asserted and we have a valid response, clear bvalid
+//           axi_bvalid <= 1'b0;
+//           next_state = IDLE;  // Return to IDLE state after the response is sent
+//         end
+//       end
+//     endcase
+//   end
+// end
 
 // State machine to control the latency and response timing
 always_ff @(posedge S_AXI_ACLK) begin
