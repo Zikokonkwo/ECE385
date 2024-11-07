@@ -57,9 +57,12 @@ font_rom font(
     assign register_num = (drawX / 32) + (20 * (drawY / 16));
     assign character =  slv_regs[register_num][14:8] * 16;
     assign invert =  slv_regs[register_num][15];
+    
     //assign invert = 1;
     assign sprite_addr = character + (drawY % 16);
     logic byte_num, glyph;
+    assign byte_num = (drawX /8);
+    assign glyph = byte_num % 4;/////////////////////////////////////////
     // Extract foreground and background colors from control register
     
     assign FGD_R = 4'b0011;
@@ -87,8 +90,5 @@ font_rom font(
             Blue  = BKG_B;
         end
     end
-
-	assign byte_num = (drawX /8);
- 	assign glyph = byte_num % 4;/////////////////////////////////////////
     
 endmodule
