@@ -399,7 +399,7 @@ always_ff @(posedge S_AXI_ACLK) begin
 		S_AXI_RDATA <= palette[S_AXI_ARADDR[2:0]];
 	    end else
 	      begin
-		S_AXI_RDATA <= q_a;
+		S_AXI_RDATA <= Douta;
 	      end
 end
           
