@@ -45,7 +45,7 @@ font_rom font(
 );
 
 //assign reg_addr = (drawX/32) + (drawY/16) * 20;
-assign char_num = (dtawx%32)/8;
+	assign char_num = (drawx%32)/8;
 assign control_reg = slv_reg[reg_addr][8*char_num +:];
 	assign sprite_addr = sprite_code[6:0]*16 + drawY%16; //week 2 change to [14:8]
 // assign invert =  slv_regs[register_num][15];
