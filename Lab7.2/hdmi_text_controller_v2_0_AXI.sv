@@ -285,7 +285,7 @@ end
 
 
 	
-assign ena = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;//added from previous slv_reg_wren
+//assign ena = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;//added from previous slv_reg_wren
 
     
 always_ff @( posedge S_AXI_ACLK )
