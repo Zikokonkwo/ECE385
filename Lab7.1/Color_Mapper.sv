@@ -71,6 +71,8 @@ logic byte_num, glyph;
 //    assign BKG_R = slv_regs[600][12:9];
 //    assign BKG_G = slv_regs[600][8:5];
 //    assign BKG_B = slv_regs[600][4:1];
+
+//ADDED 
 	assign reg_addr = (drawX/32) + (drawY/16) * 20;
 	assign char_num = (dtawx%32)/8;
 	assign control_reg = slv_reg[reg_addr][8*char_num +:];
@@ -116,8 +118,7 @@ begin
         end
     end
 end
-
-    
+//NEW LOGIC ENDS HERE
     
     
     assign FGD_R = 4'b0011;
