@@ -38,7 +38,7 @@ module hdmi_text_controller_v1_0_AXI #
 )
 (
     // Users to add ports here
-    output logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[600:0];
+    // output logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[600:0];/////////////////////////////////////////////////////////
     // User ports ends
 
     // Global Clock Signal
@@ -103,6 +103,28 @@ module hdmi_text_controller_v1_0_AXI #
     input logic  S_AXI_RREADY
 );
 
+
+///////////
+ blk_mem_gen_0 bram_inst (
+//Port A connections
+        .addra(addra), // addresses the memory space for port A Read and write operations 
+        .clka(clka), //same as clkb
+        .dina(dina),//data input to be written into memory through port A
+        .douta(douta),//data output from read operations through port A
+        .ena(ena), //enables read, wrtie, and reset operations through port A
+        .wea(wea),//enables write operations through port A 
+ //Port B conenctions
+        .addrb(addrb), //addresses the memory space for port B Read and write operations 
+        .clkb(clkb), //same as clka
+        .dinb(dinb), //data input to be written into memory through port B
+        .doutb(doutb), ///data output from read operations through port B
+        .enb(enb),//enables read, wrtie, and reset operations through port B
+        .web(web)//enables write operations through port B
+    );  
+
+////////////
+
+    
 // AXI4LITE signals
 logic  [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
 logic  axi_awready;
@@ -135,10 +157,10 @@ localparam integer OPT_MEM_ADDR_BITS = 13;
 //Note: the provided Verilog template had the registered declared as above, but in order to give 
 //students a hint we have replaced the 4 individual registers with an unpacked array of packed logic. 
 //Note that you as the student will still need to extend this to the full register set needed for the lab.
-logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];
-logic	 slv_reg_rden;
-logic	 slv_reg_wren;
-logic [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;
+    // logic [C_S_AXI_DATA_WIDTH-1:0] slv_regs[601];////////////////////////////////////////////////////////////////////////
+// logic	 slv_reg_rden;////////////////////////////////////////////////////////////////////////
+// logic	 slv_reg_wren;////////////////////////////////////////////////////////////////////////
+// logic [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;////////////////////////////////////////////////////////////////////////
 integer	 byte_index;
 logic	 aw_en;
     //change something else from 4 --> 12
@@ -242,25 +264,27 @@ end
 // These registers are cleared when reset (active low) is applied.
 // Slave register write enable is asserted when valid address and data are available
 // and the slave is ready to accept the write address and write data.
-assign slv_reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;
+// assign slv_reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;////////////////////////////////////////////////////////////////////////
+assign ena = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;//added from previous slv_reg_wren
 
+    
 always_ff @( posedge S_AXI_ACLK )
 begin
   if ( S_AXI_ARESETN == 1'b0 )
     begin
         for (integer i = 0; i < 2**C_S_AXI_ADDR_WIDTH; i++)
         begin
-           slv_regs[i] <= 0;
+            dina[i] <= 0; //instead of slv_regs its dina
         end
     end
   else begin
-    if (slv_reg_wren)
+      if (ena)//write enable
       begin
         for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
           if ( S_AXI_WSTRB[byte_index] == 1 ) begin
             // Respective byte enables are asserted as per write strobes, note the use of the index part select operator
             // '+:', you will need to understand how this operator works.
-            slv_regs[axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+            dina[axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
           end  
       end
   end
@@ -435,11 +459,11 @@ end
 // Implement memory mapped register select and read logic generation
 // Slave register read enable is asserted when valid address is available
 // and the slave is ready to accept the read address.
-assign slv_reg_rden = axi_arready & S_AXI_ARVALID & ~axi_rvalid;
+assign ena = axi_arready & S_AXI_ARVALID & ~axi_rvalid;
 always_comb
 begin
       // Address decoding for reading registers
-     reg_data_out = slv_regs[axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]];
+     douta = dina[axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]];
 end
 
 // Output register or memory read data
@@ -454,9 +478,9 @@ begin
       // When there is a valid read address (S_AXI_ARVALID) with 
       // acceptance of read address by the slave (axi_arready), 
       // output the read dada 
-      if (slv_reg_rden)
+        if (ena)
         begin
-          axi_rdata <= reg_data_out;     // register read data
+          axi_rdata <= douta;     // register read data
         end   
     end
 end    
