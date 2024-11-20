@@ -20,7 +20,6 @@ module game_state_machine (
 	  			 state <= next_state;
     end
 
-
 //State control signals/////////////////////////
 
     always_comb
@@ -66,12 +65,6 @@ module game_state_machine (
 				end
         endcase
     end
-
-
-
-
-
-
 
 /////////////////////////
     
