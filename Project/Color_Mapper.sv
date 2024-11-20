@@ -19,7 +19,7 @@ module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
     
     logic ball_on;
 	 
- /* Old Ball: Generated square box by checking if the current pixel is within a square of length
+ /*  Old Ball: Generated square box by checking if the current pixel is within a square of length
     2*BallS, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
 	 
     if ((DrawX >= BallX - Ball_size) &&
