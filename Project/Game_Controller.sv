@@ -79,23 +79,31 @@ module game_state_machine (
                     reset_level = 1; // Reset the level
                 else if (finish_line_reached)
                     next_state = LEVEL2; // Progress to Level 2
+		    else
+			    next_state = LEVEL1;
             end
             LEVEL2: begin
                 if (sprite_collision) 
                     reset_level = 1;
                 else if (finish_line_reached)
                     next_state = LEVEL3;
+		   	 else
+			     next_state = LEVEL2;
             end
             LEVEL3: begin
                 if (sprite_collision) 
                     reset_level = 1;
                 else if (finish_line_reached)
                     next_state = GAME_OVER;
+		       else
+			     next_state = LEVEL3;
             end
             GAME_OVER: begin
                 // Handle Game Over logic (restart or idle)
                 if (reset)
                     next_state = LEVEL1;
+		       else
+			     next_state = GAME_OVER;
             end
         endcase
     end
