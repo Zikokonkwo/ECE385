@@ -1,7 +1,7 @@
 typedef enum logic [1:0] {LEVEL1, LEVEL2, LEVEL3, GAME_OVER} game_state_t;
 
 module game_state_machine (
-    input logic clk, reset, sprite_collision, finish_line_reached, BallX, BallY,
+    input logic clk, reset, sprite_collision, finish_line_reached, BallX, BallY, sprite_location, finish_line,
     output logic [3:0] foreground, background,
     output logic [1:0] current_level, speed, obstacle_count,
     output logic reset_level
