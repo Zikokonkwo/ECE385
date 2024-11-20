@@ -1,7 +1,7 @@
 typedef enum logic [1:0] {LEVEL1, LEVEL2, LEVEL3, GAME_OVER} game_state_t;
 
 module game_state_machine (
-    input logic clk, reset, sprite_collision, finish_line_reached,
+    input logic clk, reset, sprite_collision, finish_line_reached, BallX, BallY,
     output logic [3:0] foreground, background,
     output logic [1:0] current_level, speed, obstacle_count,
     output logic reset_level
@@ -12,8 +12,12 @@ module game_state_machine (
     always_ff @(posedge clk or posedge reset) begin
         if (reset) 
             state <= LEVEL1;
-        else 
-            state <= next_state;
+	    else if (sprite_location = obstacle_location)
+	    	sprite_collision = 1'b1; // sprite collided with obstacle and must reset
+	    else if (sprite_location = finish_line)
+			finish_line_reached = 1'b1; //sprite reached teh finish line and level advances
+			    else
+	  			 state <= next_state;
     end
 
 
@@ -22,7 +26,7 @@ module game_state_machine (
     always_comb
 	begin 
 		// Default controls signals
-		speed = 1'b0; //clears obstacle speed until defined in each level
+		speed = 2'b00; //clears obstacle speed until defined in each level
         	background = 4'b0000; // defaults the background color to use 0 as its color data reference
         	foreground= 4'b0000; // defaults the foreground color to use 0 as its color data reference
        	 	obstacle_count = 2'b00; // initializes the projectile count multiplier to 0
