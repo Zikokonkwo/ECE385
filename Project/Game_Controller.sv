@@ -10,7 +10,7 @@ module game_state_machine (
 
     // State Transition Logic
     always_ff @(posedge clk or posedge reset) begin
-        if (reset) 
+	    if (reset | reset_level) 
             state <= LEVEL1;
 	    else if (sprite_location = obstacle_location)
 	    	sprite_collision = 1'b1; // sprite collided with obstacle and must reset
