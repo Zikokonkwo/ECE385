@@ -1,40 +1,45 @@
-module DrawBackground (
-    input wire [9:0] DrawX,   // VGA pixel X coordinate
-    input wire [9:0] DrawY,   // VGA pixel Y coordinate
-    input wire [7:0] level [0:99], // Memory holding the level layout
-    output reg [3:0] Red,     // VGA Red color
-    output reg [3:0] Green,   // VGA Green color
-    output reg [3:0] Blue     // VGA Blue color
+module vga_display (
+    input logic        clk,            // Clock signal
+    input logic [9:0]  drawX,          // Current pixel X coordinate
+    input logic [9:0]  drawY,          // Current pixel Y coordinate
+    output logic [3:0] red,            // VGA Red
+    output logic [3:0] green,          // VGA Green
+    output logic [3:0] blue            // VGA Blue
 );
+    // Parameters
+    parameter CELL_SIZE = 16; // Size of each grid cell in pixels
 
-    // Parameters for level size and screen size
-    parameter LEVEL_WIDTH = 10;
-    parameter LEVEL_HEIGHT = 10;
-    parameter CELL_WIDTH = 40; // Width of each cell in pixels
-    parameter CELL_HEIGHT = 30; // Height of each cell in pixels
-    
-    // Calculate the current cell based on VGA coordinates
-    integer grid_x, grid_y;
-    always @(*) begin
-        // Determine the grid cell based on pixel coordinates
-        grid_x = DrawX / CELL_WIDTH;
-        grid_y = DrawY / CELL_HEIGHT;
-        
-        // Calculate the index of the current cell in the level grid
-        integer index = grid_y * LEVEL_WIDTH + grid_x;
+    // Level layout memory
+    logic [6:0] read_addr;     // Address of the current row
+    logic [9:0] row_data;      // Data for the current row
+    level_layout_bram layout (
+        .clk(clk),
+        .read_addr(read_addr),
+        .row_data(row_data)
+    );
 
-        // Check if the current cell is a wall (represented by 1)
-        if (level[index] == 1) begin
-            // Wall: set color to red (for example)
-            Red = 4'b1111;    // Full Red
-            Green = 4'b0000;  // No Green
-            Blue = 4'b0000;   // No Blue
+    // Calculate grid coordinates
+    logic [9:0] gridX, gridY;
+    assign gridX = drawX / CELL_SIZE; // Grid column
+    assign gridY = drawY / CELL_SIZE; // Grid row
+
+    // Determine current cell data
+    logic cell_data;
+    always_comb begin
+        read_addr = gridY;                       // Select row
+        cell_data = row_data[9 - gridX];         // Select column bit
+    end
+
+    // Output pixel color based on cell data
+    always_comb begin
+        if (cell_data) begin
+            red = 4'hF;   // Wall: red color
+            green = 4'h0;
+            blue = 4'h0;
         end else begin
-            // Empty space: set color to black (or background color)
-            Red = 4'b0000;    // No Red
-            Green = 4'b0000;  // No Green
-            Blue = 4'b0000;   // No Blue
+            red = 4'h0;   // Background: black color
+            green = 4'h0;
+            blue = 4'h0;
         end
     end
 endmodule
-
