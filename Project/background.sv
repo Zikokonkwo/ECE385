@@ -2,6 +2,7 @@ module vga_display (
     input logic        clk,            // Clock signal
     input logic [9:0]  drawX,          // Current pixel X coordinate
     input logic [9:0]  drawY,          // Current pixel Y coordinate
+    input logic [1:0]  level_sel,      // Selected level
     output logic [3:0] red,            // VGA Red
     output logic [3:0] green,          // VGA Green
     output logic [3:0] blue            // VGA Blue
@@ -15,6 +16,7 @@ module vga_display (
     level_layout_bram layout (
         .clk(clk),
         .read_addr(read_addr),
+        .level_sel(level_sel),
         .row_data(row_data)
     );
 
