@@ -223,70 +223,49 @@ if ( (ObsY2 + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
         if (Reset || collision || collision2)//changed to have "OR collision"
         begin 
             Ball_Y_Motion <= 10'd0; //Ball_Y_Step;//was 1 (now 0 to keep player still)
-			Ball_X_Motion <= 10'd0; //Ball_X_Step;
+	    Ball_X_Motion <= 10'd0; //Ball_X_Step;
+	    BallY <= 240;//
+            BallX <= 30;//new starting position of the player
             
             
             ////
             Obs_Y_Motion <= 10'd0; //Ball_Y_Step;//was 1 (now 0 to keep player still)
-			Obs_X_Motion <= 10'd1; //Ball_X_Step;//was 0
+	    Obs_X_Motion <= 10'd1; //Ball_X_Step;//was 0
+	    ObsY <= 350;
+	    ObsX <= 150;
             ////
-               Obs_Y2_Motion <= 10'd1; //Ball_Y_Step;//was 1 (now 0 to keep player still)
-			Obs_X2_Motion <= 10'd0; //Ball_X_Step;//was 0
-            ////added
-                          
-			
-            BallY <= 240;//
-            BallX <= 30;//new starting position of the player
-          
-          
-            //
-//          ObsY <= Obs_Y_Center;
-//			ObsX <= Obs_X_Center;
-            ObsY <= 350;
-			ObsX <= 150;
-            //
-            ObsY2 <= 240;
+            Obs_Y2_Motion <= 10'd1; //Ball_Y_Step;//was 1 (now 0 to keep player still)
+	    Obs_X2_Motion <= 10'd0; //Ball_X_Step;//was 0
+	    ObsY2 <= 240;
             ObsX2 <= 320;
-            //
-            
+            ////added    
         end
         else if (keycode == 8'h0)
         begin 
             Ball_Y_Motion <= 10'd0; //Ball_Y_Step;//was 1 (now 0 to keep player still)
-			Ball_X_Motion <= 10'd0; //Ball_X_Step;
-			end
+	    Ball_X_Motion <= 10'd0; //Ball_X_Step;
+	end
         else 
         begin 
 
-			Ball_Y_Motion <= Ball_Y_Motion_next; 
-			Ball_X_Motion <= Ball_X_Motion_next; 
+	  Ball_Y_Motion <= Ball_Y_Motion_next; 
+	  Ball_X_Motion <= Ball_X_Motion_next; 
 
-            BallY <= Ball_Y_next;  // Update ball position
-            BallX <= Ball_X_next;
-			
-		end  
-		//default
-		//999999999999999999999
-	    Obs_Y_Motion <= Obs_Y_Motion_next; 
-		Obs_X_Motion <= Obs_X_Motion_next; 
-		//
-		     
-        ObsY <= Obs_Y_next;  // Update ball position
-        ObsX <= Obs_X_next;
+          BallY <= Ball_Y_next;  // Update ball position
+          BallX <= Ball_X_next;
 
-		
-		
-		    Obs_Y2_Motion <= Obs_Y2_Motion_next; 
-		Obs_X2_Motion <= Obs_X2_Motion_next; 
-		
-		ObsX2 <= Obs_X2_next;  // Update ball position//changed
-        ObsY2 <= Obs_Y2_next;
-        
-        
-		//999999999999999999999999999999999
-		
-		
-		
+	  Obs_Y_Motion <= Obs_Y_Motion_next; 
+	  Obs_X_Motion <= Obs_X_Motion_next; 
+
+	  ObsY <= Obs_Y_next;  // Update ball position
+          ObsX <= Obs_X_next;
+
+	  Obs_Y2_Motion <= Obs_Y2_Motion_next; 
+	  Obs_X2_Motion <= Obs_X2_Motion_next;
+
+	  ObsX2 <= Obs_X2_next;  // Update ball position//changed
+          ObsY2 <= Obs_Y2_next;
+	end  	
     end
     
 // always_ff @(posedge frame_clk)
