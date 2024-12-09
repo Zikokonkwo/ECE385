@@ -1,7 +1,7 @@
 
 
 //////////////// N O T E S ///////////////////
-CURRENT Results: single overlapping obstacle that comes from off screen as before
+//CURRENT Results: single overlapping obstacle that comes from off screen as before
 /////////////////////////////////////////////
 
 
