@@ -19,6 +19,9 @@ module  obstacle
  ( 
     input  logic        Reset, 
     input  logic        frame_clk,
+    input logic 	position_x,
+    input logic 	position_y,
+	
  
 
    output logic [9:0]  OBSX, 
@@ -28,8 +31,8 @@ module  obstacle
     
 
 	 
-    parameter [9:0] OBS_X_Center=320;  // Center position on the X axis
-    parameter [9:0] OBS_Y_Center=240;  // Center position on the Y axis
+    parameter [9:0] OBS_X_Center=position_x;  // Center position on the X axis
+    parameter [9:0] OBS_Y_Center=position_y;  // Center position on the Y axis
     parameter [9:0] OBS_X_Min=0;       // Leftmost point on the X axis
     parameter [9:0] OBS_X_Max=639;     // Rightmost point on the X axis
     parameter [9:0] OBS_Y_Min=0;       // Topmost point on the Y axis
