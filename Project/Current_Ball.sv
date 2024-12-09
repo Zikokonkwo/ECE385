@@ -80,7 +80,8 @@ module  ball
 //    logic [9:0] Ball_Y_Motion, Ball_Y_Motion_next;
 //    logic [9:0] Ball_X_next, Ball_Y_next;
 
-
+	logic [9:0]  obs1_size;
+	logic [9:0]  obs2_size;
 
 
 	
@@ -260,16 +261,20 @@ end
 obstacle obs1(
 	.Reset(Reset),
 	.frame_clk(frame_clk),
-	.OBSX(),
-	.OBSY(),
-	.OBS_size()
+	.position_x(320),
+	.position_y(240),
+	.OBSX(ObsX),
+	.OBSY(ObsY),
+	.OBS_size(obs1_size)
 );
 obstacle obs2(
 	.Reset(Reset),
 	.frame_clk(frame_clk),
-	.OBSX(),
-	.OBSY(),
-	.OBS_size()
+	.position_x(300),
+	.position_y(200),
+	.OBSX(ObsX2),
+	.OBSY(ObsY2),
+	.OBS_size(obs2_size)
 );
  
   
