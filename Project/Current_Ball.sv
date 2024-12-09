@@ -257,7 +257,20 @@ end
 
     
 //instantiate ball module twice
-
+obstacle obs1(
+	.Reset(Reset),
+	.frame_clk(frame_clk),
+	.OBSX(),
+	.OBSY(),
+	.OBS_size()
+);
+obstacle obs2(
+	.Reset(Reset),
+	.frame_clk(frame_clk),
+	.OBSX(),
+	.OBSY(),
+	.OBS_size()
+);
  
   
       
