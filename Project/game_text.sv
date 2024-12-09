@@ -6,9 +6,24 @@ module game_text(
   output reg [11:0] text_rgb
 );
 
-//Display Fail Region
+//signals
+    wire [10:0] rom_addr;
+    reg [6:0] char_addr, char_addr_s, char_addr_l, char_addr_r, char_addr_o;
+    reg [3:0] row_addr;
+    wire [3:0] row_addr_s, row_addr_l, row_addr_r, row_addr_o;
+    reg [2:0] bit_addr;
+    wire [2:0] bit_addr_s, bit_addr_l, bit_addr_r, bit_addr_o;
+    wire [7:0] ascii_word;
+    wire ascii_bit, score_on, logo_on, rule_on, over_on;
+    wire [7:0] rule_rom_addr;
 
+//Display Fail Region
+    assign fail_on  = (drawY >= 32) && (drawY < 64) && (drawX[9:4] < 16);
+    assign row_addr_s = drawY[4:1];
+   assign bit_addr_s = drawX[3:1];
 //Display Level Region
+
+//Display Game Start Region
 
 
   
