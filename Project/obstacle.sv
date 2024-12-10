@@ -112,17 +112,17 @@ parameter [9:0] OBS_Y_Center=240;  // Center position on the Y axis
     begin: Move_Ball
         if (Reset)
         begin 
-            OBS_Y_Motion <= 10'd0; //OBS_Y_Step;
-			OBS_X_Motion <= 10'd1; //OBS_X_Step;
+           OBS_Y_Motion <= 10'd0; //OBS_Y_Step;
+	   OBS_X_Motion <= 10'd1; //OBS_X_Step;
             
-			OBSY <= position_y;
-			OBSX <= position_x;
+	  OBSY <= position_y;
+	  OBSX <= position_x;
         end
         else 
         begin 
 
-			OBS_Y_Motion <= OBS_Y_Motion_next; 
-			OBS_X_Motion <= OBS_X_Motion_next; 
+	   OBS_Y_Motion <= OBS_Y_Motion_next; 
+	   OBS_X_Motion <= OBS_X_Motion_next; 
 
             OBSY <= OBS_Y_next;  // Update OBS position
             OBSX <= OBS_X_next;
