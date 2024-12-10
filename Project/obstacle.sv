@@ -91,11 +91,9 @@ module  obstacle
  ( 
     input  logic        Reset, 
     input  logic        frame_clk,
-	 input logic 	[9:0] position_x,
-	 input logic 	[9:0] position_y,
+    input logic 	[9:0] position_x,
+    input logic 	[9:0] position_y,
 	
- 
-
    output logic [9:0]  OBSX, 
    output logic [9:0]  OBSY, 
    output logic [9:0]  OBS_size 
