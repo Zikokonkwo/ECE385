@@ -270,8 +270,8 @@ obstacle obs1(
 obstacle obs2(
 	.Reset(Reset),
 	.frame_clk(frame_clk),
-	.position_x(300),
-	.position_y(200),
+	.position_x(320),
+	.position_y(240),
 	.OBSX(ObsX2),
 	.OBSY(ObsY2),
 	.OBS_size(obs2_size)
