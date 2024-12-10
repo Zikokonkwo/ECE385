@@ -93,15 +93,8 @@ always_comb begin
 //    end
 //
   //
-  
-always_comb
-begin
-    $display("Ball Position: (%0d, %0d), Obstacle1 Position: (%0d, %0d), Obstacle2 Position: (%0d, %0d)",
-             BallX, BallY, ObsX, ObsY, ObsX2, ObsY2);
-end  
-  
-  
-  
+   
+
     always_comb
     begin:Ball_on_proc
         if ( (DistX*DistX + DistY*DistY) <= (Size * Size) )
