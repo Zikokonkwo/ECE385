@@ -31,8 +31,8 @@ module  obstacle
     
 
 	 
-    parameter [9:0] OBS_X_Center=position_x;  // Center position on the X axis
-    parameter [9:0] OBS_Y_Center=position_y;  // Center position on the Y axis
+parameter [9:0] OBS_X_Center=320;  // Center position on the X axis
+parameter [9:0] OBS_Y_Center=240;  // Center position on the Y axis
     parameter [9:0] OBS_X_Min=0;       // Leftmost point on the X axis
     parameter [9:0] OBS_X_Max=639;     // Rightmost point on the X axis
     parameter [9:0] OBS_Y_Min=0;       // Topmost point on the Y axis
@@ -115,8 +115,8 @@ module  obstacle
             OBS_Y_Motion <= 10'd0; //OBS_Y_Step;
 			OBS_X_Motion <= 10'd1; //OBS_X_Step;
             
-			OBSY <= OBS_Y_Center;
-			OBSX <= OBS_X_Center;
+			OBSY <= position_x;
+			OBSX <= position_y;
         end
         else 
         begin 
