@@ -53,13 +53,13 @@ module  ball
     
     
     ////
-    // logic [9:0] Obs_X_Motion;
-    // logic [9:0] Obs_X_Motion_next;
-    // logic [9:0] Obs_Y_Motion;
-    // logic [9:0] Obs_Y_Motion_next;
+    logic [9:0] Obs_X_Motion;
+    logic [9:0] Obs_X_Motion_next;
+    logic [9:0] Obs_Y_Motion;
+    logic [9:0] Obs_Y_Motion_next;
 
-    // logic [9:0] Obs_X_next;
-    // logic [9:0] Obs_Y_next;
+    logic [9:0] Obs_X_next;
+    logic [9:0] Obs_Y_next;
     // ////
     // logic [9:0] Obs_X2_Motion;
     // logic [9:0] Obs_X2_Motion_next;
@@ -90,8 +90,8 @@ module  ball
         Ball_Y_Motion_next = Ball_Y_Motion; // set default motion to be same as prev clock cycle 
         Ball_X_Motion_next = Ball_X_Motion;
         ///
-        // Obs_Y_Motion_next = Obs_Y_Motion;
-        // Obs_X_Motion_next = Obs_X_Motion;
+        Obs_Y_Motion_next = Obs_Y_Motion;
+        Obs_X_Motion_next = Obs_X_Motion;
         
         // ///
         //       Obs_Y2_Motion_next = Obs_Y2_Motion;
@@ -153,23 +153,23 @@ module  ball
 	    
 	    
 // //// OBS 1
-// if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
-//         begin
-//             Obs_Y_Motion_next = (~ (Obs_Y_Step) + 1'b1);  // set to -1 via 2's complement.
-//         end
-//         else if ( (ObsY - BallS) <= Obs_Y_Min )  // Ball is at the top edge, BOUNCE!
-//         begin
-//             Obs_Y_Motion_next = Obs_Y_Step;
-//         end  
-//        //fill in the rest of the motion equations here to bounce left and right
-// 	if ((ObsX + BallS ) >= Obs_X_Max) //right edge --> bounce
-// 	begin
-// 		Obs_X_Motion_next = (~ (Obs_X_Step) + 1'b1);  // set to -1 via 2's complement.
-// 	end
-// 	else if ((ObsX - BallS ) <= Obs_X_Min) //left edge --> bounce
-// 	begin
-// 		Obs_X_Motion_next = Obs_X_Step;
-// 	end
+if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
+        begin
+            Obs_Y_Motion_next = (~ (Obs_Y_Step) + 1'b1);  // set to -1 via 2's complement.
+        end
+        else if ( (ObsY - BallS) <= Obs_Y_Min )  // Ball is at the top edge, BOUNCE!
+        begin
+            Obs_Y_Motion_next = Obs_Y_Step;
+        end  
+       //fill in the rest of the motion equations here to bounce left and right
+	if ((ObsX + BallS ) >= Obs_X_Max) //right edge --> bounce
+	begin
+		Obs_X_Motion_next = (~ (Obs_X_Step) + 1'b1);  // set to -1 via 2's complement.
+	end
+	else if ((ObsX - BallS ) <= Obs_X_Min) //left edge --> bounce
+	begin
+		Obs_X_Motion_next = Obs_X_Step;
+	end
 	    
 
 // ////
@@ -207,13 +207,13 @@ module  ball
     assign BallS = 16;  // default ball size
     assign Ball_X_next = (BallX + Ball_X_Motion_next);
     assign Ball_Y_next = (BallY + Ball_Y_Motion_next);
-    // ///77777777777777777777777777777777777777777777777777
-    // assign Obs_X_next = (ObsX + Obs_X_Motion_next);
-    // assign Obs_Y_next = (ObsY + Obs_Y_Motion_next);
-    // //
+    ///77777777777777777777777777777777777777777777777777
+    assign Obs_X_next = (ObsX + Obs_X_Motion_next);
+    assign Obs_Y_next = (ObsY + Obs_Y_Motion_next);
+    //
     //   assign Obs_X2_next = (ObsX2 + Obs_X2_Motion_next);
     // assign Obs_Y2_next = (ObsY2 + Obs_Y2_Motion_next);
-    ///77777777777777777777777777777777777777777777777777777
+    /77777777777777777777777777777777777777777777777777777
    
    always_ff @(posedge frame_clk) begin
     if (Reset || collision || collision2)
@@ -224,10 +224,10 @@ module  ball
         BallY <= 240;
         BallX <= 30;
         
-        // Obs_Y_Motion <= 10'd0;
-        // Obs_X_Motion <= 10'd1;
-        // ObsY <= 350;
-        // ObsX <= 150;
+        Obs_Y_Motion <= 10'd0;
+        Obs_X_Motion <= 10'd1;
+        ObsY <= 350;
+        ObsX <= 150;
 
         // Obs_Y2_Motion <= 10'd1;
         // Obs_X2_Motion <= 10'd0;
@@ -245,10 +245,10 @@ module  ball
     end
     
     // // Obstacles move independently
-    // Obs_Y_Motion <= Obs_Y_Motion_next;
-    // Obs_X_Motion <= Obs_X_Motion_next;
-    // ObsY <= Obs_Y_next;
-    // ObsX <= Obs_X_next;
+    Obs_Y_Motion <= Obs_Y_Motion_next;
+    Obs_X_Motion <= Obs_X_Motion_next;
+    ObsY <= Obs_Y_next;
+    ObsX <= Obs_X_next;
 
     // Obs_Y2_Motion <= Obs_Y2_Motion_next;
     // Obs_X2_Motion <= Obs_X2_Motion_next;
@@ -258,15 +258,15 @@ end
 
     
 //instantiate ball module twice
-obstacle obs1(
-	.Reset(Reset),
-	.frame_clk(frame_clk),
-	.position_x(320),
-	.position_y(240),
-	.OBSX(ObsX),
-	.OBSY(ObsY),
-	.OBS_size(obs1_size)
-);
+// obstacle obs1(
+// 	.Reset(Reset),
+// 	.frame_clk(frame_clk),
+// 	.position_x(320),
+// 	.position_y(240),
+// 	.OBSX(ObsX),
+// 	.OBSY(ObsY),
+// 	.OBS_size(obs1_size)
+// );
 // obstacle obs2(
 // 	.Reset(Reset),
 // 	.frame_clk(frame_clk),
