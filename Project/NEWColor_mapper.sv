@@ -148,10 +148,23 @@ always_comb begin
 //             Red = 4'h3 - DrawX[7:6] - DrawY[7:6]; 
 //             Green = 4'h4 - DrawX[7:6] - DrawY[7:6];
 //             Blue = 4'h6 - DrawX[7:6] - DrawY[7:6];  
+		   
+		    if( background == 4'b0001 && foreground == 4'b0001) //level 1
+			    begin 
+				    Red = background * 4'h3;
+               			    Green = background * 4'h4;
+                		    Blue = background * 4'h6;
+			    end
+		    else if ( background == 4'b0010 && foreground == 4'b0010)
+			    begin
+				Red = background * 4'h2;
+                		Green = background * 4'h3;
+                		Blue = background * 4'h4;
+			    end 
 
-             Red = background*(4'h3 - (DrawX&200)/2- (DrawY&100)/2); 
-             Green = background*(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
-             Blue = background*(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);       
+             // Red = background*(4'h3 - (DrawX&200)/2- (DrawY&100)/2); 
+             // Green = background*(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
+             // Blue = background*(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);       
         end 
     end
 endmodule
