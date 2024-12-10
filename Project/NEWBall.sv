@@ -224,7 +224,7 @@ if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
     ///77777777777777777777777777777777777777777777777777777
    
    always_ff @(posedge frame_clk) begin
-    if (Reset || collision || collision2)
+	   if (Reset || collision || collision2 || reset_player)
     begin 
         
         // Reset ball and obstacles
