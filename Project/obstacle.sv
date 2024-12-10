@@ -19,8 +19,8 @@ module  obstacle
  ( 
     input  logic        Reset, 
     input  logic        frame_clk,
-    input logic 	position_x,
-    input logic 	position_y,
+	 input logic 	[9:0] position_x,
+	 input logic 	[9:0] position_y,
 	
  
 
