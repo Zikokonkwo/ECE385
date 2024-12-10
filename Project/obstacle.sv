@@ -115,8 +115,8 @@ parameter [9:0] OBS_Y_Center=240;  // Center position on the Y axis
             OBS_Y_Motion <= 10'd0; //OBS_Y_Step;
 			OBS_X_Motion <= 10'd1; //OBS_X_Step;
             
-			OBSY <= position_x;
-			OBSX <= position_y;
+			OBSY <= position_y;
+			OBSX <= position_x;
         end
         else 
         begin 
