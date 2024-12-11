@@ -44,7 +44,17 @@ module game_text(
 end
 
 //Display Game Start Region
-
+ always @* begin
+        text_rgb = 12'h0FF;     // aqua background
+        
+        if(score_on) begin
+            char_addr = char_addr_s;
+            row_addr = row_addr_s;
+            bit_addr = bit_addr_s;
+            if(ascii_bit)
+                text_rgb = 12'hF00; // red
+        end
+ end
 
   
 endmodule
