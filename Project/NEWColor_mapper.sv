@@ -16,7 +16,9 @@
 
 module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size, ObsX, ObsY, ObsX2, ObsY2,
                        input logic [3:0] foreground, background,
-                       output logic [3:0]  Red, Green, Blue, collision, collision2 );
+                       output logic [3:0]  Red, Green, Blue, collision, collision2,
+                       output logic finish_line_reached, reset_player
+                       );
     
     logic ball_on;
     ////
@@ -60,6 +62,8 @@ always_comb begin
             (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size)) begin
             collision = 1; // Collision occurred
         end 
+        else if (BallX >= 320)
+            finish_line_reached = 1;
 	else begin
             collision = 0; // No collision
         end
@@ -136,9 +140,9 @@ always_comb begin
             Blue = 4'h0;
        end
             else if ((obs_on || obs_on2) == 1'b1) begin
-             Red = foreground*(4'hf);
-            Green = foreground*(4'h1);
-            Blue = foreground*(4'h1);
+             Red = foreground-(4'hf);
+            Green = foreground-(4'h1);
+            Blue = foreground-(4'h1);
         end 
             else begin
 //                Red = 4'hf - DrawX[9:6] - DrawY[9:6]; 
@@ -148,23 +152,10 @@ always_comb begin
 //             Red = 4'h3 - DrawX[7:6] - DrawY[7:6]; 
 //             Green = 4'h4 - DrawX[7:6] - DrawY[7:6];
 //             Blue = 4'h6 - DrawX[7:6] - DrawY[7:6];  
-		   
-		    if( background == 4'b0001 && foreground == 4'b0001) //level 1
-			    begin 
-				    Red = background * 4'h3;
-               			    Green = background * 4'h4;
-                		    Blue = background * 4'h6;
-			    end
-		    else if ( background == 4'b0010 && foreground == 4'b0010)
-			    begin
-				Red = background * 4'h2;
-                		Green = background * 4'h3;
-                		Blue = background * 4'h4;
-			    end 
 
-             // Red = background*(4'h3 - (DrawX&200)/2- (DrawY&100)/2); 
-             // Green = background*(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
-             // Blue = background*(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);       
+             Red = background-(4'h3 - (DrawX&200)/2- (DrawY&100)/2); 
+             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
+             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);       
         end 
     end
 endmodule
