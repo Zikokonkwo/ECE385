@@ -33,10 +33,10 @@ logic finish_line_reached;
     always_comb
 	begin 
 		// Default controls signals
-		speed = 2'b00; //clears obstacle speed until defined in each level
+		speed = 4'b0000; //clears obstacle speed until defined in each level
         	background = 4'b0000; // defaults the background color to use 0 as its color data reference
         	foreground= 4'b0000; // defaults the foreground color to use 0 as its color data reference
-       	 	obstacle_count = 2'b00; // initializes the projectile count multiplier to 0
+       	 	obstacle_count = 4'b0000; // initializes the projectile count multiplier to 0
 
 		case (state)
 			LEVEL1 : 
