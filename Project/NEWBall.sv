@@ -14,7 +14,7 @@ module  ball
     //
     input  logic        frame_clk, reset_player,
     input  logic [7:0]  keycode,
-
+    input  logic [3:0] speed,
     output logic [9:0]  BallX, ObsX,  ObsX2,
     output logic [9:0]  BallY, ObsY, ObsY2,
     output logic [9:0]  BallS
