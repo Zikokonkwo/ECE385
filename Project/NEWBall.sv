@@ -276,25 +276,23 @@ if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
 //    ObsY2 <= Obs_Y2_next;
 //    ObsX2 <= Obs_X2_next;
     
-    
-    //
-       
-    //
 end
 
+//IDEA
+	//if(level == 1)
+		//instatiate 4 obstacles
+		//move in the vertical direction
+		//hard code where these balls should start and speed
+	// if(level == 2)
+		//instatiate 8 obstacles
+		//move 4 verticle direction and other 4 in the horizontal direction
+		//hard code where these balls should start and speed
+	// if(level == 3)
+		// instantiate 10 obstacles
+		//move 4 verticle direction and  4 in the horizontal direction and 2 in the diagonal direction
+		//hard code where these balls should start and speed
     
-// always_ff @(posedge frame_clk)
-//    begin
-//            if (collision || collision2 || Reset) begin
-//                ObsY <= 350;
-//			ObsX <= 150;
-//            //
-//            ObsY2 <= 240;
-//            ObsX2 <= 320;
 
-//            end
-//   end
- 
   
       
 endmodule
