@@ -94,6 +94,7 @@ logic sprite_collision;
             LEVEL2: begin
                 if (sprite_collision) 
                     reset_level = 1;
+		    next_state = LEVEL1;
                 else if (finish_line_reached)begin
                     next_state = LEVEL3;
                     reset_player = 1;
@@ -104,6 +105,7 @@ logic sprite_collision;
             LEVEL3: begin
                 if (sprite_collision) 
                     reset_level = 1;
+		    next_state = LEVEL1;
                 else if (finish_line_reached)
                     next_state = GAME_OVER;
 		       else
