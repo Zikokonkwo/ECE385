@@ -1,17 +1,16 @@
 typedef enum logic [1:0] {LEVEL1, LEVEL2, LEVEL3, GAME_OVER} game_state_t;
 
 module game_state_machine (
-    input logic clk, reset, BallX, BallY, ObsX, ObsY, Ball_size, 
+    input logic clk, reset, BallX, BallY, ObsX, ObsY, Ball_size, finish_line_reached,
     output logic [3:0] foreground, background,
-    output logic [1:0] current_level,
-    output logic [3:0] speed, obstacle_count,
+    output logic [1:0] current_level, speed, obstacle_count,
     output logic reset_level, reset_player
 );
     game_state_t state, next_state;
 
 
 logic sprite_collision;
-logic finish_line_reached;
+
 
 
     // State Transition Logic
@@ -22,9 +21,7 @@ logic finish_line_reached;
             (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size)) 
 	    	sprite_collision <= 1'b1; // sprite collided with obstacle and must reset
 	    	
-	    else if (BallX >= 580)
-			finish_line_reached <= 1'b1; //sprite reached teh finish line and level advances
-			  
+	   
          else
 	  			 state <= next_state;
     end
@@ -33,42 +30,42 @@ logic finish_line_reached;
     always_comb
 	begin 
 		// Default controls signals
-		speed = 4'b0000; //clears obstacle speed until defined in each level
-        	background = 4'b0000; // defaults the background color to use 0 as its color data reference
-        	foreground= 4'b0000; // defaults the foreground color to use 0 as its color data reference
-       	 	obstacle_count = 4'b0000; // initializes the projectile count multiplier to 0
+		speed = 2'b00; //clears obstacle speed until defined in each level
+        	background = 4'b0010; // defaults the background color to use 0 as its color data reference
+        	foreground= 4'b0010; // defaults the foreground color to use 0 as its color data reference
+       	 	obstacle_count = 2'b00; // initializes the projectile count multiplier to 0
 
 		case (state)
 			LEVEL1 : 
 				begin 
-		                speed = 4'b0001; //obstacle speed is initially slow
-                        	background = 4'b0001; // sets the background color to use 1 as its color data reference
-                        	foreground= 4'b0001; // sets the foreground color to use 1 as its color data reference
-                        	obstacle_count = 4'b0100; // obstacle count multiplier is initially 1
+		                speed = 2'b01; //obstacle speed is initially slow
+                        	background = 4'b0011; // sets the background color to use 1 as its color data reference
+                        	foreground= 4'b0011; // sets the foreground color to use 1 as its color data reference
+                        	obstacle_count = 2'b01; // obstacle count multiplier is initially 1
             
 				end
 			LEVEL2 : 
 				begin 
-		                speed = 3'b0100; //obstacle speed is twice the initial speed
+		                speed = 2'b10; //obstacle speed is twice the initial speed
                         	background = 4'b0010; // sets the background color to use 2 as its color data reference
                         	foreground= 4'b0010; // sets the foreground color to use 2 as its color data reference
-                        	obstacle_count = 4'b1000; // obstacle count multiplier is 2
+                        	obstacle_count = 2'b10; // obstacle count multiplier is 2
                         
 				end
 			LEVEL3 : 
 				begin 
-		                speed = 2'b1000; //obstacle speed is three times the initial speed 
+		                speed = 2'b11; //obstacle speed is three times the initial speed 
                         	background = 4'b0100; // sets the background color to use 4 as its color data reference
                         	foreground= 4'b0100; // sets the foreground color to use 4 as its color data reference
-                        	obstacle_count = 4'b1100; // obstacle count multiplier is 3
+                        	obstacle_count = 2'b11; // obstacle count multiplier is 3
                         
 				end
 			GAME_OVER : 
 				begin 
-                        	speed = 4'b0000; // halts obstacles when game ends
+                        	speed = 2'b00; // halts obstacles when game ends
                         	background = 4'b1000; // sets the background color to use 8 as its color data reference
                         	foreground= 4'b1000; // sets the foreground color to use 8 as its color data reference
-                    		obstacle_count = 4'b0000; // clear obstacle count multiplier when game ends
+                    		obstacle_count = 2'b00; // clear obstacle count multiplier when game ends
                         
 				end
         endcase
@@ -91,6 +88,7 @@ logic finish_line_reached;
                     end
 		    else
 			    next_state = LEVEL1;
+			    reset_player = 0;
             end
             LEVEL2: begin
                 if (sprite_collision) 
@@ -100,6 +98,7 @@ logic finish_line_reached;
                     reset_player = 1;
 		   	end else
 			     next_state = LEVEL2;
+			     reset_player = 0;
             end
             LEVEL3: begin
                 if (sprite_collision) 
@@ -108,6 +107,7 @@ logic finish_line_reached;
                     next_state = GAME_OVER;
 		       else
 			     next_state = LEVEL3;
+			     reset_player = 0;
             end
             GAME_OVER: begin
                 // Handle Game Over logic (restart or idle)
@@ -115,6 +115,7 @@ logic finish_line_reached;
                     next_state = LEVEL1;
 		       else
 			     next_state = GAME_OVER;
+			     reset_player = 0;
             end
         endcase
     end
