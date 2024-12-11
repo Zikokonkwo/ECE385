@@ -4,7 +4,7 @@ module game_state_machine (
     input logic clk, reset, BallX, BallY, ObsX, ObsY, Ball_size, 
     output logic [3:0] foreground, background,
     output logic [1:0] current_level, speed, obstacle_count,
-    output logic [2:0] speed,
+    output logic [3:0] speed,
     output logic reset_level, reset_player
 );
     game_state_t state, next_state;
@@ -41,7 +41,7 @@ logic finish_line_reached;
 		case (state)
 			LEVEL1 : 
 				begin 
-		                speed = 2'b01; //obstacle speed is initially slow
+		                speed = 4'b0001; //obstacle speed is initially slow
                         	background = 4'b0001; // sets the background color to use 1 as its color data reference
                         	foreground= 4'b0001; // sets the foreground color to use 1 as its color data reference
                         	obstacle_count = 2'b01; // obstacle count multiplier is initially 1
@@ -49,7 +49,7 @@ logic finish_line_reached;
 				end
 			LEVEL2 : 
 				begin 
-		                speed = 2'b10; //obstacle speed is twice the initial speed
+		                speed = 3'b0100; //obstacle speed is twice the initial speed
                         	background = 4'b0010; // sets the background color to use 2 as its color data reference
                         	foreground= 4'b0010; // sets the foreground color to use 2 as its color data reference
                         	obstacle_count = 2'b10; // obstacle count multiplier is 2
@@ -57,7 +57,7 @@ logic finish_line_reached;
 				end
 			LEVEL3 : 
 				begin 
-		                speed = 2'b11; //obstacle speed is three times the initial speed 
+		                speed = 2'b1000; //obstacle speed is three times the initial speed 
                         	background = 4'b0100; // sets the background color to use 4 as its color data reference
                         	foreground= 4'b0100; // sets the foreground color to use 4 as its color data reference
                         	obstacle_count = 2'b11; // obstacle count multiplier is 3
@@ -65,7 +65,7 @@ logic finish_line_reached;
 				end
 			GAME_OVER : 
 				begin 
-                        	speed = 2'b00; // halts obstacles when game ends
+                        	speed = 4'b0000; // halts obstacles when game ends
                         	background = 4'b1000; // sets the background color to use 8 as its color data reference
                         	foreground= 4'b1000; // sets the foreground color to use 8 as its color data reference
                     		obstacle_count = 2'b00; // clear obstacle count multiplier when game ends
