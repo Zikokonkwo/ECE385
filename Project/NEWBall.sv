@@ -291,6 +291,9 @@ end
 		// 	.OBSX(ObsX),
 		// 	.OBSY(ObsY),
 		// 	.OBS_size(obs1_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs2(
@@ -301,6 +304,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs3(
@@ -311,6 +317,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs3(
@@ -321,6 +330,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 	// if(level == 2)
@@ -335,6 +347,9 @@ end
 		// 	.OBSX(ObsX),
 		// 	.OBSY(ObsY),
 		// 	.OBS_size(obs1_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs2(
@@ -345,6 +360,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs3(
@@ -355,6 +373,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs4(
@@ -365,6 +386,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// obstacle obs5(
 		// 	.Reset(Reset),
@@ -374,6 +398,9 @@ end
 		// 	.OBSX(ObsX),
 		// 	.OBSY(ObsY),
 		// 	.OBS_size(obs1_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs6(
@@ -384,6 +411,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs7(
@@ -394,6 +424,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs8(
@@ -404,6 +437,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 	// if(level == 3)
 		// instantiate 10 obstacles
@@ -417,6 +453,9 @@ end
 		// 	.OBSX(ObsX),
 		// 	.OBSY(ObsY),
 		// 	.OBS_size(obs1_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs2(
@@ -427,6 +466,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs3(
@@ -437,6 +479,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs4(
@@ -447,6 +492,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// obstacle obs5(
 		// 	.Reset(Reset),
@@ -456,6 +504,9 @@ end
 		// 	.OBSX(ObsX),
 		// 	.OBSY(ObsY),
 		// 	.OBS_size(obs1_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs6(
@@ -466,6 +517,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs7(
@@ -476,6 +530,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs8(
@@ -486,6 +543,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// obstacle obs9(
 		// 	.Reset(Reset),
@@ -495,6 +555,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
 		// );
 		// obstacle obs10(
@@ -505,6 +568,9 @@ end
 		// 	.OBSX(ObsX2),
 		// 	.OBSY(ObsY2),
 		// 	.OBS_size(obs2_size),
+		// 	.horizontal(),
+		// 	.vertical(),
+		// 	.diagnol(),
 		//	.OBS_speed(speed)
     
 
