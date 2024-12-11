@@ -283,14 +283,229 @@ end
 		//instatiate 4 obstacles
 		//move in the vertical direction
 		//hard code where these balls should start and speed
+		// obstacle obs1(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX),
+		// 	.OBSY(ObsY),
+		// 	.OBS_size(obs1_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs2(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs3(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs3(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
 	// if(level == 2)
 		//instatiate 8 obstacles
 		//move 4 verticle direction and other 4 in the horizontal direction
 		//hard code where these balls should start and speed
+		// obstacle obs1(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX),
+		// 	.OBSY(ObsY),
+		// 	.OBS_size(obs1_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs2(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs3(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs4(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// obstacle obs5(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX),
+		// 	.OBSY(ObsY),
+		// 	.OBS_size(obs1_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs6(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs7(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs8(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
 	// if(level == 3)
 		// instantiate 10 obstacles
 		//move 4 verticle direction and  4 in the horizontal direction and 2 in the diagonal direction
 		//hard code where these balls should start and speed
+			// obstacle obs1(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX),
+		// 	.OBSY(ObsY),
+		// 	.OBS_size(obs1_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs2(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs3(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs4(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// obstacle obs5(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX),
+		// 	.OBSY(ObsY),
+		// 	.OBS_size(obs1_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs6(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs7(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs8(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// obstacle obs9(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
+		// );
+		// obstacle obs10(
+		// 	.Reset(Reset),
+		// 	.frame_clk(frame_clk),
+		// 	.position_x(320),
+		// 	.position_y(240),
+		// 	.OBSX(ObsX2),
+		// 	.OBSY(ObsY2),
+		// 	.OBS_size(obs2_size),
+		//	.OBS_speed(speed)
     
 
   
