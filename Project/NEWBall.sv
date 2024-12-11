@@ -161,20 +161,20 @@ module  ball
 //// OBS 1
 if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
         begin
-            Obs_Y_Motion_next = (~ (Obs_Y_Step) + 1'd1);  // set to -1 via 2's complement.
+		Obs_Y_Motion_next = (~ (Obs_Y_Step * speed) + 1'd1);  // set to -1 via 2's complement.
         end
         else if ( (ObsY - BallS) <= Obs_Y_Min )  // Ball is at the top edge, BOUNCE!
         begin
-            Obs_Y_Motion_next = Obs_Y_Step;
+            Obs_Y_Motion_next = Obs_Y_Step * speed;
         end  
        //fill in the rest of the motion equations here to bounce left and right
 	if ((ObsX + BallS ) >= Obs_X_Max) //right edge --> bounce
 	begin
-		Obs_X_Motion_next = (~ (Obs_X_Step) + 1'd1);  // set to -1 via 2's complement.
+		Obs_X_Motion_next = (~ (Obs_X_Step * speed) + 1'd1);  // set to -1 via 2's complement.
 	end
 	else if ((ObsX - BallS ) <= Obs_X_Min) //left edge --> bounce
 	begin
-		Obs_X_Motion_next = Obs_X_Step;
+		Obs_X_Motion_next = Obs_X_Step * speed;
 	end
 	
 //// OBS 2
