@@ -4,6 +4,7 @@ module game_state_machine (
     input logic clk, reset, BallX, BallY, ObsX, ObsY, Ball_size, 
     output logic [3:0] foreground, background,
     output logic [1:0] current_level, speed, obstacle_count,
+    output logic [2:0] speed,
     output logic reset_level, reset_player
 );
     game_state_t state, next_state;
