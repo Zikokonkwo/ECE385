@@ -55,6 +55,11 @@ end
                 text_rgb = 12'hF00; // red
         end
  end
-
+    
+ assign text_on = {score_on, logo_on, rule_on, over_on};
+    
+    // ascii ROM interface
+    assign rom_addr = {char_addr, row_addr};
+    assign ascii_bit = ascii_word[~bit_addr];
   
 endmodule
