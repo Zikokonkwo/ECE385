@@ -110,15 +110,15 @@ logic [3:0] lvl_background, lvl_foreground;
     lvl_background = 4'hF; // Default background color
     lvl_foreground = 4'h0; // Default foreground color
     case (current_level)
-        1: begin
+        0: begin
             lvl_background = 4'hF; // Background for level 1
             lvl_foreground = 4'hA; // Foreground for level 1
         end
-        2: begin
+        1: begin
             lvl_background = 4'h5; // Background for level 2
             lvl_foreground = 4'hA; // Foreground for level 2
         end
-        3: begin
+        2: begin
             lvl_background = 4'h7; // Background for level 3
             lvl_foreground = 4'hD; // Foreground for level 3
         end
