@@ -240,12 +240,12 @@ if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
         BallY <= 240;
         BallX <= 20;
         end
-        else if ((reset_player) == 1'b1)begin
-        Ball_Y_Motion <= 10'd0; 
-        Ball_X_Motion <= 10'd0;
-        BallY <= 240;
-        BallX <= 30;
-            end 
+        // else if ((reset_player) == 1'b1)begin
+        // Ball_Y_Motion <= 10'd0; 
+        // Ball_X_Motion <= 10'd0;
+        // BallY <= 240;
+        // BallX <= 30;
+        //     end 
         
         
 
