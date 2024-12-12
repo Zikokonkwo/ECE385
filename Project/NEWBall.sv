@@ -104,7 +104,7 @@ module  ball
 
       ///
       
-	if (keycode == 8'h1A) //go up
+	    if (keycode == 8'h1A && ((BallY - BallS) <= Ball_Y_Min)) //go up
 	begin
             	Ball_Y_Motion_next = -10'd1;
 	    	Ball_X_Motion_next = 0;
@@ -117,17 +117,17 @@ module  ball
 	    	//causes failed implimentation 
 	end
 	    
-	else if(keycode == 8'h16) //go down
+	    else if(keycode == 8'h16 &&  ((BallY + BallS) >= Ball_Y_Max) ) //go down
 	begin
 	    	Ball_Y_Motion_next = 10'd1;
 	    	Ball_X_Motion_next = 0;
 	end 
-	    else if(keycode == 8'h04) //move left
+	    else if(keycode == 8'h04 && ((BallX - BallS ) <= Ball_X_Min)) //move left
 	begin
 		Ball_Y_Motion_next = 0;
 		Ball_X_Motion_next = -10'd1;
 	end 
-	    else if(keycode == 8'h07) //move right
+	    else if(keycode == 8'h07 && ((BallX + BallS ) >= Ball_X_Max)) //move right
 	begin
 		Ball_Y_Motion_next = 0;
 	    	Ball_X_Motion_next = 10'd1;
