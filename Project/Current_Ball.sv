@@ -213,7 +213,7 @@ if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
     //
     //   assign Obs_X2_next = (ObsX2 + Obs_X2_Motion_next);
     // assign Obs_Y2_next = (ObsY2 + Obs_Y2_Motion_next);
-    /77777777777777777777777777777777777777777777777777777
+    //77777777777777777777777777777777777777777777777777777
    
    always_ff @(posedge frame_clk) begin
     if (Reset || collision || collision2)
