@@ -14,346 +14,154 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper ( input  logic [9:0] drawX, drawY,
-		       input  logic [31:0] slv_regs[600:0],
-		       output logic [3:0]  Red, Green, Blue
-		     );
-
+module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size, ObsX, ObsY, ObsX2, ObsY2,
+                       input logic [3:0] foreground, background,
+                       input logic [1:0] current_level,
+                       output logic [3:0]  Red, Green, Blue, 
+                       output logic finish_line_reached, reset_player, collision, collision2
+                       );
+    
     logic ball_on;
-    logic [10:0] sprite_addr;
-    logic [7:0] font_data; 
+    ////
+    logic obs_on;
+     logic obs_on2;
+    ////
+	 
+ /* Old Ball: Generated square box by checking if the current pixel is within a square of length
+    2*BallS, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
+	 
+    if ((DrawX >= BallX - Ball_size) &&
+       (DrawX <= BallX + Ball_size) &&
+       (DrawY >= BallY - Ball_size) &&
+       (DrawY <= BallY + Ball_size))
+       )
 
-    logic invert;
-    logic [2:0] FGD_R, FGD_G, FGD_B, BKG_R, BKG_G, BKG_B;
-
-   //psuedocode:
-	//Calculate glyph coordinates from pixel coordinates
-	// assign glyphX = drawX/ 8;
-	// assign glyphY = drawY/ 16;
-	// // Determine VRAM register address to access
-	// assign register_address = (glyphY * 20) + (glyphX / 4);
-	//  // Calculate byte offset within the register
- //    	assign byte_offset = glyphX % 4;
-
- //    	// Extract glyph byte from VRAM data at register_address
- //    	assign glyph_byte = (slv_regs[register_address] >> (byte_offset * 8)) & 8'hFF;
-
-		
-font_rom font(
-	.addr(sprite_addr),
-	.data(font_data)
-);
-
-	// Calculate VRAM and glyph coordinates
-    logic [8:0] register_num;
-    logic [7:0] char_sel, character;
-    logic glyphLine;
-//    logic [3:0] FGD_R, FGD_G, FGD_B;
-//    logic [3:0] BKG_R, BKG_G, BKG_B;
+     New Ball: Generates (pixelated) circle by using the standard circle formula.  Note that while 
+     this single line is quite powerful descriptively, it causes the synthesis tool to use up three
+     of the 120 available multipliers on the chip!  Since the multiplicants are required to be signed,
+	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
+	  
+    int DistX, DistY, Size;
+    assign DistX = DrawX - BallX;
+    assign DistY = DrawY - BallY;
+    assign Size = Ball_size;
     
-    // Set control register and character select based on inputs
-//    assign control_reg = slv_regs[600];
-//    assign char_sel = drawX % 32;
-
-    // Determine register, character, inversion, and sprite address
-    assign register_num = (drawX / 32) + (20 * (drawY / 16));
-//    assign character =  slv_regs[register_num][14:8] * 16;
-    reg [31:0] Addrb;
-   assign register_region = drawX % 32;
-   always_comb begin
-   if (register_region < 16) begin
-            assign character =  Addrb[14:8] * 16;//first char at address
-     end else begin
-            assign character =  Addrb[30:24] * 16;//second char at address
-
-     end
-   end
+    ///////
+    int ObsDistX, ObsDistY;
+    assign ObsDistX = DrawX - ObsX;
+    assign ObsDistY = DrawY - ObsY;
     
-    
-//    assign invert =  slv_regs[register_num][15];
-//assign invert = 1;
-    assign sprite_addr = character + (drawY % 16);
-logic byte_num, glyph;
-    // Extract foreground and background colors from control register
-    
-//    assign FGD_R = slv_regs[600][24:21];
-//    assign FGD_G = slv_regs[600][20:17];
-//    assign FGD_B = slv_regs[600][16:13];
-    
-//    assign BKG_R = slv_regs[600][12:9];
-//    assign BKG_G = slv_regs[600][8:5];
-//    assign BKG_B = slv_regs[600][4:1];
-    
-    
-    
-    assign FGD_R = 4'b0011;
-    assign FGD_G = 4'b0000;
-    assign FGD_B = 4'b1110;
-   
-    assign BKG_R = 4'b1110;
-    assign BKG_G = 4'b0000;
-    assign BKG_B = 4'b0001;
-
-    // Determine glyph line based on font data and inversion
-    assign glyphLine = font_data[sprite_addr];
-
-    // Assign RGB based on glyph line and inversion
-        always_comb begin
-        if (sprite_addr[drawX[2:0]]) begin//glyphLine was font_data
-            // assign background colors to foreground and vice versa
- 	    Red   = FGD_R;
-            Green = FGD_G;
-            Blue  = FGD_B;
-        end else begin
-            // Draw background color
-            Red   = BKG_R;
-            Green = BKG_G;
-            Blue  = BKG_B;
+    int ObsDistX2, ObsDistY2;
+     assign ObsDistX2 = DrawX - ObsX2;
+    assign ObsDistY2 = DrawY - ObsY2;
+    //////
+  
+  //COLLISION DETECTION
+always_comb begin
+        // Check for collision between the player and obstacle
+        if ((BallX + Ball_size > ObsX - (Ball_size+5)) && (BallX - Ball_size < ObsX + (Ball_size+20)) && 
+            (BallY + Ball_size > ObsY - (Ball_size+5)) && (BallY - Ball_size < ObsY + (Ball_size+20))) begin
+                collision = 1; // Collision occurred
+            
+             end else if (!((BallX + Ball_size > ObsX - (Ball_size+5)) && (BallX - Ball_size < ObsX + (Ball_size+20)) && 
+            (BallY + Ball_size > ObsY - (Ball_size+5)) && (BallY - Ball_size < ObsY + (Ball_size+20)))) begin
+                collision = 0;
+        end 
+         if ((BallX >= 400) || ((BallX + 16 ) >= 639))
+            finish_line_reached = 1;//removed collision = 0 below
+            else  
+            finish_line_reached = 0;
+    end
+//
+  
+   // 2 COLLISION DETECTION
+always_comb begin
+        // Check for collision between the player and obstacle
+        if ((BallX + Ball_size > ObsX2 - Ball_size) && (BallX - Ball_size < ObsX2 + Ball_size) && 
+            (BallY + Ball_size > ObsY2 - Ball_size) && (BallY - Ball_size < ObsY2 + Ball_size)) begin
+            collision2 = 1; // Collision occurred
+        end 
+	else begin
+            collision2 = 0; // No collision
         end
     end
-
-
-//case (glyph) 
-//0: begin
-// assign character =  slv_regs[register_num][6:0] * 16;
-//    assign invert =  slv_regs[register_num][7];
-//end
-
-//1: begin
-// assign character =  slv_regs[register_num][14:8] * 16;
-//    assign invert =  slv_regs[register_num][15];
-//end
-
-//2: begin
-// assign character =  slv_regs[register_num][22:16] * 16;
-//    assign invert =  slv_regs[register_num][23];
-//end
-
-//3: begin
-// assign character =  slv_regs[register_num][30:24] * 16;
-//    assign invert =  slv_regs[register_num][31];
-//end
-
-//endcase
- 
-
-
-
-
-
-
-
-//	assign byte_num = (drawX /8);
-assign char_num = (drawX / 8);//rewrote above line
-
-// 	logic byte_num;
-// 	assign register_col = (drawX/32);
-// 	assign register_row = (drawY/16);
-
-// 	assign register_num = (20) * (register_row) + register_col;
-
-// 	//find the glyph coordinates
-// 	assign glyph = byte_num % 4;/////////////////////////////////////////
-assign glyph = byte_num % 2;//rewrote above
-
-// //	assign byte_num = 4 * register_num;
-// 	assign byte_row = byte_num / 80;
-// 	assign byte_col = byte_num % 80;
-	
-	
-// 	assign FGD_R = slv_regs[600][24:21];
-// 	assign FGD_G = slv_regs[600][20:17];
-// 	assign FGD_B = slv_regs[600][16:13];
-	
-// 	assign BKG_R = slv_regs[600][12:9];
-// 	assign BKG_G = slv_regs[600][16:13];
-// 	assign BKG_B = slv_regs[600][12:9];
-	
-// 		if (invert) begin
-//			assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
-//			assign FGD_G = slv_regs[600][8:5];
-//			assign FGD_B = slv_regs[600][4:1]; 
-
-//			assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
-//			assign BKG_G = slv_regs[600][20:17];
-//			assign BKG_B = slv_regs[600][16:13]; 
-//			end
-//			    else begin
-//				    assign BKG_R = slv_regs[600][24:21];
-//				    assign BKG_G = slv_regs[600][20:17];
-//				    assign BKG_B = slv_regs[600][16:13]; 
-
-//				    assign FGD_R = slv_regs[600][12:9];
-//				    assign FGD_G = slv_regs[600][8:5];
-//				    assign FGD_B = slv_regs[600][4:1];
-	
-	// 	    end
-	// case (byte_num)
- //            0: begin
- //            assign byte_num = (drawX /8);
-	//             assign invert = slv_regs[register_num][7] ;
-	            
-	//             if (invert) begin
-	// 		assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
-	// 		assign FGD_G = slv_regs[600][8:5];
-	// 		assign FGD_B = slv_regs[600][4:1]; 
-
-	// 		assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
-	// 		assign BKG_G = slv_regs[600][20:17];
-	// 		assign BKG_B = slv_regs[600][16:13]; 
-	// 		end
-	// 		    else begin
-	// 			    assign BKG_R = slv_regs[600][24:21];
-	// 			    assign BKG_G = slv_regs[600][20:17];
-	// 			    assign BKG_B = slv_regs[600][16:13]; 
-
-	// 			    assign FGD_R = slv_regs[600][12:9];
-	// 			    assign FGD_G = slv_regs[600][8:5];
-	// 			    assign FGD_B = slv_regs[600][4:1];
-	            
-	// 	    assign addr_in = ((slv_regs[register_num][6:0])*16)+(drawY%16);
-		    
-	// 	    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-	// 	    begin
-	// 		    assign Red = FGD_R;
-	// 		    assign Blue = FGD_B;
-	// 		    assign Green = FGD_G;
- //            end
-	// 		    else begin
-	// 		    	  assign Red = BKG_R;
-	// 		          assign Blue = BKG_B;
-	// 		   	  assign Green = BKG_G;
-	// 	      end
-		    
- //            end
- //            1: begin
-	// 	   // slv_regs[register_num][15:8]; 
-
-	// 	    assign invert = slv_regs[register_num][15] ;
-		    
-	// 	    if (invert) begin
-	// 		assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
-	// 		assign FGD_G = slv_regs[600][8:5];
-	// 		assign FGD_B = slv_regs[600][4:1]; 
-
-	// 		assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
-	// 		assign BKG_G = slv_regs[600][20:17];
-	// 		assign BKG_B = slv_regs[600][16:13]; 
-	// 		end
-	// 		    else begin
-	// 			    assign BKG_R = slv_regs[600][24:21];
-	// 			    assign BKG_G = slv_regs[600][20:17];
-	// 			    assign BKG_B = slv_regs[600][16:13]; 
-
-	// 			    assign FGD_R = slv_regs[600][12:9];
-	// 			    assign FGD_G = slv_regs[600][8:5];
-	// 			    assign FGD_B = slv_regs[600][4:1];
-		    
-	// 	    assign addr_in = ((slv_regs[register_num][14:8])*16)+(drawY%16);
-		    
-	// 	    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-	// 	    begin
-	// 		    assign Red = FGD_R;
-	// 		    assign Blue = FGD_B;
-	// 		    assign Green = FGD_G;
- //            end
-	// 		    else begin
-	// 		    	  assign Red = BKG_R;
-	// 		          assign Blue = BKG_B;
-	// 		   	  assign Green = BKG_G;
-	// 	    end
-		    
- //            end
- //            2: begin
-	// 	  //  slv_regs[register_num][23:16]; 
-
-
-	// 	    assign invert = slv_regs[register_num][23] ;
-		    
-	// 	    if (invert) begin
-	// 		assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
-	// 		assign FGD_G = slv_regs[600][8:5];
-	// 		assign FGD_B = slv_regs[600][4:1]; 
-
-	// 		assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
-	// 		assign BKG_G = slv_regs[600][20:17];
-	// 		assign BKG_B = slv_regs[600][16:13]; 
-	// 		end
-	// 		    else begin
-	// 			    assign BKG_R = slv_regs[600][24:21];
-	// 			    assign BKG_G = slv_regs[600][20:17];
-	// 			    assign BKG_B = slv_regs[600][16:13]; 
-
-	// 			    assign FGD_R = slv_regs[600][12:9];
-	// 			    assign FGD_G = slv_regs[600][8:5];
-	// 			    assign FGD_B = slv_regs[600][4:1];
-		    
-	// 	    assign addr_in = ((slv_regs[register_num][22:16])*16)+(drawY%16);
-		    
-	// 	    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-	// 	    begin
-	// 		    assign Red = FGD_R;
-	// 		    assign Blue = FGD_B;
-	// 		    assign Green = FGD_G;
- //            end 
-	// 		    else begin
-	// 		    	  assign Red = BKG_R;
-	// 		          assign Blue = BKG_B;
-	// 		   	  assign Green = BKG_G;
-	// 	    end
-		    
-            
-		    
- //            end
- //            3: begin
-	// 	  //  slv_regs[register_num][31:24]; 
-
-	// 	    assign invert = slv_regs[register_num][31] ;
-		    
-	// 	    if (invert) begin
-	// 		assign FGD_R = slv_regs[600][12:9];//FOREGROUND IS NOW BACKGROUND
-	// 		assign FGD_G = slv_regs[600][8:5];
-	// 		assign FGD_B = slv_regs[600][4:1]; 
-
-	// 		assign BKG_R = slv_regs[600][24:21]; //BACKGROUND IS NOw FOREGROUND
-	// 		assign BKG_G = slv_regs[600][20:17];
-	// 		assign BKG_B = slv_regs[600][16:13]; 
-	// 		end
-	// 		    else begin
-	// 			    assign BKG_R = slv_regs[600][24:21];
-	// 			    assign BKG_G = slv_regs[600][20:17];
-	// 			    assign BKG_B = slv_regs[600][16:13]; 
-
-	// 			    assign FGD_R = slv_regs[600][12:9];
-	// 			    assign FGD_G = slv_regs[600][8:5];
-	// 			    assign FGD_B = slv_regs[600][4:1];
-		    
-	// 	    assign addr_in = ((slv_regs[register_num][30:24])*16)+(drawY%16);
-		    
-	// 	    if (font_data[drawX % 8])//if the specific bit in the 8 bit font data string we are drawing = 1 then draw FGD
-	// 	    begin
-	// 		    assign Red = FGD_R;
-	// 		    assign Blue = FGD_B;
-	// 		    assign Green = FGD_G;
- //            end
-	// 		    else begin
-	// 		    	  assign Red = BKG_R;
-	// 		          assign Blue = BKG_B;
-	// 		   	  assign Green = BKG_G;
-	// 	    end
-		    
- //            end
- //            default: begin
-	// 	 assign Red = BKG_R;
-	// 	assign Blue = BKG_B;
-	// 	assign Green = BKG_G; 
-
-	// 	assign Red = FGD_R;
-	// 	assign Blue = FGD_B;
-	// 	assign Green = FGD_G;
- //            end
- //        endcase
-
-
+//
+  
+  
+  //
+   // O L D    COLLISION DETECTION
+//always_comb begin
+//        // Check for collision between the player and obstacle
+//        if ((BallX + Ball_size > ObsX) && (BallX < ObsX + Ball_size) && 
+//            (BallY + Ball_size > ObsY) && (BallY < ObsY + Ball_size)) begin
+//            collision = 1; // Collision occurred
+//        end 
+//	else begin
+//            collision = 0; // No collision
+//        end
+//    end
+//
+  //
+  
+  
+  
+  
+  
+    always_comb
+    begin:Ball_on_proc
+        if ( (DistX*DistX + DistY*DistY) <= ((Size) * (Size)) )
+            ball_on = 1'b1;
+        else 
+            ball_on = 1'b0;
+     end 
+     
+     ////
+     //99999999999999999999999999999999999999999
+     always_comb
+    begin:Obs_on_proc
+        if ( (ObsDistX*ObsDistX + ObsDistY*ObsDistY) <= ((Size+5) * (Size+5)) )
+            obs_on = 1'b1;
+        else 
+            obs_on = 1'b0;
+     end 
+     //99999999999999999999999999999999999999999999999999999
+     ////
+     ////
+     always_comb
+    begin:Obs_on_proc2
+        if ( (ObsDistX2*ObsDistX2 + ObsDistY2*ObsDistY2) <= (Size * Size) )
+            obs_on2 = 1'b1;
+        else 
+            obs_on2 = 1'b0;
+     end 
+     ////
+       
+    always_comb
+    begin:RGB_Display
+        if ((ball_on == 1'b1)) begin 
+            Red = 4'h0;
+            Green = 4'hf;
+            Blue = 4'h0;
+       end
+            else if ((obs_on) == 1'b1) begin//removed || obs_on2
+                Red = 4'hf;
+                Green = 4'h0;
+                Blue = 4'h0;
+        end 
+            else if (DrawX <= 50 || DrawX >= 599) begin
+                Red = 4'h0;
+                Green = 4'h4;
+                Blue = 4'h1;
+                end
+//            if (current_level == 2'b11)begin
+//            Red = (4'h5);
+//            Green = (4'h5);
+//            Blue = (4'h5);
+                else if ((ball_on == 0) && (obs_on == 0) && ((DrawX >= 51) && (DrawX <= 598))) begin
+             Red = background-(4'h3 - (DrawX&200)/2- (DrawY&100)/2); //added "*(background)"
+             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);//added "*(background)"
+             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);   //added "*(background)"    
+        end 
+        end
     
 endmodule
