@@ -16,6 +16,7 @@
 
 module  color_mapper ( input  logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size, ObsX, ObsY, ObsX2, ObsY2,
                        input logic [3:0] foreground, background,
+		      input logic [1:0] current_level,
                        output logic [3:0]  Red, Green, Blue, collision2,
                        output logic finish_line_reached, reset_player, collision
                        );
@@ -104,31 +105,30 @@ always_comb begin
 //    end
 //
   //
-	logic [3:0] lvl_background, lvl_foreground;
+logic [3:0] lvl_background, lvl_foreground;
   always_comb begin
-        lvl_background <= 4'hF; // Default background color
-        lvl_foreground <= 4'h0; // Default foreground color
-        case (current_level)
-	    1: 
-		begin
-                lvl_background <= 4'hf; // Background for level 2
-                lvl_foreground <= 4'hA; // Foreground for level 2
-            end
-            2: begin
-                lvl_background <= 4'h5; // Background for level 2
-                lvl_foreground <= 4'hA; // Foreground for level 2
-            end
-            3: begin
-                lvl_background <= 4'h7; // Background for level 3
-                lvl_foreground <= 4'hD; // Foreground for level 3
-            end
-            default: begin
-                lvl_background <= 4'hF; // Default background
-                lvl_foreground <= 4'h0; // Default foreground
-            end
-        endcase
-    end
+    lvl_background = 4'hF; // Default background color
+    lvl_foreground = 4'h0; // Default foreground color
+    case (current_level)
+        1: begin
+            lvl_background = 4'hF; // Background for level 1
+            lvl_foreground = 4'hA; // Foreground for level 1
+        end
+        2: begin
+            lvl_background = 4'h5; // Background for level 2
+            lvl_foreground = 4'hA; // Foreground for level 2
+        end
+        3: begin
+            lvl_background = 4'h7; // Background for level 3
+            lvl_foreground = 4'hD; // Foreground for level 3
+        end
+        default: begin
+            lvl_background = 4'hF; // Default background
+            lvl_foreground = 4'h0; // Default foreground
+        end
+    endcase
 end
+
   
   
   
@@ -170,9 +170,9 @@ end
             Blue = 4'h0;
        end
 	 if (obs_on == 1'b1) begin //((obs_on || obs_on2) == 1'b1)
-             Red = foreground-(4'hf);
-            Green = foreground-(4'h1);
-            Blue = foreground-(4'h1);
+             Red = lvl_foreground-(4'hf);
+            Green = lvl_foreground-(4'h1);
+            Blue = lvl_foreground-(4'h1);
         end 
             else begin
 //                Red = 4'hf - DrawX[9:6] - DrawY[9:6]; 
@@ -183,9 +183,9 @@ end
 //             Green = 4'h4 - DrawX[7:6] - DrawY[7:6];
 //             Blue = 4'h6 - DrawX[7:6] - DrawY[7:6];  
 
-             Red = background-(4'h3 - (DrawX&200)/2- (DrawY&100)/2); 
-             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
-             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);       
+             Red = lvl_background-(4'h3 - (DrawX&200)/2- (DrawY&100)/2); 
+             Green = lvl_background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
+             Blue = lvl_background-(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);       
         end 
     end
 endmodule
