@@ -104,7 +104,31 @@ always_comb begin
 //    end
 //
   //
-  
+	logic [3:0] lvl_background, lvl_foreground;
+  always_comb begin
+        lvl_background <= 4'hF; // Default background color
+        lvl_foreground <= 4'h0; // Default foreground color
+        case (current_level)
+	    1: 
+		begin
+                lvl_background <= 4'hf; // Background for level 2
+                lvl_foreground <= 4'hA; // Foreground for level 2
+            end
+            2: begin
+                lvl_background <= 4'h5; // Background for level 2
+                lvl_foreground <= 4'hA; // Foreground for level 2
+            end
+            3: begin
+                lvl_background <= 4'h7; // Background for level 3
+                lvl_foreground <= 4'hD; // Foreground for level 3
+            end
+            default: begin
+                lvl_background <= 4'hF; // Default background
+                lvl_foreground <= 4'h0; // Default foreground
+            end
+        endcase
+    end
+end
   
   
   
