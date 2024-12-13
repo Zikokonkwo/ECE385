@@ -105,10 +105,27 @@ always_comb begin
 //    end
 //
   //
-// logic [3:0] lvl_background, lvl_foreground;
-//   always_comb begin
-//     lvl_background = 4'hF; // Default background color
-//     lvl_foreground = 4'h0; // Default foreground color
+ logic [3:0] lvl_background, lvl_foreground;
+   always_comb begin
+     lvl_background = 4'hF; // Default background color
+     lvl_foreground = 4'h0; // Default foreground color
+	if(foreground == 3 && background == 3) 
+		begin 
+			lvl_background = 4'hF; 
+    			lvl_foreground = 4'h0; 
+		end
+	else if(foreground == 6 &&  background == 6)
+		begin
+			lvl_background = 4'hF; 
+    			lvl_foreground = 4'h0; 
+		end
+	else if(foreground == 10 &&  background == 10)
+		begin
+			lvl_background = 4'hF; 
+    			lvl_foreground = 4'h0; 
+		end
+	
+			
 //     case (current_level)
 //         0: begin
 //             lvl_background = 4'hF; // Background for level 1
