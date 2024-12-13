@@ -5,7 +5,7 @@ module game_state_machine (
     output logic [3:0] foreground, background,
     output logic [1:0] current_level, speed, obstacle_count,
     output logic reset_level, reset_player,
-    output logic [9:0] BallX, BallY
+    //output logic [9:0] BallX, BallY
 );
     game_state_t state, next_state;
 
@@ -14,27 +14,28 @@ logic sprite_collision;
 
 
 
-    // State Transition Logic
-    always_ff @(posedge clk or posedge reset) begin
-	    if (reset || reset_level) begin
-            state <= LEVEL1;
+//     // State Transition Logic
+//     always_ff @(posedge clk or posedge reset) begin
+// 	    if (reset || reset_level) begin
+//             state <= LEVEL1;
             
-//            BallX <= 20;//ADDED
-//            BallY <= 240;//ADDED
+// //            BallX <= 20;//ADDED
+// //            BallY <= 240;//ADDED
  
-//	    else if ((BallX + Ball_size > ObsX - Ball_size) && (BallX - Ball_size < ObsX + Ball_size) && 
-//            (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size)) 
-//	    	sprite_collision <= 1'b1; // sprite collided with obstacle and must reset
+// //	    else if ((BallX + Ball_size > ObsX - Ball_size) && (BallX - Ball_size < ObsX + Ball_size) && 
+// //            (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size)) 
+// //	    	sprite_collision <= 1'b1; // sprite collided with obstacle and must reset
 	    	
 	   
-         end else if (reset_player) begin
-                     BallX <= 20;//ADDED
-                     BallY <= 240;//ADDED
+//          end else if (reset_player) begin
+//                      BallX <= 20;//ADDED
+//                      BallY <= 240;//ADDED
          
-         end
-         else
-	  			 state <= next_state;
-    end
+//          end
+//          else
+// 	  			 state <= next_state;
+//     end
+	
 //State control signals/////////////////////////
 
     always_comb
