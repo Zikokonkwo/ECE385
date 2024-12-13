@@ -105,26 +105,30 @@ always_comb begin
 //    end
 //
   //
- logic [3:0] lvl_background, lvl_foreground;
+logic [3:0] red, green, blue;
    always_comb begin
-     lvl_background = 4'hF; // Default background color
-     lvl_foreground = 4'h0; // Default foreground color
+     red = 4'hF; // Default background color
+     green = 4'h0; // Default foreground color
+     blue = 4'h0;
 	if(foreground == 3 && background == 3) 
 		begin 
-			lvl_background = 4'hF; 
-    			lvl_foreground = 4'h0; 
+			red = 4'h5; 
+    			green = 4'h3; 
+			blue = 4'h3;
 		end
 	else if(foreground == 6 &&  background == 6)
 		begin
-			lvl_background = 4'hF; 
-    			lvl_foreground = 4'h0; 
+			red = 4'h6; 
+    			green = 4'h4; 
+			blue = 4'h2
 		end
 	else if(foreground == 10 &&  background == 10)
 		begin
-			lvl_background = 4'hF; 
-    			lvl_foreground = 4'h0; 
+			red = 4'hF; 
+    			green = 4'h3; 
+			blue = 4'h6
 		end
-	
+   end
 			
 //     case (current_level)
 //         0: begin
@@ -200,9 +204,9 @@ always_comb begin
 //             Green = 4'h4 - DrawX[7:6] - DrawY[7:6];
 //             Blue = 4'h6 - DrawX[7:6] - DrawY[7:6];  
 
-             Red = background-(4'h3 - (DrawX&200)/2- (DrawY&100)/2); 
-             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
-             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY&100)/2);       
+	    Red = (red - (DrawX&200)/2- (DrawY&100)/2); 
+	    Green = (green - (DrawX%300)/2 - (DrawY%200)/2);
+	    Blue = (blue - (DrawX%200)/2 - (DrawY&100)/2);       
         end 
     end
 endmodule
