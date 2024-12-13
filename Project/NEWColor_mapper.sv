@@ -154,7 +154,7 @@ always_comb begin
 //            Blue = background-(4'h1);
 
 //
-             Red = (background)-(4'he);
+             Red = (background/2)-(4'he);
             Green = (background)-(4'h1);
             Blue = (background)-(4'h1);
 //
@@ -183,11 +183,19 @@ always_comb begin
 //             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
 //             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY%100)/2);  
              
-             //
-             Red = (background)-(4'h3 - (DrawX&200)/(2*background)- (DrawY%100)/2); 
-             Green = (background)-(4'h4 - (DrawX%300)/(2*background) - (DrawY%200)/2);
-             Blue = (background)-(4'h6 - (DrawX%200)/(2*background) - (DrawY%100)/2); 
-             //     
+//             //
+//             Red = (background)-(4'h3 - (DrawX&200)/(2*background)- (DrawY%100)/2); 
+//             Green = (background)-(4'h4 - (DrawX%300)/(2*background) - (DrawY%200)/2);
+//             Blue = (background)-(4'h6 - (DrawX%200)/(2*background) - (DrawY%100)/2); 
+//             // 
+
+//
+             Red = background*4'h1;
+            Green = background*4'h1;
+            Blue = background*4'h1;
+
+
+//    
         end 
     end
-
+    endmodule
