@@ -106,31 +106,6 @@ always_comb begin
 //
   //
   
-  logic [3:0] red, green, blue;
-   always_comb begin
-     red = 4'hF; // Default background color
-     green = 4'h0; // Default foreground color
-     blue = 4'h0;
-	if(foreground == 3 && background == 3) 
-		begin 
-			red = 4'h5; 
-    			green = 4'h3; 
-			blue = 4'h3;
-		end
-	else if(foreground == 6 &&  background == 6)
-		begin
-			red = 4'h6; 
-    			green = 4'h4; 
-			blue = 4'h2
-		end
-	else if(foreground == 10 &&  background == 10)
-		begin
-			red = 4'hF; 
-    			green = 4'h3; 
-			blue = 4'h6
-		end
-   end
-  
 //  always_comb
 //begin
 //    $display("Ball Position: (%0d, %0d), Obstacle1 Position: (%0d, %0d), Obstacle2 Position: (%0d, %0d)",
@@ -166,67 +141,35 @@ always_comb begin
 //     end 
      ////
        
-//     always_comb
-//     begin:RGB_Display
-//         if ((ball_on == 1'b1)) begin 
-//             Red = 4'h0;
-//             Green = 4'hf;
-//             Blue = 4'h0;
-//        end
-//             else if (obs_on == 1'b1) begin
-// //             Red = background-(4'he);
-// //            Green = background-(4'h1);
-// //            Blue = background-(4'h1);
-
-// //
-//              Red = (background)-(4'he);
-//             Green = (background)-(4'h1);
-//             Blue = (background)-(4'h1);
-// //
-//         end 
-//             else if ((DrawX <= 50) || (DrawX >= 590)) begin
-//                          Red = 4'h0;
-//                          Green = 4'h6;
-//                          Blue = 4'h1;
-//                       end
-// //        else if ((obs_on2) == 1'b1) begin
-// //             Red = 4'h0;
-// //            Green = 4'h0;
-// //            Blue = 4'h9;
-// //        end 
-        
-//             else begin
-// //                Red = 4'hf - DrawX[9:6] - DrawY[9:6]; 
-// //             Green = 4'hf - DrawX[9:6] - DrawY[9:6];
-// //             Blue = 4'hf - DrawX[9:6] - DrawY[9:6]; 
-  
-// //             Red = 4'h3 - DrawX[7:6] - DrawY[7:6]; 
-// //             Green = 4'h4 - DrawX[7:6] - DrawY[7:6];
-// //             Blue = 4'h6 - DrawX[7:6] - DrawY[7:6];  
-
-// //             Red = background-(4'h3 - (DrawX&200)/2- (DrawY%100)/2); 
-// //             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
-// //             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY%100)/2);  
-             
-//              //
-//              Red = (background)-(4'h3 - (DrawX&200)/(2*background)- (DrawY%100)/2); 
-//              Green = (background)-(4'h4 - (DrawX%300)/(2*background) - (DrawY%200)/2);
-//              Blue = (background)-(4'h6 - (DrawX%200)/(2*background) - (DrawY%100)/2); 
-//              //     
-//         end 
-//     end
-always_comb
+    always_comb
     begin:RGB_Display
         if ((ball_on == 1'b1)) begin 
             Red = 4'h0;
             Green = 4'hf;
             Blue = 4'h0;
        end
-	 if (obs_on == 1'b1) begin //((obs_on || obs_on2) == 1'b1)
-             Red = foreground-(4'hf);
-            Green = foreground-(4'h1);
-            Blue = foreground-(4'h1);
+            else if (obs_on == 1'b1) begin
+//             Red = background-(4'he);
+//            Green = background-(4'h1);
+//            Blue = background-(4'h1);
+
+//
+             Red = (background)-(4'he);
+            Green = (background)-(4'h1);
+            Blue = (background)-(4'h1);
+//
         end 
+            else if ((DrawX <= 50) || (DrawX >= 590)) begin
+                         Red = 4'h0;
+                         Green = 4'h6;
+                         Blue = 4'h1;
+                      end
+//        else if ((obs_on2) == 1'b1) begin
+//             Red = 4'h0;
+//            Green = 4'h0;
+//            Blue = 4'h9;
+//        end 
+        
             else begin
 //                Red = 4'hf - DrawX[9:6] - DrawY[9:6]; 
 //             Green = 4'hf - DrawX[9:6] - DrawY[9:6];
@@ -236,9 +179,15 @@ always_comb
 //             Green = 4'h4 - DrawX[7:6] - DrawY[7:6];
 //             Blue = 4'h6 - DrawX[7:6] - DrawY[7:6];  
 
-	    Red = (red - (DrawX&200)/2- (DrawY&100)/2); 
-	    Green = (green - (DrawX%300)/2 - (DrawY%200)/2);
-	    Blue = (blue - (DrawX%200)/2 - (DrawY&100)/2);       
+//             Red = background-(4'h3 - (DrawX&200)/2- (DrawY%100)/2); 
+//             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
+//             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY%100)/2);  
+             
+             //
+             Red = (background)-(4'h3 - (DrawX&200)/(2*background)- (DrawY%100)/2); 
+             Green = (background)-(4'h4 - (DrawX%300)/(2*background) - (DrawY%200)/2);
+             Blue = (background)-(4'h6 - (DrawX%200)/(2*background) - (DrawY%100)/2); 
+             //     
         end 
     end
-endmodule
+
