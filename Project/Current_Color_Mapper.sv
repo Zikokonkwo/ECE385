@@ -17,25 +17,18 @@ module color_mapper (
     input logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size, ObsX, ObsY, ObsX2, ObsY2,
     input logic [3:0] foreground, background,
     input logic [1:0] current_level,
-    input logic frame_clk, reset,
+    input logic clk, reset,
     output logic [3:0] Red, Green, Blue,
     output logic finish_line_reached, reset_player, collision, collision2
 );
 
-    parameter [9:0] SQ_X_Step=1;      // Step size on the X axis
-    parameter [9:0] SQ_Y_Step=1;      // Step size on the Y axis
-    parameter [9:0] SQ_X_Min=49;       // Leftmost point on the X axis
-    parameter [9:0] SQ_X_Max=589;     // Rightmost point on the X axis
-    parameter [9:0] SQ_Y_Min=0;       // Topmost point on the Y axis
-    parameter [9:0] SQ_Y_Max=479;     // Bottommost point on the Y axis
-    
     logic ball_on, obs_on, obs_on2, square_on;
     logic [9:0] SquareX, SquareY; // Position of the bouncing square
     logic signed [9:0] Square_X_Motion, Square_Y_Motion; // Motion step for the square
     logic [9:0] SquareSize = 10'd20; // Size of the square
 
     // Initialize square direction and position
-    always_ff @(posedge frame_clk) begin
+    always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             SquareX <= 10'd300;
             SquareY <= 10'd200;
@@ -49,13 +42,13 @@ module color_mapper (
             // Bounce logic for the square
             if ((SquareY + SquareSize) >= 10'd430) begin
                 Square_Y_Motion <= -Square_Y_Motion; // Bottom edge
-            end else if ((SquareY-SquareSize) <= 10'd50) begin
+            end else if (SquareY <= 10'd50) begin
                 Square_Y_Motion <= -Square_Y_Motion; // Top edge
             end
 
             if ((SquareX + SquareSize) >= 10'd590) begin
                 Square_X_Motion <= -Square_X_Motion; // Right edge
-            end else if ((SquareX-SquareSize) <= 10'd50) begin
+            end else if (SquareX <= 10'd50) begin
                 Square_X_Motion <= -Square_X_Motion; // Left edge
             end
         end
