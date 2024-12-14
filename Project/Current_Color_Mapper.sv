@@ -81,12 +81,10 @@ module color_mapper (
     
 
     // Initialize square position
-    always_ff @(posedge frame_clk) begin
-        if (reset) begin
+    
             SquareX <= 10'd300; // Fixed X position
             SquareY <= 10'd200; // Fixed Y position
-        end
-    end
+     
 
     // Determine if pixel is part of the square
     always_comb begin
