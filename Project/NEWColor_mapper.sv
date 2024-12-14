@@ -63,19 +63,27 @@ always_comb begin
             (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size)) begin
             collision = 1; // Collision occurred
         end 
-	else begin
+	if (!((BallX + Ball_size > ObsX - Ball_size) && (BallX - Ball_size < ObsX + Ball_size) && 
+            (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size))) begin
             collision = 0; // No collision
         end
          if ((BallX >= 580)) 
             finish_line_reached = 1;//removed collision = 0 below
+//          
             
             //
 
             //
-            else  
+            if (BallX <= 579)
             finish_line_reached = 0;
     end
 //
+
+
+
+
+
+
   
    // 2 COLLISION DETECTION
 //always_comb begin
@@ -183,16 +191,16 @@ always_comb begin
 //             Green = background-(4'h4 - (DrawX%300)/2 - (DrawY%200)/2);
 //             Blue = background-(4'h6 - (DrawX%200)/2 - (DrawY%100)/2);  
              
-//             //
-//             Red = (background)-(4'h3 - (DrawX&200)/(2*background)- (DrawY%100)/2); 
-//             Green = (background)-(4'h4 - (DrawX%300)/(2*background) - (DrawY%200)/2);
-//             Blue = (background)-(4'h6 - (DrawX%200)/(2*background) - (DrawY%100)/2); 
-//             // 
+             //
+             Red = (background)-(4'h3 - (DrawX&200)/(2*background)- (DrawY%100)/2); 
+             Green = (background)-(4'h4 - (DrawX%300)/(2*background) - (DrawY%200)/2);
+             Blue = (background)-(4'h6 - (DrawX%200)/(2*background) - (DrawY%100)/2); 
+             // 
 
 //
-             Red = background*4'h1;
-            Green = background*4'h1;
-            Blue = background*4'h1;
+//             Red = background*4'h1;
+//            Green = background*4'h1;
+//            Blue = background*4'h1;
 
 
 //    
