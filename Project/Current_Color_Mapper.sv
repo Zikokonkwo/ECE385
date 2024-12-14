@@ -24,50 +24,40 @@ module color_mapper (
 
     logic ball_on, obs_on, obs_on2, square_on;
     logic [9:0] SquareX, SquareY; // Position of the bouncing square
-    logic [1:0] SquareDirX, SquareDirY; // Direction of the square (0: no movement, 1: positive, 2: negative)
+    logic signed [9:0] Square_X_Motion, Square_Y_Motion; // Motion step for the square
     logic [9:0] SquareSize = 10'd20; // Size of the square
-
-    // Distances for ball and obstacles
-    int DistX, DistY, Size;
-    assign DistX = DrawX - BallX;
-    assign DistY = DrawY - BallY;
-    assign Size = Ball_size;
-
-    int ObsDistX, ObsDistY;
-    assign ObsDistX = DrawX - ObsX;
-    assign ObsDistY = DrawY - ObsY;
 
     // Initialize square direction and position
     always_ff @(posedge frame_clk) begin
         if (reset) begin
             SquareX <= 10'd300;
             SquareY <= 10'd200;
-            SquareDirX <= 2'd1; // Initial direction: positive X
-            SquareDirY <= 2'd1; // Initial direction: positive Y
+            Square_X_Motion <= 10'd1; // Initial motion in X
+            Square_Y_Motion <= 10'd1; // Initial motion in Y
         end else begin
-            // Update square position
-            if (SquareDirX == 2'd1)
-                SquareX <= SquareX + 1;
-            else if (SquareDirX == 2'd2)
-                SquareX <= SquareX - 1;
-
-            if (SquareDirY == 2'd1)
-                SquareY <= SquareY + 1;
-            else if (SquareDirY == 2'd2)
-                SquareY <= SquareY - 1;
+            // Update square position based on motion
+            SquareX <= SquareX + Square_X_Motion;
+            SquareY <= SquareY + Square_Y_Motion;
 
             // Bounce logic for the square
-            if (SquareX <= 10'd50 || SquareX + SquareSize >= 10'd590)
-                SquareDirX <= (SquareDirX == 2'd1) ? 2'd2 : 2'd1;
+            if ((SquareY + SquareSize) >= 10'd430) begin
+                Square_Y_Motion <= -Square_Y_Motion; // Bottom edge
+            end else if (SquareY <= 10'd50) begin
+                Square_Y_Motion <= -Square_Y_Motion; // Top edge
+            end
 
-            if (SquareY <= 10'd50 || SquareY + SquareSize >= 10'd430)
-                SquareDirY <= (SquareDirY == 2'd1) ? 2'd2 : 2'd1;
+            if ((SquareX + SquareSize) >= 10'd590) begin
+                Square_X_Motion <= -Square_X_Motion; // Right edge
+            end else if (SquareX <= 10'd50) begin
+                Square_X_Motion <= -Square_X_Motion; // Left edge
+            end
         end
     end
 
     // Determine if pixel is part of the square
     always_comb begin
-        if ((DrawX >= SquareX && DrawX < SquareX + SquareSize) &&
+        if ((current_level == 2'b10) &&
+            (DrawX >= SquareX && DrawX < SquareX + SquareSize) &&
             (DrawY >= SquareY && DrawY < SquareY + SquareSize)) begin
             square_on = 1'b1;
         end else begin
@@ -77,7 +67,7 @@ module color_mapper (
 
     // Ball-on logic
     always_comb begin: Ball_on_proc
-        if ((DistX * DistX + DistY * DistY) <= (Size * Size))
+        if (((DrawX - BallX) * (DrawX - BallX) + (DrawY - BallY) * (DrawY - BallY)) <= (Ball_size * Ball_size))
             ball_on = 1'b1;
         else
             ball_on = 1'b0;
@@ -85,7 +75,7 @@ module color_mapper (
 
     // Obstacle-on logic
     always_comb begin: Obs_on_proc
-        if ((ObsDistX * ObsDistX + ObsDistY * ObsDistY) <= (Size * Size))
+        if (((DrawX - ObsX) * (DrawX - ObsX) + (DrawY - ObsY) * (DrawY - ObsY)) <= (Ball_size * Ball_size))
             obs_on = 1'b1;
         else
             obs_on = 1'b0;
