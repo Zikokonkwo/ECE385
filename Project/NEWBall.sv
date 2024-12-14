@@ -95,14 +95,26 @@ module  ball
         ///
         Obs_Y_Motion_next = Obs_Y_Motion;
         Obs_X_Motion_next = Obs_X_Motion;
-
+        
+        //added66666
+//if (finish_line_reached) begin
+//BallX <= 30;
+//BallY <= 240;
+//end
         
         //
 //              Obs_Y2_Motion_next = Obs_Y2_Motion;
 //        Obs_X2_Motion_next = Obs_X2_Motion;//added
 
 
-      ///
+//      ///
+//      if (finish_line_reached)begin
+//      BallX <= 30;
+//      BallY <= 240;//added666666
+//      end
+//      ///
+      
+      
       
 	if (keycode == 8'h1A) //go up
 	begin
@@ -212,7 +224,7 @@ if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
     ///77777777777777777777777777777777777777777777777777777
    
    always_ff @(posedge frame_clk) begin
-    if (Reset || collision || reset_level)
+    if (Reset || collision || reset_level || finish_line_reached || reset_player || speedX)//addedRECENT speedx
     begin 
         
         // Reset ball and obstacles
@@ -224,14 +236,12 @@ if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
         Ball_Y_Motion <= 10'd0; //removed000000000000000000000000000000000000000000000000000000000000000
         Ball_X_Motion <= 10'd0;
         BallY <= 240;
-        BallX <= 20;
-        end
-        else if (reset_player || finish_line_reached)begin
-        Ball_Y_Motion <= 10'd0; 
-        Ball_X_Motion <= 10'd0;//removed000000000000000000000000000000000000000000000000000000000000000
-        BallY <= 240;
         BallX <= 30;
-            end 
+        end
+//        else if (reset_player || finish_line_reached)begin
+//        BallY <= 240;
+//        BallX <= 30;
+//            end //removed666666
         
         
 
@@ -243,6 +253,13 @@ if ( (ObsY + BallS) >= Obs_Y_Max )  // Ball is at the bottom edge, BOUNCE!
 //        ObsY2 <= 350;
 //        ObsX2 <= 150;
    
+	//added RECENT999
+	if (speedX) begin
+	BallY <= 240;
+	BallX <= 30;
+	end
+	
+	
 	
     else if (keycode != 8'h0) 
     begin
