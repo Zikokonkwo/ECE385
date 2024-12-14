@@ -17,46 +17,80 @@ module color_mapper (
     input logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size, ObsX, ObsY, ObsX2, ObsY2,
     input logic [3:0] foreground, background,
     input logic [1:0] current_level,
-    input logic frame_clk, Reset,
+    input logic frame_clk, reset,
     output logic [3:0] Red, Green, Blue,
     output logic finish_line_reached, reset_player, collision, collision2
 );
 
+    parameter [9:0] SQ_X_Min=49;       // Leftmost point on the X axis
+    parameter [9:0] SQ_X_Max=589;     // Rightmost point on the X axis
+    parameter [9:0] SQ_Y_Min=0;       // Topmost point on the Y axis
+    parameter [9:0] SQ_Y_Max=479;     // Bottommost point on the Y axis
+    
     logic ball_on, obs_on, obs_on2, square_on;
-    logic [9:0] SquareX, SquareY; // Position of the bouncing square
-    logic signed [9:0] Square_X_Motion, Square_Y_Motion; // Motion step for the square
+    logic [9:0] SquareX, SquareY; // Position of the square
     logic [9:0] SquareSize = 10'd20; // Size of the square
 
-    // Initialize square direction and position
-    always_ff @(posedge frame_clk ) begin
-        if (Reset) begin
-            SquareX <= 10'd300;
-            SquareY <= 10'd200;
-            Square_X_Motion <= 10'd1; // Initial motion in X
-            Square_Y_Motion <= 10'd1; // Initial motion in Y
-        end else begin
-            // Update square position based on motion
-            SquareX <= SquareX + Square_X_Motion;
-            SquareY <= SquareY + Square_Y_Motion;
+    ////
+	 logic collision0, collision1;
+ /* Old Ball: Generated square box by checking if the current pixel is within a square of length
+    2*BallS, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
+	 
+    if ((DrawX >= BallX - Ball_size) &&
+       (DrawX <= BallX + Ball_size) &&
+       (DrawY >= BallY - Ball_size) &&
+       (DrawY <= BallY + Ball_size))
+       )
 
-            // Bounce logic for the square
-            if ((SquareY + SquareSize) >= 10'd430) begin
-                Square_Y_Motion <= -Square_Y_Motion; // Bottom edge
-            end else if (SquareY <= 10'd50) begin
-                Square_Y_Motion <= -Square_Y_Motion; // Top edge
-            end
+     New Ball: Generates (pixelated) circle by using the standard circle formula.  Note that while 
+     this single line is quite powerful descriptively, it causes the synthesis tool to use up three
+     of the 120 available multipliers on the chip!  Since the multiplicants are required to be signed,
+	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
+	  
+    int DistX, DistY, Size;
+    assign DistX = DrawX - BallX;
+    assign DistY = DrawY - BallY;
+    assign Size = Ball_size;
+    
+    ///////
+    int ObsDistX, ObsDistY;
+    assign ObsDistX = DrawX - ObsX;
+    assign ObsDistY = DrawY - ObsY;
+    
+    always_comb begin
+        // Check for collision between the player and obstacle
+        if ((BallX + Ball_size > ObsX - Ball_size) && (BallX - Ball_size < ObsX + Ball_size) && 
+            (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size)) begin
+            collision0 = 1; // Collision occurred
+        end 
+	if (!((BallX + Ball_size > ObsX - Ball_size) && (BallX - Ball_size < ObsX + Ball_size) && 
+            (BallY + Ball_size > ObsY - Ball_size) && (BallY - Ball_size < ObsY + Ball_size))) begin
+            collision0 = 0; // No collision
+        end
+         if ((BallX >= 580)) 
+            finish_line_reached = 1;//removed collision = 0 below
+//          
+            
+            //
 
-            if ((SquareX + SquareSize) >= 10'd590) begin
-                Square_X_Motion <= -Square_X_Motion; // Right edge
-            end else if (SquareX <= 10'd50) begin
-                Square_X_Motion <= -Square_X_Motion; // Left edge
-            end
+            //
+            if (BallX <= 579)
+            finish_line_reached = 0;
+    end
+//
+    
+
+    // Initialize square position
+    always_ff @(posedge frame_clk) begin
+        if (reset) begin
+            SquareX <= 10'd300; // Fixed X position
+            SquareY <= 10'd200; // Fixed Y position
         end
     end
 
     // Determine if pixel is part of the square
     always_comb begin
-        if ((current_level == 2'b10) &&
+        if ((current_level == 2'b00) &&
             (DrawX >= SquareX && DrawX < SquareX + SquareSize) &&
             (DrawY >= SquareY && DrawY < SquareY + SquareSize)) begin
             square_on = 1'b1;
@@ -81,6 +115,21 @@ module color_mapper (
             obs_on = 1'b0;
     end
 
+    // Collision detection logic between ball and square
+    always_comb begin: Collision_detection
+        if ((BallX + Ball_size) >= SquareX && (BallX - Ball_size) < (SquareX + SquareSize) &&
+            (BallY + Ball_size) >= SquareY && (BallY - Ball_size) < (SquareY + SquareSize)) begin
+            collision1 = 1'b1;
+        end else begin
+            collision1 = 1'b0;
+        end
+    end
+    always_comb begin
+        if(collision0 == 1 || collision1 == 1)
+            begin
+                collision = 1;
+            end
+    end
     // RGB Display logic
     always_comb begin: RGB_Display
         if (ball_on == 1'b1) begin
