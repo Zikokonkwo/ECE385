@@ -17,7 +17,7 @@ module color_mapper (
     input logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size, ObsX, ObsY, ObsX2, ObsY2,
     input logic [3:0] foreground, background,
     input logic [1:0] current_level,
-    input logic clk, reset,
+    input logic frame_clk, reset,
     output logic [3:0] Red, Green, Blue,
     output logic finish_line_reached, reset_player, collision, collision2
 );
@@ -38,7 +38,7 @@ module color_mapper (
     assign ObsDistY = DrawY - ObsY;
 
     // Initialize square direction and position
-    always_ff @(posedge clk or posedge reset) begin
+    always_ff @(posedge frame_clk) begin
         if (reset) begin
             SquareX <= 10'd300;
             SquareY <= 10'd200;
