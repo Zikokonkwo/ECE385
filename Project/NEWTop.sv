@@ -153,7 +153,8 @@ module mb_usb_hdmi_top(
         .reset_player(reset_player_flag),
         
         .collision(collision_detected),
-        .collision2(collision_detected2)//added
+        .collision2(collision_detected2),//added
+          .finish_line_reached(finnishflag)
     );
     
     //Color Mapper Module   
@@ -172,7 +173,7 @@ module mb_usb_hdmi_top(
         .Blue(blue),
         .collision(collision_detected),//added
         .collision2(collision_detected2),//added
-        
+        .finish_line_reached(finnishflag),
         .foreground(fground),
         .background(bground)
     );
@@ -180,15 +181,17 @@ module mb_usb_hdmi_top(
     game_state_machine game_instance (
     .clk(Clk),
     .reset(reset_ah),
-    .BallX(ballxsig),
-    .BallY(ballysig),
+//    .BallX(ballxsig),
+//    .BallY(ballysig),
     .ObsX(obsxsig),
     .ObsY(obsysig),
     .Ball_size(ballsizesig),
     .reset_player(reset_player_flag),
     .foreground(fground),
     .background(bground),
-    .speed(speed_multiplier)
+    .speed(speed_multiplier),
+    .finish_line_reached(finnishflag)
+    
     );
     
 endmodule
