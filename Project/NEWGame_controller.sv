@@ -16,8 +16,10 @@ logic sprite_collision;
 
     // State Transition Logic
     always_ff @(posedge clk or posedge reset) begin
-	    if (reset || reset_level) begin
+	    if (reset || reset_level || collision) begin//added999 added collision
             state <= LEVEL1;
+            reset_player <= 1;//added999
+            speedX <= 1;//addedRECENT
             
 //            BallX <= 20;//ADDED
 //            BallY <= 240;//ADDED
@@ -40,16 +42,16 @@ logic sprite_collision;
     always_comb
 	begin 
 		// Default controls signals
-		speedX = 2'b01; //clears obstacle speed until defined in each level
+//		speedX = 2'b01; //clears obstacle speed until defined in each level
 		speedY = 2'b01; //obstacle speed is twice the initial speed
-        	background = 4'b0101; // defaults the background color to use 0 as its color data reference
-        	foreground= 4'b0001; // defaults the foreground color to use 0 as its color data reference
+//        	background = 4'b0101; // defaults the background color to use 0 as its color data reference//ADDEDTHIS6666removedfornow
+//        	foreground= 4'b0001; // defaults the foreground color to use 0 as its color data reference
        	 	obstacle_count = 2'b00; // initializes the projectile count multiplier to 0
 
 		case (state)
 			LEVEL1 : 
 				begin 
-		                speedX = 2'b10; //obstacle speed is initially slow
+//		                speedX = 2'b10; //obstacle speed is initially slow
 		                speedY = 2'b01; //obstacle speed is twice the initial speed
                         	background = 4'b0011; // sets the background color to use 1 as its color data reference
                         	foreground= 4'b0010; // sets the foreground color to use 1 as its color data reference
@@ -58,7 +60,7 @@ logic sprite_collision;
 				end
 			LEVEL2 : 
 				begin //000000000000000000  MADE COLOR SAME AS LEVEL BEOFER TO CEHCK 00000000000000000000000000000000000000000000000000
-		                speedX = 2'b01; //obstacle speed is twice the initial speed
+//		                speedX = 2'b01; //obstacle speed is twice the initial speed
 		                 speedY = 2'b11; //obstacle speed is twice the initial speed
                         	background = 4'b0101; // sets the background color to use 2 as its color data reference
                         	foreground= 4'b0100; // sets the foreground color to use 2 as its color data reference
@@ -67,7 +69,7 @@ logic sprite_collision;
 				end
 			LEVEL3 : 
 				begin 
-		                speedX = 2'b11; //obstacle speed is three times the initial speed 
+//		                speedX = 2'b11; //obstacle speed is three times the initial speed 
 		                speedY = 2'b11; //obstacle speed is twice the initial speed
                         	background = 4'b1110; // sets the background color to use 4 as its color data reference
                         	foreground= 4'b1000; // sets the foreground color to use 4 as its color data reference
@@ -76,7 +78,7 @@ logic sprite_collision;
 				end
 			GAME_OVER : 
 				begin 
-                        	speedX = 2'b00; // halts obstacles when game ends
+//                        	speedX = 2'b00; // halts obstacles when game ends
                         	speedY = 2'b00; //obstacle speed is twice the initial speed
                         	background = 4'b0000; // sets the background color to use 8 as its color data reference
                         	foreground= 4'b0000; // sets the foreground color to use 8 as its color data reference
@@ -106,7 +108,7 @@ logic sprite_collision;
                     reset_level = 1;
                     next_state = LEVEL1;
                      // Reset the level
-                end else if (finish_line_reached)begin
+                end else if (finish_line_reached && (state == LEVEL1))begin
                     reset_player = 1;
                     next_state = LEVEL2; // Progress to Level 2
                     
@@ -119,7 +121,7 @@ logic sprite_collision;
                 if (collision) begin
                     reset_level = 1;
                     next_state = LEVEL1;
-                end else if (finish_line_reached)begin
+                end else if (finish_line_reached && (state == LEVEL2))begin
                   reset_player = 1;
                     next_state = LEVEL3;
                   
@@ -131,7 +133,7 @@ logic sprite_collision;
                 if (collision) begin
                     reset_level = 1;
                     next_state = LEVEL1;
-                end else if (finish_line_reached)
+                end else if (finish_line_reached && (state == LEVEL3))
                     next_state = GAME_OVER;
 		       else
 			     next_state = LEVEL3;
@@ -151,4 +153,3 @@ logic sprite_collision;
     // Output current level
     assign current_level = state;
 endmodule
-
